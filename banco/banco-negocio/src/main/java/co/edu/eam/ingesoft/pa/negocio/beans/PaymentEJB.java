@@ -265,5 +265,49 @@ public class PaymentEJB {
 		}
 		return total;
 	}
+	
+	public void pagarAvanceTarjeta (CreditCardConsume consumo, double valorAvance){
+		
+		List<CreditCardConsume> consumos = consumoEJB.consumosTarjetaNoPagos(consumo.getCreditCard());
+		double avancePago = valorAvance / consumos.size();
+		double residuo = 0; // es lo que quedara despues de abonar a todos los
+							// consumos
+
+		for (CreditCardConsume c : consumos) {
+			double monto = 0;
+			/* verifico si el avance es mayor o igual a lo que se debe */
+			if (avancePago >= c.getRemainingAmmount()) {
+				residuo = avancePago - c.getRemainingAmmount(); // va asignando
+																// el restande a
+																// la variable
+																// $residuo
+				c.setRemainingAmmount(c.getRemainingAmmount() - c.getRemainingAmmount()); // descuento
+																							// el
+																							// monto
+																							// restante
+				monto = c.getRemainingAmmount();
+			} else {
+				
+				throw new ExcepcionNegocio("El monto asignado");
+//				c.setRemainingAmmount(avancePago);
+//				monto = avancePago;
+			}
+			/*
+			 * Si el monto restante es 0 entonces cambio el estado a true =
+			 * pagado
+			 */
+			if (c.getRemainingAmmount() == 0) {
+				c.setPayed(true);
+			}
+			consumoEJB.actualizarConsumo(c); // actualizo el consumo
+			
+			CreditCard tarj = cardEJB.buscarCreditCard(c.getCreditCard().getNumber());
+			 tarj.setMonto(tarj.getMonto()+monto);
+			 em.merge(tarj);
+		}
+		if (residuo != 0) {
+			avances(consumo, residuo);
+		}
+	}
 
 }
