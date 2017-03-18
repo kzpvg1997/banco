@@ -1712,8 +1712,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     		   conPayment.avances(consu, avance);
     		   JOptionPane.showMessageDialog(null, "Se ha registrado el pago de su avance Exitosamente",
    					"EXITO",JOptionPane.INFORMATION_MESSAGE);
+    		   listarConsumosTarjeta(tarjeta);
     	   }
-    		  listarConsumosTarjeta(tarjeta);
+    		  
 		}
     	
        }catch (ExcepcionNegocio e){
@@ -2345,18 +2346,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		List<CreditCardConsume> lista = conTarjConsumo.consumosTarjeta(tarjeta);
 		DefaultTableModel dtm = (DefaultTableModel) jTablePagoConsumo.getModel();
 		dtm.setRowCount(0);
-		String tipoPagado = "NO";
+		String tipoPagado = "SI";
 		for (CreditCardConsume creditCardConsume : lista) {
-			if (creditCardConsume.isPayed() == true) {
-				tipoPagado = "SI";
+			if (creditCardConsume.isPayed() == false) {
+				tipoPagado = "NO";
 			}
-			
-			
 				dtm.addRow(new Object[] { creditCardConsume.getId(), creditCardConsume.getAmmount(),
 					creditCardConsume.getRemainingAmmount(), tipoPagado, creditCardConsume.getNumberShares(),
 					creditCardConsume.getRemaningShares(), creditCardConsume.getValorCuota() });
-		
-		
 		}
 	}
 

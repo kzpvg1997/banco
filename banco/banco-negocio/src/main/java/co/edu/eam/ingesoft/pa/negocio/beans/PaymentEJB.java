@@ -103,7 +103,7 @@ public class PaymentEJB {
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void pagarTarjeta(CreditCard tarjeta) {
-		
+
 		double valorTotal = consumoEJB.sumaConsumosTarjetaCuotas(tarjeta);
 		double vdescontar = 0.0;
 		double vSumarTarjeta = calcularValorTotalCuotas(tarjeta);
@@ -121,7 +121,7 @@ public class PaymentEJB {
 					conNoPag.setRemaningShares(conNoPag.getRemaningShares() - 1);
 					conNoPag.setRemainingAmmount(conNoPag.getRemainingAmmount() - vdescontar);
 					em.merge(conNoPag);
-					
+
 					CreditCard tarj = cardEJB.buscarCreditCard(conNoPag.getCreditCard().getNumber());
 					tarj.setMonto(tarj.getMonto() + vSumarTarjeta);
 					em.merge(tarj);
@@ -133,17 +133,17 @@ public class PaymentEJB {
 					pay.setPaymentDate(consumoEJB.fechaActual());
 					pay.setIdConsume(conNoPag);
 					pay.setShare(conNoPag.getRemaningShares());
+
 					em.persist(pay);
-					
-					if (conNoPag.getRemainingAmmount() <= 0 || conNoPag.getRemaningShares() == 0){
+
+					if (conNoPag.getRemainingAmmount() <= 0.0 || conNoPag.getRemaningShares() == 0) {
 						conNoPag.setPayed(true);
 						conNoPag.setRemainingAmmount(0);
 						conNoPag.setValorCuota(0);
 						em.merge(conNoPag);
 					}
-
 				}
-				
+
 			}
 		}
 	}
@@ -216,7 +216,7 @@ public class PaymentEJB {
 	}
 
 	/* Hacer avances a consumos */
-	public void avances( CreditCardConsume consumo, double restante) {
+	public void avances(CreditCardConsume consumo, double restante) {
 		List<CreditCardConsume> consumos = consumoEJB.consumosTarjetaNoPagos(consumo.getCreditCard());
 		double avancePago = restante / consumos.size();
 		double residuo = 0; // es lo que quedara despues de abonar a todos los
@@ -247,10 +247,10 @@ public class PaymentEJB {
 				c.setPayed(true);
 			}
 			consumoEJB.actualizarConsumo(c); // actualizo el consumo
-			
+
 			CreditCard tarj = cardEJB.buscarCreditCard(c.getCreditCard().getNumber());
-			 tarj.setMonto(tarj.getMonto()+monto);
-			 em.merge(tarj);
+			tarj.setMonto(tarj.getMonto() + monto);
+			em.merge(tarj);
 		}
 		if (residuo != 0) {
 			avances(consumo, residuo);
@@ -258,16 +258,16 @@ public class PaymentEJB {
 	}
 
 	public double calcularValorTotalCuotas(CreditCard tarjeta) {
-		double total=0.0;
+		double total = 0.0;
 		List<CreditCardConsume> lista = consumoEJB.consumosTarjetaNoPagos(tarjeta);
 		for (CreditCardConsume cmo : lista) {
 			total += cmo.getValorCuota();
 		}
 		return total;
 	}
-	
-	public void pagarAvanceTarjeta (CreditCardConsume consumo, double valorAvance){
-		
+
+	public void pagarAvanceTarjeta(CreditCardConsume consumo, double valorAvance) {
+
 		List<CreditCardConsume> consumos = consumoEJB.consumosTarjetaNoPagos(consumo.getCreditCard());
 		double avancePago = valorAvance / consumos.size();
 		double residuo = 0; // es lo que quedara despues de abonar a todos los
@@ -287,10 +287,10 @@ public class PaymentEJB {
 																							// restante
 				monto = c.getRemainingAmmount();
 			} else {
-				
+
 				throw new ExcepcionNegocio("El monto asignado");
-//				c.setRemainingAmmount(avancePago);
-//				monto = avancePago;
+				// c.setRemainingAmmount(avancePago);
+				// monto = avancePago;
 			}
 			/*
 			 * Si el monto restante es 0 entonces cambio el estado a true =
@@ -300,10 +300,10 @@ public class PaymentEJB {
 				c.setPayed(true);
 			}
 			consumoEJB.actualizarConsumo(c); // actualizo el consumo
-			
+
 			CreditCard tarj = cardEJB.buscarCreditCard(c.getCreditCard().getNumber());
-			 tarj.setMonto(tarj.getMonto()+monto);
-			 em.merge(tarj);
+			tarj.setMonto(tarj.getMonto() + monto);
+			em.merge(tarj);
 		}
 		if (residuo != 0) {
 			avances(consumo, residuo);
