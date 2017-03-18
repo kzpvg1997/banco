@@ -86,7 +86,7 @@ public class PagoAjaxController implements Serializable {
 	public void buscarConsumos(){
 		
 		CreditCard tarjeta = creditCardEJB.buscarCreditCard(numeroTarjeta);
-		creditConsumo = consumoEJB.consumosTarjeta(tarjeta);
+		creditConsumo = consumoEJB.consumosTarjetaNoPagos(tarjeta);
 
 	}
 	

@@ -1,0 +1,70 @@
+
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+
+		<h:form prependId="false">
+		
+		<p:panelGrid id="paneldatosbusqueda" columns="3">
+
+					<p:outputLabel for="tftipoD" id="lblid" value="#{msj['pago.combTipoDocumento']}:" />
+					<h:selectOneMenu id="tftipoD" value="#{pagoAjax.combTipoDocumento}">
+						<f:selectItem itemValue="C.C" itemLabel="C.C"/>
+						<f:selectItem itemValue="R.C" itemLabel="R.C"/>
+						<f:selectItem itemValue="T.I" itemLabel="T.I"/>
+					</h:selectOneMenu>
+					<p:message for="tftipoD"/>
+					
+					<p:outputLabel for="tfnumero" id="numDoc" value="#{msj['pago.numeroDocumento']}:" />
+					<p:inputText id="tfnumero" value="#{pagoAjax.numeroDocumento}" />
+					<p:message for="tfnumero"/>
+					
+					<p:outputLabel for="tfnumerota" id="numTa" value="#{msj['pago.numeroTarjeta']}:" />
+					<p:inputText id="tfnumerota" value="#{pagoAjax.numeroTarjeta}" />
+					<p:message for="tfnumerota"/>
+					
+					<p:commandButton id="btnbuscar" value="#{msj['pago.buscar']}:" process="@this tftipoD tfnumero tfnumerota" update="tablaDoc"
+					 action="#{pagoAjax.buscarConsumos}"/>
+					
+				</p:panelGrid>
+				
+				<p:dataTable id="tablaDoc" value="#{pagoAjax.creditConsumo}" var="con" border="1">
+					<p:column>
+						<f:facet name="header">
+							Identificacion
+						</f:facet>
+						<p:outputLabel value="#{con.id}"/>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							Fecha
+						</f:facet>
+						<p:outputLabel value="#{con.dateConsume}"/>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							Valor
+						</f:facet>
+						<p:outputLabel value="#{con.ammount}"/>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							N° Cuotas
+						</f:facet>
+						<p:outputLabel value="#{con.numberShares}"/>
+					</p:column>
+					
+				</p:dataTable>
+				<p:commandButton id="btnpagar" value="Pagar" action="#{pagoController.pagar}" />
+
+			
+		</h:form>
+
+	</ui:define>
+</ui:composition>
