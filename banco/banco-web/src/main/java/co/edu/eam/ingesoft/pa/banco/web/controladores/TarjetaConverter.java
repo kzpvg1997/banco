@@ -11,9 +11,9 @@ import javax.inject.Named;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCard;
 import co.edu.eam.ingesoft.pa.negocio.beans.CreditCardEJB;
 
-@FacesConverter(value="progConverter",forClass=CreditCard.class)
-@Named("progConverter")
-public class ProgramaConverter implements Serializable{
+@FacesConverter(value="tarjConverter",forClass=CreditCard.class)
+@Named("tarjConverter")
+public class TarjetaConverter implements Serializable{
 
 	@EJB
 	private CreditCardEJB creditCartdEJB;

@@ -67,6 +67,8 @@ public class PagoController implements Serializable{
 	
 	private List<CreditCardConsume> creditConsumo;
 	
+	private CreditCardConsume Consume;
+	
 	
 	@PostConstruct
 	public void inicializar(){
@@ -75,11 +77,12 @@ public class PagoController implements Serializable{
 	}
 	
 	public void buscarConsumos(){
-		
 		CreditCard tarjeta = creditCardEJB.buscarCreditCard(numeroTarjeta);
 		creditConsumo = consumoEJB.consumosTarjeta(tarjeta);
 
 	}
+	
+	
 	
 	public void pagar(){
 		System.out.println("holaaaaa");
