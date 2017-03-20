@@ -12,42 +12,43 @@
 
 			<p:panelGrid id="paneldatosbusqueda" columns="3">
 
-				<p:outputLabel for="tftipoD" id="lblid"
-					value="#{msj['pago.combTipoDocumento']}:" />
-				<h:selectOneMenu id="tftipoD" value="#{pagoAjax.combTipoDocumento}">
+				<p:outputLabel for="tftipoD" id="lblid" value="pago.combTipoDocumento" />
+				<h:selectOneMenu id="tftipoD"
+					value="#{pagoController.combTipoDocumento}">
+					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
 					<f:selectItem itemValue="C.C" itemLabel="C.C" />
 					<f:selectItem itemValue="R.C" itemLabel="R.C" />
 					<f:selectItem itemValue="T.I" itemLabel="T.I" />
 				</h:selectOneMenu>
 				<p:message for="tftipoD" />
 
-				<p:outputLabel for="tfnumero" id="numDoc"
-					value="#{msj['pago.numeroDocumento']}:" />
-				<p:inputText id="tfnumero" value="#{pagoAjax.numeroDocumento}" />
+				<p:outputLabel for="tfnumero" id="numDoc" value="Numero Documento" />
+				<p:inputText id="tfnumero" value="#{pagoController.numeroDocumento}" />
 				<p:message for="tfnumero" />
 
-				<p:outputLabel for="tfnumerota" id="numTa"
-					value="#{msj['pago.numeroTarjeta']}:" />
-				<p:inputText id="tfnumerota" value="#{pagoAjax.numeroTarjeta}" />
-				<p:message for="tfnumerota" />
+				<p:outputLabel for="btnbuscar" id="btn" value="Busqueda" />
+				<p:commandButton id="btnbuscar" value="buscar"
+					process="@this tftipoD tfnumero cbcuen cbtar"
+					update="tablaDoc paneldatosbusqueda pagoTotal"
+					action="#{pagoController.buscarConsumos}" />
+				<p:message for="tftipoD" />
 
-				<p:commandButton id="btnbuscar" value="#{msj['pago.buscar']}:"
-					process="@this tftipoD tfnumero tfnumerota" update="tablaDoc"
-					action="#{pagoAjax.buscarConsumos}" />
 
-				<h:outputLabel for="cbconsumo" id="lblprog" value="Consumo" />
-				<h:selectOneMenu id="cbconsumo"
-					value="pagoController.creditCardSeleccionada"
-					converter="tarjConverter">
+				<h:outputLabel for="cbtar" id="lbltarjeta" value="Tarjetas" />
+				<p:selectOneMenu id="cbtar"
+					value="#{pagoController.tarjetaSeleccionada}">
+					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
+					<f:selectItems value="#{pagoController.tarjetas}" var="tarjeta"
+						itemValue="#{tarjeta}" itemLabel="#{tarjeta.number}" />
 
-					<f:selectItems value="#{docenteController.programas}" var="prog"
-						itemValue="#{prog}" itemLabel="#{prog.nombre}" />
-
-				</h:selectOneMenu>
-
+					<f:ajax event="change" execute="@this cbtar"
+						render="tablaDoc paneldatosbusqueda"
+						listener="#{pagoController.cargarTablaCombo}" />
+				</p:selectOneMenu>
 			</p:panelGrid>
-
-			<p:dataTable id="tablaDoc" value="#{pagoAjax.creditConsumo}"
+			
+			
+			<p:dataTable id="tablaDoc" value="#{pagoController.consumos}"
 				var="con" border="1">
 				<p:column>
 					<f:facet name="header">
@@ -74,9 +75,30 @@
 					<p:outputLabel value="#{con.numberShares}" />
 				</p:column>
 
+				<p:column headerText="Pago">
+					<p:commandButton action="#" process="@this" value="Pagar"
+						update="tablaDoc" />
+				</p:column>
 			</p:dataTable>
-			<p:commandButton id="btnpagar" value="Pagar"
-				action="#{pagoController.pagar}" />
+			
+
+			<br></br>
+			<br></br>
+			
+
+			<p:panelGrid id="pagoTotal" columns="3">
+
+				<h:outputLabel for="cbcuen" id="lblcuenta" value="Cuentas" />
+				<h:selectOneMenu id="cbcuen"
+					value="#{pagoController.cuentaSeleccionada}">
+					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
+					<f:selectItems value="#{pagoController.cuentas}" var="cuentas"
+						itemValue="#{cuentas}" itemLabel="#{cuentas.number}" />
+				</h:selectOneMenu>
+
+				<p:commandButton id="btnpagar" value="Pagar"
+					action="#{pagoController.pagar}" />
+			</p:panelGrid>
 
 
 		</h:form>

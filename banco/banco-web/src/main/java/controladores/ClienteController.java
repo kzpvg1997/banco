@@ -1,4 +1,4 @@
-package co.edu.eam.ingesoft.pa.banco.web.controladores;
+package controladores;
 
 import java.io.Serializable;
 import java.util.List;

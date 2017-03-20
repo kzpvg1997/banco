@@ -1,4 +1,4 @@
-package co.edu.eam.ingesoft.pa.banco.web.controladores;
+package controladores;
 
 import java.io.Serializable;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
@@ -14,18 +15,22 @@ import org.omnifaces.util.Messages;
 
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCard;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCardConsume;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Product;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.SavingAccount;
 import co.edu.eam.ingesoft.pa.negocio.beans.CreditCardConsumeEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CreditCardEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CustomerEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.PaymentEJB;
+import co.edu.eam.ingesoft.pa.negocio.beans.ProductEJB;
+import co.edu.eam.ingesoft.pa.negocio.beans.SavingAccountEJB;
 
 
 
 @Named("pagoAjax")
 @ViewScoped
 public class PagoAjaxController implements Serializable {
-	
-	
+
 	@EJB
 	private CreditCardEJB creditCardEJB;
 	
@@ -33,41 +38,38 @@ public class PagoAjaxController implements Serializable {
 	private CustomerEJB customerEJB;
 	
 	@EJB
-	private PaymentEJB paymentEJB;
-	
-	@EJB
 	private CreditCardConsumeEJB consumoEJB;
 	
+	@EJB
+	private ProductEJB productoEJB;
 	
+	@EJB
+	private SavingAccountEJB savinEJB;
+	
+	@NotNull(message="Seleccione una opcion")
 	private String combTipoDocumento;
 	
 	@Pattern(regexp="[0-9]*",message="Ingrese solo numeros")
 	@Length(min=4,max=10,message="Lonitud entre 4 y 10")
 	private String numeroDocumento;
 	
-	private CreditCard combTarjeta;
+	private String tarjetaSeleccionada;
 	
-	private String combConsumo;
+	private String cuentaSeleccionada;
 	
-	@Pattern(regexp="[0-9]*",message="Verifique que el numero de la tarjeta no tenga letas")
-	@Length(min=4,max=10,message="Lonitud entre 4 y 10")
-	private String numeroTarjeta;
+	private List<SavingAccount> cuentas;
 	
-	private Double cuota;
+	private List<CreditCard> tarjetas;
 	
-	private Double monto;
+	private List<CreditCardConsume> consumos;
 	
-	private Double capital;
+	private List<Product> productos;
 	
-	private Double interes;
+	private CreditCardConsume Consume;
 	
-	private Double avance;
+	private CreditCard tarSeleccionada;
 	
-	private CreditCard creditCardSeleccionada;
 	
-	private List<CreditCard> creditCard;
-	
-	private List<CreditCardConsume> creditConsumo;
 	
 	
 	@PostConstruct
@@ -76,90 +78,27 @@ public class PagoAjaxController implements Serializable {
 		
 	}
 	
-	//public void borrar(CreditCardConsume con) {
-
-		//docenteEJB.borrarDocente(doc);
-		//Messages.addFlashGlobalInfo("Docente borrado exitosamente");
-		//docentes = docenteEJB.listar();
-	//}
-	
 	public void buscarConsumos(){
 		
-		CreditCard tarjeta = creditCardEJB.buscarCreditCard(numeroTarjeta);
-		creditConsumo = consumoEJB.consumosTarjetaNoPagos(tarjeta);
+		Customer cli = customerEJB.buscarCustomer(combTipoDocumento, numeroDocumento);
+		if(cli != null){
+			tarjetas = creditCardEJB.listaTarjetasCliente(cli);
+			cuentas = savinEJB.listarCuentasAhorroCliente(cli);
+		}
 
+	}	
+	
+	public void cargarTablaCombo(){
+		Product prot = productoEJB.buscarProducto(tarjetaSeleccionada);
+		System.out.println(prot.getNumber());
+		CreditCard tar = (CreditCard) prot;
+		consumos = consumoEJB.consumosTarjetaNoPagos(tar);
+		
 	}
+
 	
 	public void pagar(){
 		System.out.println("holaaaaa");
-	}
-
-	/**
-	 * @return the consumoEJB
-	 */
-	public CreditCardConsumeEJB getConsumoEJB() {
-		return consumoEJB;
-	}
-
-	/**
-	 * @param consumoEJB the consumoEJB to set
-	 */
-	public void setConsumoEJB(CreditCardConsumeEJB consumoEJB) {
-		this.consumoEJB = consumoEJB;
-	}
-
-	/**
-	 * @return the numeroTarjeta
-	 */
-	public String getNumeroTarjeta() {
-		return numeroTarjeta;
-	}
-
-
-
-
-	/**
-	 * @param numeroTarjeta the numeroTarjeta to set
-	 */
-	public void setNumeroTarjeta(String numeroTarjeta) {
-		this.numeroTarjeta = numeroTarjeta;
-	}
-
-
-
-
-	/**
-	 * @return the creditConsumo
-	 */
-	public List<CreditCardConsume> getCreditConsumo() {
-		return creditConsumo;
-	}
-
-
-
-
-	/**
-	 * @param creditConsumo the creditConsumo to set
-	 */
-	public void setCreditConsumo(List<CreditCardConsume> creditConsumo) {
-		this.creditConsumo = creditConsumo;
-	}
-
-
-
-
-	/**
-	 * @return the creditCard
-	 */
-	public List<CreditCard> getCreditCard() {
-		return creditCard;
-	}
-
-	/**
-	 * @param creditCard the creditCard to set
-	 */
-	public void setCreditCard(List<CreditCard> creditCard) {
-		this.creditCard = creditCard;
 	}
 
 	/**
@@ -191,17 +130,45 @@ public class PagoAjaxController implements Serializable {
 	}
 
 	/**
-	 * @return the paymentEJB
+	 * @return the consumoEJB
 	 */
-	public PaymentEJB getPaymentEJB() {
-		return paymentEJB;
+	public CreditCardConsumeEJB getConsumoEJB() {
+		return consumoEJB;
 	}
 
 	/**
-	 * @param paymentEJB the paymentEJB to set
+	 * @param consumoEJB the consumoEJB to set
 	 */
-	public void setPaymentEJB(PaymentEJB paymentEJB) {
-		this.paymentEJB = paymentEJB;
+	public void setConsumoEJB(CreditCardConsumeEJB consumoEJB) {
+		this.consumoEJB = consumoEJB;
+	}
+
+	/**
+	 * @return the productoEJB
+	 */
+	public ProductEJB getProductoEJB() {
+		return productoEJB;
+	}
+
+	/**
+	 * @param productoEJB the productoEJB to set
+	 */
+	public void setProductoEJB(ProductEJB productoEJB) {
+		this.productoEJB = productoEJB;
+	}
+
+	/**
+	 * @return the savinEJB
+	 */
+	public SavingAccountEJB getSavinEJB() {
+		return savinEJB;
+	}
+
+	/**
+	 * @param savinEJB the savinEJB to set
+	 */
+	public void setSavinEJB(SavingAccountEJB savinEJB) {
+		this.savinEJB = savinEJB;
 	}
 
 	/**
@@ -233,117 +200,116 @@ public class PagoAjaxController implements Serializable {
 	}
 
 	/**
-	 * @return the combTarjeta
+	 * @return the tarjetaSeleccionada
 	 */
-	public CreditCard getCombTarjeta() {
-		return combTarjeta;
+	public String getTarjetaSeleccionada() {
+		return tarjetaSeleccionada;
 	}
 
 	/**
-	 * @param combTarjeta the combTarjeta to set
+	 * @param tarjetaSeleccionada the tarjetaSeleccionada to set
 	 */
-	public void setCombTarjeta(CreditCard combTarjeta) {
-		this.combTarjeta = combTarjeta;
+	public void setTarjetaSeleccionada(String tarjetaSeleccionada) {
+		this.tarjetaSeleccionada = tarjetaSeleccionada;
 	}
 
 	/**
-	 * @return the combConsumo
+	 * @return the cuentaSeleccionada
 	 */
-	public String getCombConsumo() {
-		return combConsumo;
+	public String getCuentaSeleccionada() {
+		return cuentaSeleccionada;
 	}
 
 	/**
-	 * @param combConsumo the combConsumo to set
+	 * @param cuentaSeleccionada the cuentaSeleccionada to set
 	 */
-	public void setCombConsumo(String combConsumo) {
-		this.combConsumo = combConsumo;
+	public void setCuentaSeleccionada(String cuentaSeleccionada) {
+		this.cuentaSeleccionada = cuentaSeleccionada;
 	}
 
 	/**
-	 * @return the cuota
+	 * @return the cuentas
 	 */
-	public Double getCuota() {
-		return cuota;
+	public List<SavingAccount> getCuentas() {
+		return cuentas;
 	}
 
 	/**
-	 * @param cuota the cuota to set
+	 * @param cuentas the cuentas to set
 	 */
-	public void setCuota(Double cuota) {
-		this.cuota = cuota;
+	public void setCuentas(List<SavingAccount> cuentas) {
+		this.cuentas = cuentas;
 	}
 
 	/**
-	 * @return the monto
+	 * @return the tarjetas
 	 */
-	public Double getMonto() {
-		return monto;
+	public List<CreditCard> getTarjetas() {
+		return tarjetas;
 	}
 
 	/**
-	 * @param monto the monto to set
+	 * @param tarjetas the tarjetas to set
 	 */
-	public void setMonto(Double monto) {
-		this.monto = monto;
+	public void setTarjetas(List<CreditCard> tarjetas) {
+		this.tarjetas = tarjetas;
 	}
 
 	/**
-	 * @return the capital
+	 * @return the consumos
 	 */
-	public Double getCapital() {
-		return capital;
+	public List<CreditCardConsume> getConsumos() {
+		return consumos;
 	}
 
 	/**
-	 * @param capital the capital to set
+	 * @param consumos the consumos to set
 	 */
-	public void setCapital(Double capital) {
-		this.capital = capital;
+	public void setConsumos(List<CreditCardConsume> consumos) {
+		this.consumos = consumos;
 	}
 
 	/**
-	 * @return the interes
+	 * @return the productos
 	 */
-	public Double getInteres() {
-		return interes;
+	public List<Product> getProductos() {
+		return productos;
 	}
 
 	/**
-	 * @param interes the interes to set
+	 * @param productos the productos to set
 	 */
-	public void setInteres(Double interes) {
-		this.interes = interes;
+	public void setProductos(List<Product> productos) {
+		this.productos = productos;
 	}
 
 	/**
-	 * @return the avance
+	 * @return the consume
 	 */
-	public Double getAvance() {
-		return avance;
+	public CreditCardConsume getConsume() {
+		return Consume;
 	}
 
 	/**
-	 * @param avance the avance to set
+	 * @param consume the consume to set
 	 */
-	public void setAvance(Double avance) {
-		this.avance = avance;
+	public void setConsume(CreditCardConsume consume) {
+		Consume = consume;
 	}
 
 	/**
-	 * @return the creditCardSeleccionada
+	 * @return the tarSeleccionada
 	 */
-	public CreditCard getCreditCardSeleccionada() {
-		return creditCardSeleccionada;
+	public CreditCard getTarSeleccionada() {
+		return tarSeleccionada;
 	}
 
 	/**
-	 * @param creditCardSeleccionada the creditCardSeleccionada to set
+	 * @param tarSeleccionada the tarSeleccionada to set
 	 */
-	public void setCreditCardSeleccionada(CreditCard creditCardSeleccionada) {
-		this.creditCardSeleccionada = creditCardSeleccionada;
+	public void setTarSeleccionada(CreditCard tarSeleccionada) {
+		this.tarSeleccionada = tarSeleccionada;
 	}
-	
 
 
 

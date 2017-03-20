@@ -11,7 +11,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCard;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CustomerPK;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Product;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.SavingAccount;
 import co.edu.eam.ingesoft.pa.negocio.beans.remote.IProductoRemote;
@@ -35,4 +37,20 @@ public class ProductEJB {
 		List<Product> lista = q.getResultList();
 		return lista.size();
 	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Product> listarProductosCliente(Customer cliente){
+		Query q = em.createNamedQuery(Product.ContarProductosCliente);
+		q.setParameter(1, cliente);
+		List<Product> lista = q.getResultList();
+		return lista;
+	}
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Product buscarProducto(String num){
+		return em.find(Product.class, num);
+	}
+
+	
+	
 }

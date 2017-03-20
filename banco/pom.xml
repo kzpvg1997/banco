@@ -10,7 +10,6 @@
 		<module>banco-negocio</module>
 		<module>banco-persistencia</module>
 		<module>banco-standalone</module>
-		
 		<module>banco-web</module>
 	</modules>
 	<build>
