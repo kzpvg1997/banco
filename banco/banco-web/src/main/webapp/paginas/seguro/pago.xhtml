@@ -12,7 +12,7 @@
 
 			<p:panelGrid id="paneldatosbusqueda" columns="3">
 
-				<p:outputLabel for="tftipoD" id="lblid" value="pago.combTipoDocumento" />
+				<p:outputLabel for="tftipoD" id="lblid" value="#{msj['pago.combTipoDocumento']}:" />
 				<h:selectOneMenu id="tftipoD"
 					value="#{pagoController.combTipoDocumento}">
 					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
@@ -22,19 +22,19 @@
 				</h:selectOneMenu>
 				<p:message for="tftipoD" />
 
-				<p:outputLabel for="tfnumero" id="numDoc" value="Numero Documento" />
+				<p:outputLabel for="tfnumero" id="numDoc" value="#{msj['pago.numeroDocumento']}:" />
 				<p:inputText id="tfnumero" value="#{pagoController.numeroDocumento}" />
 				<p:message for="tfnumero" />
 
-				<p:outputLabel for="btnbuscar" id="btn" value="Busqueda" />
-				<p:commandButton id="btnbuscar" value="buscar"
+				<p:outputLabel for="btnbuscar" id="btn" value="#{msj['pago.busqueda']}:" />
+				<p:commandButton id="btnbuscar" value="#{msj['pago.buscar']}"
 					process="@this tftipoD tfnumero cbcuen cbtar"
 					update="tablaDoc paneldatosbusqueda pagoTotal"
 					action="#{pagoController.buscarConsumos}" />
 				<p:message for="tftipoD" />
 
 
-				<h:outputLabel for="cbtar" id="lbltarjeta" value="Tarjetas" />
+				<h:outputLabel for="cbtar" id="lbltarjeta" value="#{msj['pago.combTarjeta']}:" />
 				<p:selectOneMenu id="cbtar"
 					value="#{pagoController.tarjetaSeleccionada}">
 					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
@@ -88,7 +88,7 @@
 
 			<p:panelGrid id="pagoTotal" columns="3">
 
-				<h:outputLabel for="cbcuen" id="lblcuenta" value="Cuentas" />
+				<h:outputLabel for="cbcuen" id="lblcuenta" value="#{msj['pago.cuentas']}:" />
 				<h:selectOneMenu id="cbcuen"
 					value="#{pagoController.cuentaSeleccionada}">
 					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
@@ -96,7 +96,7 @@
 						itemValue="#{cuentas}" itemLabel="#{cuentas.number}" />
 				</h:selectOneMenu>
 
-				<p:commandButton id="btnpagar" value="Pagar"
+				<p:commandButton id="btnpagar" value="#{msj['pago.pagar']}"
 					action="#{pagoController.pagar}" />
 			</p:panelGrid>
 

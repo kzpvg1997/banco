@@ -10,7 +10,7 @@
 		<h:form prependId="false">
 			<p:panelGrid id="paneldatosbusqueda" columns="3">
 
-				<p:outputLabel for="cbtipo" id="lbli" value="Tipo Documento" />
+				<p:outputLabel for="cbtipo" id="lbli" value="#{msj['cliente.tipoDocumento']}:" />
 
 				<h:selectOneMenu id="cbtipo" value="#{clienteAjax.tipoDocumento}">
 					<f:selectItem itemValue="C.C" itemLabel="C.C" />
@@ -19,24 +19,24 @@
 				</h:selectOneMenu>
 				<p:message for="cbtipo" />
 
-				<p:outputLabel for="tfnumero" id="lblid" value="Numero Documento" />
+				<p:outputLabel for="tfnumero" id="lblid" value="#{msj['cliente.numeroDocumento']}:" />
 				<p:inputText id="tfnumero" value="#{clienteAjax.numeroDocumento}" />
 				<p:message for="tfnumero" />
 
-				<p:outputLabel for="tfnom" id="nom" value="Nombre" />
+				<p:outputLabel for="tfnom" id="nom" value="#{msj['cliente.nombre']}:" />
 				<p:inputText id="tfnom" value="#{clienteAjax.nombre}" />
 				<p:message for="tfnom" />
 
-				<p:outputLabel for="tfape" id="apell" value="Apellido" />
+				<p:outputLabel for="tfape" id="apell" value="#{msj['cliente.apellido']}:" />
 				<p:inputText id="tfape" value="#{clienteAjax.apellido}" />
 				<p:message for="tfape" />
 
-				<p:commandButton id="btnregistar" value="Registrar"
+				<p:commandButton id="btnregistar" value="#{msj['cliente.registrar']}:"
 					process="@this paneldatosbusqueda"
 					update="paneldatosbusqueda tablaDoc"
 					action="#{clienteAjax.registrar}" />
 
-				<p:commandButton id="btnbuscar" value="Buscar"
+				<p:commandButton id="btnbuscar" value="#{msj['cliente.buscar']}:"
 					process="@this cbtipo tfnumero "
 					update="paneldatosbusqueda cbtipo tfnumero tfnom tfape"
 					action="#{clienteAjax.buscar}" />

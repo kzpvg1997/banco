@@ -15,30 +15,39 @@
 		type="text/javascript"></script>
 </h:head>
 <h:form>
-			<h:commandLink action="#{idiomaController.cambiarIngles}" value="Ingles"/>
-			<br></br>
-			<h:commandLink action="#{idiomaController.cambiarEspañol}" value="Español"></h:commandLink>
-			
-		</h:form>
+	<h:commandLink action="#{idiomaController.cambiarIngles}"
+		value="Ingles" />
+	<br></br>
+	<h:commandLink action="#{idiomaController.cambiarEspañol}"
+		value="Español"></h:commandLink>
+
+</h:form>
 <h:body>
 	<div id="page">
-		
+
 		<div id="header">
-		<h:form>
-			<div>
-				<a href="index.html" class="logo"><img
-					src="#{request.contextPath}/images/logo.png" alt="" /></a>
-				<ul id="navigation">
-					<li class="selected"><a href="#{request.contextPath}/paginas/seguro/pago.xhtml">Pago</a></li>
-					<li><a href="#{request.contextPath}/paginas/seguro/clientes.xhtml">Cliente</a></li>
-					<li class="menu"><a href="blog.html">#{sessionControl.cliente.name}</a>
+			<h:form>
+				<div>
+					<a href="index.html" class="logo"><img
+						src="#{request.contextPath}/images/logo.png" alt="" /></a>
+					<ul id="navigation">
+						<li class="selected"><a
+							href="#{request.contextPath}/paginas/seguro/pago.xhtml">Pago</a></li>
+						<li><a
+							href="#{request.contextPath}/paginas/seguro/clientes.xhtml">Cliente</a></li>
+						<li class="menu"><a href="blog.html">#{sessionControl.cliente.name}</a>
 						</li>
-					<li>
-					<h:commandLink action="#{sessionControl.cerrarSesion()}" 
-							value="Cerrar Sesion" rendered="#{sessionControl.sesion}" ></h:commandLink>
-					</li>
-				</ul>
-			</div>
+						<li><h:commandLink action="#{sessionControl.cerrarSesion()}"
+								value="Cerrar Sesion" rendered="#{sessionControl.sesion}"></h:commandLink>
+						</li>
+						<li><h:selectOneMenu id="cbtipo"
+								value="#{clienteAjax.tipoDocumento}">
+								<f:selectItem itemValue="Español" itemLabel="Español" />
+								<f:selectItem itemValue="Ingles" itemLabel="Ingles" />
+							</h:selectOneMenu></li>
+
+					</ul>
+				</div>
 			</h:form>
 		</div>
 		<div id="body" class="home">

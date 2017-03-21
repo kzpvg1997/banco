@@ -7,7 +7,7 @@ http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 	
 	<application>
 		<resource-bundle>
-		<base-name>resources/mensajes-es</base-name>
+		<base-name>mensajes</base-name>
 		<var>msj</var>
 		</resource-bundle>
 	</application>
