@@ -11,18 +11,18 @@
 
 			<h:panelGrid columns="3">
 			
-				<p:outputLabel for="tfusu" id="usu" value="Usuario" />
+				<p:outputLabel for="tfusu" id="usu" value="#{msj['login.usuario']}:" />
 				<p:inputText id="tfusu" value="#{sessionControl.nombre}" />
 				<p:message for="tfusu" />
 
-				<p:outputLabel for="tfpass" id="pass" value="Contraseña" />
+				<p:outputLabel for="tfpass" id="pass" value="#{msj['login.contraseña']}:" />
 				<h:inputSecret id="tfpass" value="#{sessionControl.num}" />
 				<p:message for="tfpass" />
 				
 
 			</h:panelGrid>
 
-			<p:commandButton value="Iniciar sesion" ajax="false" 
+			<p:commandButton value="#{msj['login.iniciarSesion']}:" ajax="false" 
 			action="#{sessionControl.loginU}" />
 
 

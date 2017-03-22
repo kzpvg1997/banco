@@ -14,14 +14,6 @@
 	<script src="#{request.contextPath}/js/mobile.js"
 		type="text/javascript"></script>
 </h:head>
-<h:form>
-	<h:commandLink action="#{idiomaController.cambiarIngles}"
-		value="Ingles" />
-	<br></br>
-	<h:commandLink action="#{idiomaController.cambiarEspañol}"
-		value="Español"></h:commandLink>
-
-</h:form>
 <h:body>
 	<div id="page">
 
@@ -40,11 +32,17 @@
 						<li><h:commandLink action="#{sessionControl.cerrarSesion()}"
 								value="Cerrar Sesion" rendered="#{sessionControl.sesion}"></h:commandLink>
 						</li>
-						<li><h:selectOneMenu id="cbtipo"
-								value="#{clienteAjax.tipoDocumento}">
-								<f:selectItem itemValue="Español" itemLabel="Español" />
-								<f:selectItem itemValue="Ingles" itemLabel="Ingles" />
-							</h:selectOneMenu></li>
+						<li class="menu">
+						<a href="#">Idioma</a>
+						<ul class="primary">
+							<li>
+								<h:commandLink action="#{idiomaController.cambiarIngles}"
+											value="Ingles" />
+											<h:commandLink action="#{idiomaController.cambiarEspañol}"
+										value="Español"/>
+							</li>
+						</ul>
+					</li>
 
 					</ul>
 				</div>
