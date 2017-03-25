@@ -1,0 +1,105 @@
+
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+
+		<h:form prependId="false">
+
+			<h3>Asociacion Cuenta</h3>
+
+			<p:panelGrid id="panelavance" columns="3">
+
+				<p:outputLabel for="tftitular" id="tfnombretitular"
+					value="Nombre Titular" />
+				<p:inputText id="tftitular"
+					value="#{pagoController.numeroDocumento}" />
+				<p:message for="tftitular" />
+
+				<p:outputLabel for="cbDocTitular" id="lbliDocumentoTitular"
+					value="Documento Titular" />
+				<h:selectOneMenu id="cbDocTitular"
+					value="#{clienteAjax.tipoDocumento}">
+					<f:selectItem itemValue="C.C" itemLabel="C.C" />
+					<f:selectItem itemValue="R.C" itemLabel="R.C" />
+					<f:selectItem itemValue="T.I" itemLabel="T.I" />
+				</h:selectOneMenu>
+				<p:message for="cbDocTitular" />
+
+				<p:outputLabel for="tfnumDocumentoTitu" id="tfnumetitular"
+					value="Numero Documento" />
+				<p:inputText id="tfnumDocumentoTitu"
+					value="#{pagoController.numeroDocumento}" />
+				<p:message for="tfnumDocumentoTitu" />
+
+				<p:outputLabel for="tfbanco" id="tfban" value="Banco" />
+				<p:selectOneMenu id="tfbanco"
+					value="#{pagoController.tarjetaSeleccionada}">
+					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
+					<f:selectItems value="#{pagoController.tarjetas}" var="tarjeta"
+						itemValue="#{tarjeta}" itemLabel="#{tarjeta.number}" />
+
+					<f:ajax event="change" execute="@this " render="panelavance"
+						listener="#{pagoController.cargarTablaCombo}" />
+				</p:selectOneMenu>
+				<p:message for="tfbanco" />
+
+				<p:outputLabel for="tfnumero" id="tfnuro" value="Numero" />
+				<p:inputText id="tfnumero" value="#{pagoController.numeroDocumento}" />
+				<p:message for="tfnumero" />
+
+				<p:outputLabel for="tfnombre" id="tfnom" value="Nombre" />
+				<p:inputText id="tfnombre" value="#{pagoController.numeroDocumento}" />
+				<p:message for="tfnombre" />
+
+			</p:panelGrid>
+
+
+			<p:panelGrid id="panelBotones" columns="2">
+				<p:commandButton id="btacep" value="Aceptar" action="#" />
+				<p:commandButton id="btcan" value="Cancelar" action="#" />
+			</p:panelGrid>
+
+
+			<p:panelGrid id="panelDatosAsociado" columns="1">
+				<p:dataTable id="tablaTarje" value="#{pagoController.consumos}"
+					var="tar" border="1">
+					<p:column>
+						<f:facet name="header">
+							Nombre
+						</f:facet>
+						<p:outputLabel value="#{con.id}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							Titular
+						</f:facet>
+						<p:outputLabel value="#{con.dateConsume}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							Estado
+						</f:facet>
+						<p:outputLabel value="#{con.id}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							Accion
+						</f:facet>
+						<p:commandButton action="#" process="@this" value="Quitar"
+							update="tablaDoc" />
+						<p:outputLabel value="#{con.id}" />
+					</p:column>
+				</p:dataTable>
+				<br></br>
+			</p:panelGrid>
+
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,65 @@
+
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+
+		<h:form prependId="false">
+
+			<h3>Transacciones</h3>
+
+			<p:panelGrid id="paneltransaccion" columns="3">
+
+				<h:outputLabel for="cbcuorigen" id="lblcuentaorigen" value="Cuenta Origen" />
+				<p:selectOneMenu id="cbcuorigen"
+					value="#{pagoController.tarjetaSeleccionada}">
+					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
+					<f:selectItems value="#{pagoController.tarjetas}" var="tarjeta"
+						itemValue="#{tarjeta}" itemLabel="#{tarjeta.number}" />
+
+					<f:ajax event="change" execute="@this "
+						render="paneltransaccion"
+						listener="#{pagoController.cargarTablaCombo}" />
+				</p:selectOneMenu>
+				<p:message for="cbcuorigen" />
+				
+				
+				<h:outputLabel for="cbcuodestino" id="lblcuentadesti" value="Cuenta Destino" />
+				<p:selectOneMenu id="cbcuodestino"
+					value="#{pagoController.tarjetaSeleccionada}">
+					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
+					<f:selectItems value="#{pagoController.tarjetas}" var="tarjeta"
+						itemValue="#{tarjeta}" itemLabel="#{tarjeta.number}" />
+
+					<f:ajax event="change" execute="@this "
+						render="paneltransaccion"
+						listener="#{pagoController.cargarTablaCombo}" />
+				</p:selectOneMenu>
+				<p:message for="cbcuodestino" />
+
+
+				<p:outputLabel for="tfmontotrasn" id="tfcantidad" value="Monto" />
+				<p:inputText id="tfmontotrasn" value="#{pagoController.numeroDocumento}" />
+				<p:message for="tfmontotrasn" />
+
+
+				
+			</p:panelGrid>
+			
+
+			<p:panelGrid id="panelBotones" columns="2">
+
+				<p:commandButton id="btaceptartrans" value="Aceptar" action="#" />
+
+				<p:commandButton id="btcancelartrans" value="Cancelar" action="#" />
+			</p:panelGrid>
+
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

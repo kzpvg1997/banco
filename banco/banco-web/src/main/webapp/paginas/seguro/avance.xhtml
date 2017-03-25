@@ -1,0 +1,59 @@
+
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+
+		<h:form prependId="false">
+
+			<h3>Avance Cuenta de Ahorros</h3>
+
+			<p:panelGrid id="panelavance" columns="3">
+
+				<h:outputLabel for="cbtar" id="lbltarje" value="Tarjeta" />
+				<p:selectOneMenu id="cbtar"
+					value="#{pagoController.tarjetaSeleccionada}">
+					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
+					<f:selectItems value="#{pagoController.tarjetas}" var="tarjeta"
+						itemValue="#{tarjeta}" itemLabel="#{tarjeta.number}" />
+
+					<f:ajax event="change" execute="@this "
+						render="panelavance"
+						listener="#{pagoController.cargarTablaCombo}" />
+				</p:selectOneMenu>
+				<p:message for="cbtar" />
+
+
+				<p:outputLabel for="tfcantidadAvance" id="tfcantidad" value="Cantidad" />
+				<p:inputText id="tfcantidadAvance" value="#{pagoController.numeroDocumento}" />
+				<p:message for="tfcantidadAvance" />
+
+
+				<h:outputLabel for="cbtcuenta" id="cbtcuen" value="Cuenta" />
+				<p:selectOneMenu id="cbtcuenta"
+					value="#{pagoController.cuentaSeleccionada}">
+					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
+					<f:selectItems value="#{pagoController.cuentas}" var="cuentas"
+						itemValue="#{cuentas}" itemLabel="#{cuentas.number}" />
+				</p:selectOneMenu>
+				<p:message for="cbtcuenta" />
+			</p:panelGrid>
+			
+
+			<p:panelGrid id="panelBotones" columns="2">
+
+				<p:commandButton id="btaceptar" value="Aceptar" action="#" />
+
+				<p:commandButton id="btcancelar" value="Cancelar" action="#{retornoController.otraPagina}"
+				/>
+			</p:panelGrid>
+
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

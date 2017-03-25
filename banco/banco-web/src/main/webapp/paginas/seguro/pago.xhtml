@@ -9,30 +9,10 @@
 	<ui:define name="cuerpo">
 
 		<h:form prependId="false">
+		
+		<h3>Bienvenido Sr #{sessionControl.cliente.name}</h3>
 
-			<p:panelGrid id="paneldatosbusqueda" columns="3">
-
-				<p:outputLabel for="tftipoD" id="lblid" value="#{msj['pago.combTipoDocumento']}:" />
-				<h:selectOneMenu id="tftipoD"
-					value="#{pagoController.combTipoDocumento}">
-					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
-					<f:selectItem itemValue="C.C" itemLabel="C.C" />
-					<f:selectItem itemValue="R.C" itemLabel="R.C" />
-					<f:selectItem itemValue="T.I" itemLabel="T.I" />
-				</h:selectOneMenu>
-				<p:message for="tftipoD" />
-
-				<p:outputLabel for="tfnumero" id="numDoc" value="#{msj['pago.numeroDocumento']}:" />
-				<p:inputText id="tfnumero" value="#{pagoController.numeroDocumento}" />
-				<p:message for="tfnumero" />
-
-				<p:outputLabel for="btnbuscar" id="btn" value="#{msj['pago.busqueda']}:" />
-				<p:commandButton id="btnbuscar" value="#{msj['pago.buscar']}"
-					process="@this tftipoD tfnumero cbcuen cbtar"
-					update="tablaDoc paneldatosbusqueda pagoTotal"
-					action="#{pagoController.buscarConsumos}" />
-				<p:message for="tftipoD" />
-
+			<p:panelGrid id="paneldatosbusqueda" columns="1">
 
 				<h:outputLabel for="cbtar" id="lbltarjeta" value="#{msj['pago.combTarjeta']}:" />
 				<p:selectOneMenu id="cbtar"
