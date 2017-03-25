@@ -26,6 +26,7 @@ public class CreditCardConsume implements Serializable{
 
 	public static final String CONSUMOS_TARJETAS="Consumos.Tarjetas";
 	
+	//atributos de la clase
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
