@@ -13,5 +13,8 @@ public class RetornoPaginasController implements Serializable {
 	public String otraPagina(){
 		return "/paginas/seguro/resumenproducto.xhtml?faces-redirect=true";
 		
+		
 	}
+	
+	
 }
