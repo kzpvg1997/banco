@@ -30,6 +30,7 @@ public class Banco implements Serializable{
 	@Column(name="id_bank")
 	private String id;
 	
+	
 	@Column(name="name_bank",length=40)
 	private String nombre;
 	

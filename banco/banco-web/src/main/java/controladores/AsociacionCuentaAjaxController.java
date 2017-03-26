@@ -57,7 +57,8 @@ public class AsociacionCuentaAjaxController implements Serializable{
 	public void agregarCuentaAsociada(){
 		
 		Customer customer = sesionCotroller.getCliente();
-		Banco banco = (Banco) cuAsEJB.buscarBanco(bancoSeleccionado);
+		Banco banco = (Banco)cuAsEJB.buscarBanco(bancoSeleccionado);
+
 		CuentaAsociados cu = new CuentaAsociados(numeroCuenta, numeroDocumento, nombreTitular, cbDocumentoTitular,
 				customer, banco, true, nombreCuenta, monto);
 		System.out.println(cu+"-----"+banco);
