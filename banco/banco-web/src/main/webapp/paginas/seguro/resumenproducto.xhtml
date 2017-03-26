@@ -16,19 +16,19 @@
 
 			<p:panelGrid id="panelresumencuentas" columns="1">
 
-				<p:dataTable id="tablaCue" value="#{pagoController.consumos}"
+				<p:dataTable id="tablaCue" value="#{resumenProductoAjaxController.cuentas}"
 					var="cuen" border="1">
 					<p:column>
 						<f:facet name="header">
 							Numero
 						</f:facet>
-						<p:outputLabel value="#{con.id}" />
+						<p:outputLabel value="#{cuen.id}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">
 							Saldo
 						</f:facet>
-						<p:outputLabel value="#{con.dateConsume}" />
+						<p:outputLabel value="#{cuen.ammount}" />
 					</p:column>
 				</p:dataTable>
 			</p:panelGrid>
@@ -39,31 +39,31 @@
 
 			<p:panelGrid id="paneltarjetas" columns="1">
 
-				<p:dataTable id="tablaTarje" value="#{pagoController.consumos}"
+				<p:dataTable id="tablaTarje" value="#{resumenProductoAjaxController.tarjetas}"
 					var="tar" border="1">
 					<p:column>
 						<f:facet name="header">
 							Numero
 						</f:facet>
-						<p:outputLabel value="#{con.id}" />
+						<p:outputLabel value="#{tar.number}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">
 							Franquisia
 						</f:facet>
-						<p:outputLabel value="#{con.dateConsume}" />
+						<p:outputLabel value="#{tar.franchise}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">
 							Deuda A La Fecha
 						</f:facet>
-						<p:outputLabel value="#{con.id}" />
+						<p:outputLabel value="#{tar.deuda}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">
-							Disponible
+							Disponibildad
 						</f:facet>
-						<p:outputLabel value="#{con.id}" />
+						<p:outputLabel value="#{tar.disponible}" />
 					</p:column>
 				</p:dataTable>
 				<br></br>

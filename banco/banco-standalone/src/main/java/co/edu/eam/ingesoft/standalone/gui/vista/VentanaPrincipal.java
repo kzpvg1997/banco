@@ -2290,6 +2290,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				} else {
 					CreditCard tarjeta = new CreditCard();
 					tarjeta.setMonto(monto);
+					tarjeta.setMontoOriginal(monto);
 					tarjeta.setFranchise(fran);
 					tarjeta.setCustomer(cli);
 

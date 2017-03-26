@@ -44,7 +44,7 @@ public class SessionController implements Serializable {
 						cliente = clienteTemp;
 						Faces.setSessionAttribute("user", cliente);
 						System.out.println("Inicio sesion");
-						return "/paginas/seguro/avance.xhtml?faces-redirect=true";
+						return "/paginas/seguro/resumenproducto.xhtml?faces-redirect=true";
 						
 					}
 				} else {
@@ -70,6 +70,7 @@ public class SessionController implements Serializable {
 		sesion.invalidate();
 		return "/paginas/publico/login.xhtml?faces-redirect=true";
 	}
+	
 
 	public boolean isSesion() {
 		return cliente != null;

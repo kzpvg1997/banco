@@ -42,6 +42,16 @@ public class CreditCard extends Product implements Serializable{
 	@Column(name="monto")
 	private Double monto;
 	
+	@Column(name="monto_original")
+	private Double montoOriginal;
+	
+	@Column(name="deuda")
+	private Double deuda;
+	
+	@Column(name="disponible")
+	private boolean disponible;
+	//HOla
+	
 
 	public CreditCard() {
 		super();
@@ -50,14 +60,75 @@ public class CreditCard extends Product implements Serializable{
 	
 	
 
+	public CreditCard(String cvc, Date expirationDate, Franchise franchise, Double monto, Double montoOriginal,
+			Double deuda, boolean disponible) {
+		super();
+		this.cvc = cvc;
+		this.expirationDate = expirationDate;
+		this.franchise = franchise;
+		this.monto = monto;
+		this.montoOriginal = montoOriginal;
+		this.deuda = deuda;
+		this.disponible = disponible;
+	}
+
+
+
+
+	/**
+	 * @return the cvc
+	 */
+	public String getCvc() {
+		return cvc;
+	}
+
+
+	/**
+	 * @param cvc the cvc to set
+	 */
+	public void setCvc(String cvc) {
+		this.cvc = cvc;
+	}
+
+
+	/**
+	 * @return the expirationDate
+	 */
+	public Date getExpirationDate() {
+		return expirationDate;
+	}
+
+
+	/**
+	 * @param expirationDate the expirationDate to set
+	 */
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+
+
+	/**
+	 * @return the franchise
+	 */
+	public Franchise getFranchise() {
+		return franchise;
+	}
+
+
+	/**
+	 * @param franchise the franchise to set
+	 */
+	public void setFranchise(Franchise franchise) {
+		this.franchise = franchise;
+	}
+
+
 	/**
 	 * @return the monto
 	 */
 	public Double getMonto() {
 		return monto;
 	}
-
-
 
 
 	/**
@@ -68,46 +139,59 @@ public class CreditCard extends Product implements Serializable{
 	}
 
 
-
-
-	public CreditCard(String cvc, Date expirationDate, Franchise franchise, Double monto) {
-		super();
-		this.cvc = cvc;
-		this.expirationDate = expirationDate;
-		this.franchise = franchise;
-		this.monto = monto;
+	/**
+	 * @return the montoOriginal
+	 */
+	public Double getMontoOriginal() {
+		return montoOriginal;
 	}
 
 
-
-
-	public String getCvc() {
-		return cvc;
+	/**
+	 * @param montoOriginal the montoOriginal to set
+	 */
+	public void setMontoOriginal(Double montoOriginal) {
+		this.montoOriginal = montoOriginal;
 	}
 
 
-	public void setCvc(String cvc) {
-		this.cvc = cvc;
+	/**
+	 * @return the deuda
+	 */
+	public Double getDeuda() {
+		return deuda;
 	}
 
 
-	public Date getExpirationDate() {
-		return expirationDate;
+	/**
+	 * @param deuda the deuda to set
+	 */
+	public void setDeuda(Double deuda) {
+		this.deuda = deuda;
 	}
 
 
-	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate;
+	/**
+	 * @return the disponible
+	 */
+	public boolean getDisponible() {
+		return disponible;
 	}
 
 
-	public Franchise getFranchise() {
-		return franchise;
+	/**
+	 * @param disponible the disponible to set
+	 */
+	public void setDisponible(boolean disponible) {
+		this.disponible = disponible;
 	}
 
 
-	public void setFranchise(Franchise franchise) {
-		this.franchise = franchise;
+	/**
+	 * @return the tarjetascliente
+	 */
+	public static String getTarjetascliente() {
+		return TarjetasCliente;
 	}
 
 
@@ -120,7 +204,9 @@ public class CreditCard extends Product implements Serializable{
 	public String toString() {
 		return getNumber();
 	}
+
 	
-	
+
+
 	
 }
