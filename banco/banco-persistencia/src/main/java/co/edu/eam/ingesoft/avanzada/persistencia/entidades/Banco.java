@@ -28,7 +28,7 @@ public class Banco implements Serializable{
 	
 	@Id
 	@Column(name="id_bank")
-	private int id;
+	private String id;
 	
 	@Column(name="name_bank",length=40)
 	private String nombre;
@@ -37,22 +37,34 @@ public class Banco implements Serializable{
 	public Banco() {
 		
 	}
+	
+	/**
+	 * @param id
+	 * @param nombre
+	 */
+	public Banco(String id, String nombre) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+	}
 
 
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public String getId() {
 		return id;
 	}
+
 
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
+
 
 
 	/**

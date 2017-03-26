@@ -14,14 +14,11 @@
 
 			<p:panelGrid id="panelavance" columns="3">
 
-				<p:outputLabel for="tftitular" id="tfnombretitular"
-					value="Nombre Titular" />
-				<p:inputText id="tftitular"
-					value="#{pagoController.numeroDocumento}" />
+				<p:outputLabel for="tftitular" id="tfnombretitular" value="Nombre Titular" />
+				<p:inputText id="tftitular" value="#{pagoController.numeroDocumento}" />
 				<p:message for="tftitular" />
 
-				<p:outputLabel for="cbDocTitular" id="lbliDocumentoTitular"
-					value="Documento Titular" />
+				<p:outputLabel for="cbDocTitular" id="lbliDocumentoTitular" value="Tipo ID Titular" />
 				<h:selectOneMenu id="cbDocTitular"
 					value="#{clienteAjax.tipoDocumento}">
 					<f:selectItem itemValue="C.C" itemLabel="C.C" />
@@ -48,43 +45,46 @@
 				</p:selectOneMenu>
 				<p:message for="tfbanco" />
 
-				<p:outputLabel for="tfnumero" id="tfnuro" value="Numero" />
-				<p:inputText id="tfnumero" value="#{pagoController.numeroDocumento}" />
-				<p:message for="tfnumero" />
+				<p:outputLabel for="tfnumeroCu" id="tfnuroCu" value="Numero Cuenta" />
+				<p:inputText id="tfnumeroCu" value="#{asociadosAjaxController.numeroCuenta}" />
+				<p:message for="tfnumeroCu" />
 
-				<p:outputLabel for="tfnombre" id="tfnom" value="Nombre" />
-				<p:inputText id="tfnombre" value="#{pagoController.numeroDocumento}" />
-				<p:message for="tfnombre" />
+				<p:outputLabel for="tfnombreCu" id="tfnomCu" value="Nombre de Cuenta" />
+				<p:inputText id="tfnombreCu" value="#{asociadosAjaxController.nombreCuenta}" />
+				<p:message for="tfnombreCu" />
+				
+				<p:outputLabel for="tfmonto" id="tfmon" value="Monto" />
+				<p:inputText id="tfmonto" value="#{asociadosAjaxController.monto}" />
+				<p:message for="tfmonto" />
 
 			</p:panelGrid>
 
 
 			<p:panelGrid id="panelBotones" columns="2">
-				<p:commandButton id="btacep" value="Aceptar" action="#" />
+				<p:commandButton id="btacep" value="Agregar Cuenta" action="#{asociadosAjaxController.agregarCuentaAsociada()}" />
 				<p:commandButton id="btcan" value="Cancelar" action="#" />
 			</p:panelGrid>
 
 
 			<p:panelGrid id="panelDatosAsociado" columns="1">
-				<p:dataTable id="tablaTarje" value="#{pagoController.consumos}"
-					var="tar" border="1">
+				<p:dataTable id="tablaCuentas" value="#{asociadosAjaxController.cuentasCliente}" var="cue" border="1">
 					<p:column>
 						<f:facet name="header">
-							Nombre
+							Nombre Cuenta
 						</f:facet>
-						<p:outputLabel value="#{con.id}" />
+						<p:outputLabel value="#{cue.nombreAsociacion}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">
 							Titular
 						</f:facet>
-						<p:outputLabel value="#{con.dateConsume}" />
+						<p:outputLabel value="#{cue.nombreAsociado}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">
 							Estado
 						</f:facet>
-						<p:outputLabel value="#{con.id}" />
+						<p:outputLabel value="#{cue.verificado}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">

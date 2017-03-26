@@ -15,7 +15,9 @@ import javax.persistence.Query;
 
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Banco;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CuentaAsociados;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Franchise;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Product;
 import co.edu.eam.ingesoft.pa.negocio.beans.remote.ICuentaAsociadosRemote;
 import co.edu.eam.ingesoft.pa.negocio.excepciones.ExcepcionNegocio;
 
@@ -45,12 +47,9 @@ public class CuentaAsociadosEJB {
 	public void agregarCuentaAsociados(CuentaAsociados cuenta){
 		CuentaAsociados cu = buscarCuentaAsociado(cuenta.getNumeroCuenta());
 		if(cu!=null){
-			
-			cu.setVerificado(true);
-			em.persist(cu);
-			
+			throw new ExcepcionNegocio("Este numero no esta disponible,\n Digite otro numero");			
 		}else{
-			throw new ExcepcionNegocio("Este numero no esta disponible,\n Digite otro numero");
+			em.persist(cu);
 		}
 		
 	}
@@ -68,5 +67,22 @@ public class CuentaAsociadosEJB {
 		return bancos;
 		
 	}
+	
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<CuentaAsociados> listaCuentasCliente(Customer customer){
+		
+		Query q = em.createNamedQuery(CuentaAsociados.ASOCIACIONES_CLIENTE);
+		q.setParameter(1, customer);
+		List<CuentaAsociados> cuentas = q.getResultList();
+		return cuentas;
+		
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Banco buscarBanco(String id){
+		return em.find(Banco.class, id);
+	}
+
 	
 }

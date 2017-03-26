@@ -5,11 +5,16 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 
 import org.omnifaces.cdi.ViewScoped;
+import org.omnifaces.util.Messages;
 
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Banco;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CuentaAsociados;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
 import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadosEJB;
 
 @Named("asociadosAjaxController")
@@ -17,26 +22,64 @@ import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadosEJB;
 public class AsociacionCuentaAjaxController implements Serializable{
 	
 	@EJB
-	private CuentaAsociadosEJB asociadosEJB;
+	private CuentaAsociadosEJB cuAsEJB; //EJB de CuentaAsociados
+	
+	@Inject
+	private SessionController sesionCotroller;
 	
 	private String nombreTitular;
 	
 	private String cbDocumentoTitular;
 	
+	private String numeroDocumento;
+	
 	private List<Banco> bancos;
 	
-	private String numero;
+	private String numeroCuenta;
 	
-	private String nombre;
+	private String nombreCuenta;
 	
+	@NotNull(message="Seleccione una opcion")
 	private String bancoSeleccionado;
+	
+	private double monto;
+	
+	private List<CuentaAsociados> cuentasCliente;
 	
 	
 	@PostConstruct
 	public void inicializar(){
-		bancos = asociadosEJB.listaBancos();
+		bancos = cuAsEJB.listaBancos();
+		//cuentasCliente = cuAsEJB.listaCuentasCliente(sesionCotroller.getCliente());
 	}
 
+	
+	public void agregarCuentaAsociada(){
+		
+		Customer customer = sesionCotroller.getCliente();
+		Banco banco = (Banco) cuAsEJB.buscarBanco(bancoSeleccionado);
+		CuentaAsociados cu = new CuentaAsociados(numeroCuenta, numeroDocumento, nombreTitular, cbDocumentoTitular,
+				customer, banco, true, nombreCuenta, monto);
+		System.out.println(cu+"-----"+banco);
+		cuAsEJB.agregarCuentaAsociados(cu);
+		
+		
+	}
+
+	/**
+	 * @return the cuentasCliente
+	 */
+	public List<CuentaAsociados> getCuentasCliente() {
+		return cuentasCliente;
+	}
+
+
+	/**
+	 * @param cuentasCliente the cuentasCliente to set
+	 */
+	public void setCuentasCliente(List<CuentaAsociados> cuentasCliente) {
+		this.cuentasCliente = cuentasCliente;
+	}
 
 	/**
 	 * @return the bancoSeleccionado
@@ -55,18 +98,18 @@ public class AsociacionCuentaAjaxController implements Serializable{
 
 
 	/**
-	 * @return the asociadosEJB
+	 * @return the monto
 	 */
-	public CuentaAsociadosEJB getAsociadosEJB() {
-		return asociadosEJB;
+	public double getMonto() {
+		return monto;
 	}
 
 
 	/**
-	 * @param asociadosEJB the asociadosEJB to set
+	 * @param monto the monto to set
 	 */
-	public void setAsociadosEJB(CuentaAsociadosEJB asociadosEJB) {
-		this.asociadosEJB = asociadosEJB;
+	public void setMonto(double monto) {
+		this.monto = monto;
 	}
 
 
@@ -119,35 +162,86 @@ public class AsociacionCuentaAjaxController implements Serializable{
 
 
 	/**
-	 * @return the numero
+	 * @return the sesionCotroller
 	 */
-	public String getNumero() {
-		return numero;
+	public SessionController getSesionCotroller() {
+		return sesionCotroller;
 	}
 
 
 	/**
-	 * @param numero the numero to set
+	 * @param sesionCotroller the sesionCotroller to set
 	 */
-	public void setNumero(String numero) {
-		this.numero = numero;
+	public void setSesionCotroller(SessionController sesionCotroller) {
+		this.sesionCotroller = sesionCotroller;
 	}
 
 
 	/**
-	 * @return the nombre
+	 * @return the numeroCuenta
 	 */
-	public String getNombre() {
-		return nombre;
+	public String getNumeroCuenta() {
+		return numeroCuenta;
 	}
 
 
 	/**
-	 * @param nombre the nombre to set
+	 * @param numeroCuenta the numeroCuenta to set
 	 */
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNumeroCuenta(String numeroCuenta) {
+		this.numeroCuenta = numeroCuenta;
 	}
+
+
+	/**
+	 * @return the nombreCuenta
+	 */
+	public String getNombreCuenta() {
+		return nombreCuenta;
+	}
+
+
+	/**
+	 * @param nombreCuenta the nombreCuenta to set
+	 */
+	public void setNombreCuenta(String nombreCuenta) {
+		this.nombreCuenta = nombreCuenta;
+	}
+
+
+	/**
+	 * @return the cuAsEJB
+	 */
+	public CuentaAsociadosEJB getCuAsEJB() {
+		return cuAsEJB;
+	}
+
+
+	/**
+	 * @param cuAsEJB the cuAsEJB to set
+	 */
+	public void setCuAsEJB(CuentaAsociadosEJB cuAsEJB) {
+		this.cuAsEJB = cuAsEJB;
+	}
+
+
+	/**
+	 * @return the numeroDocumento
+	 */
+	public String getNumeroDocumento() {
+		return numeroDocumento;
+	}
+
+
+	/**
+	 * @param numeroDocumento the numeroDocumento to set
+	 */
+	public void setNumeroDocumento(String numeroDocumento) {
+		this.numeroDocumento = numeroDocumento;
+	}
+
+
+	
 	
 	
 }
