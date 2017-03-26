@@ -38,7 +38,7 @@ public class CuentaAsociadosEJB {
 	}
 	
 	public void agregarCuentaAsociados(CuentaAsociados cuenta){
-		CuentaAsociados cu = buscarCuentaAsociado(cuenta.getNumber());
+		CuentaAsociados cu = buscarCuentaAsociado(cuenta.getNumeroCuenta());
 		if(cu!=null){
 			
 			cu.setVerificado(true);

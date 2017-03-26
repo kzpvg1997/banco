@@ -22,7 +22,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="T_ASSOCIATED_ACOUNTS")
-public class CuentaAsociados extends Product implements Serializable{
+public class CuentaAsociados  implements Serializable{
 
 	@Id
 	@Column(name="numero_cuenta")
@@ -72,7 +72,7 @@ public class CuentaAsociados extends Product implements Serializable{
 	 */
 	public CuentaAsociados(String numeroCuenta, String idAsociado, String nombreAsociado, String tipoID,
 			Customer customer, Banco banco, boolean verificado, String nombreAsociacion, double monto) {
-		super();
+		
 		this.numeroCuenta = numeroCuenta;
 		this.idAsociado = idAsociado;
 		this.nombreAsociado = nombreAsociado;
