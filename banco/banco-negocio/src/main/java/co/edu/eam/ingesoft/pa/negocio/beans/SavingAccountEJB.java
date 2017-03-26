@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCard;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Franchise;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Product;
@@ -193,5 +194,9 @@ public class SavingAccountEJB {
 		}else{
 			throw new ExcepcionNegocio("No se puede transferir a la misma cuenta");
 		}
+	}
+	
+	public void actualizarCuenta(SavingAccount c){
+		em.merge(c);
 	}
 }

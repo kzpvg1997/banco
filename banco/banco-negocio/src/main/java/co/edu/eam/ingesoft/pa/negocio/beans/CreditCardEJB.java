@@ -65,6 +65,10 @@ public class CreditCardEJB {
 		
 	}
 	
+	
+	
+	
+	
 	/**
 	 * Cuenta los productos de un determinado cliente
 	 * @param cliente el cliente que recibe para contar los productos

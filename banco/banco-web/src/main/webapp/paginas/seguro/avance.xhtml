@@ -16,39 +16,40 @@
 
 				<h:outputLabel for="cbtar" id="lbltarje" value="Tarjeta" />
 				<p:selectOneMenu id="cbtar"
-					value="#{pagoController.tarjetaSeleccionada}">
+					value="#{avanceAjax.tarjetaSeleccionada}">
 					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
-					<f:selectItems value="#{pagoController.tarjetas}" var="tarjeta"
+					<f:selectItems value="#{avanceAjax.tarjetas}" var="tarjeta"
 						itemValue="#{tarjeta}" itemLabel="#{tarjeta.number}" />
-
-					<f:ajax event="change" execute="@this "
-						render="panelavance"
-						listener="#{pagoController.cargarTablaCombo}" />
 				</p:selectOneMenu>
 				<p:message for="cbtar" />
 
 
-				<p:outputLabel for="tfcantidadAvance" id="tfcantidad" value="Cantidad" />
-				<p:inputText id="tfcantidadAvance" value="#{pagoController.numeroDocumento}" />
-				<p:message for="tfcantidadAvance" />
-
-
 				<h:outputLabel for="cbtcuenta" id="cbtcuen" value="Cuenta" />
 				<p:selectOneMenu id="cbtcuenta"
-					value="#{pagoController.cuentaSeleccionada}">
+					value="#{avanceAjax.cuentaSeleccionada}">
 					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
-					<f:selectItems value="#{pagoController.cuentas}" var="cuentas"
+					<f:selectItems value="#{avanceAjax.cuentas}" var="cuentas"
 						itemValue="#{cuentas}" itemLabel="#{cuentas.number}" />
 				</p:selectOneMenu>
 				<p:message for="cbtcuenta" />
+
+				<p:outputLabel for="tfcantidadAvance" id="tfcantidad"
+					value="Cantidad" />
+				<p:inputText id="tfcantidadAvance" value="#{avanceAjax.cantidad}" />
+				<p:message for="tfcantidadAvance" />
+
 			</p:panelGrid>
-			
+
 
 			<p:panelGrid id="panelBotones" columns="2">
 
-				<p:commandButton id="btaceptar" value="Aceptar" action="#" />
+				<p:commandButton id="baceptar" value="Aceptar"
+					action="#{avanceAjax.avance}"
+					process="@this tfcantidadAvance cbtar cbtcuenta"
+					update="panelavance " />
 
-				<p:commandButton id="btcancelar" value="Cancelar1" action="#{sessionControl.cancelarPagina}"/>
+				<p:commandButton id="btcancelar" value="Cancelar"
+					action="#{sessionControl.cancelarPagina}" />
 			</p:panelGrid>
 
 
