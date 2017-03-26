@@ -59,6 +59,14 @@ public class CuentaAsociados  implements Serializable{
 	private double monto;
 	
 	
+	
+	
+	public CuentaAsociados() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	/**
 	 * @param numeroCuenta
 	 * @param idAsociado

@@ -18,7 +18,7 @@
 				<p:selectOneMenu id="cbcuorigen"
 					value="#{pagoController.tarjetaSeleccionada}">
 					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
-					<f:selectItems value="#{pagoController.tarjetas}" var="tarjeta"
+					<f:selectItems value="#{transaccionAjaxController.tarjetas}" var="tarjeta"
 						itemValue="#{tarjeta}" itemLabel="#{tarjeta.number}" />
 
 					<f:ajax event="change" execute="@this "
@@ -32,8 +32,8 @@
 				<p:selectOneMenu id="cbcuodestino"
 					value="#{pagoController.tarjetaSeleccionada}">
 					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
-					<f:selectItems value="#{pagoController.tarjetas}" var="tarjeta"
-						itemValue="#{tarjeta}" itemLabel="#{tarjeta.number}" />
+					<f:selectItems value="#{transaccionAjaxController.cuentas}" var="cuenta"
+						itemValue="#{cuenta}" itemLabel="#{cuenta.number}" />
 
 					<f:ajax event="change" execute="@this "
 						render="paneltransaccion"
