@@ -50,7 +50,6 @@ public class CreditCard extends Product implements Serializable{
 	
 	@Column(name="disponible")
 	private boolean disponible;
-	//HOla
 	
 
 	public CreditCard() {
@@ -58,8 +57,6 @@ public class CreditCard extends Product implements Serializable{
 	}
 
 	
-	
-
 	public CreditCard(String cvc, Date expirationDate, Franchise franchise, Double monto, Double montoOriginal,
 			Double deuda, boolean disponible) {
 		super();
