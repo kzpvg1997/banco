@@ -49,6 +49,8 @@ public class CreditCardEJB {
 					fechaExpedicion.setYear(fechaExpedicion.getYear()+4);
 					creditCard.setExpirationDate(fechaExpedicion);
 					creditCard.setCvc(numeroAleatorio3());
+					creditCard.setDeuda(0.0);
+					creditCard.setDisponible(true);
 					em.persist(creditCard);
 					
 				}else{
