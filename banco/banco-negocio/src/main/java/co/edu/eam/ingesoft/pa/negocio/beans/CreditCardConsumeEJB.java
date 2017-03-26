@@ -78,7 +78,7 @@ public class CreditCardConsumeEJB {
 			
 			em.persist(consumo);
 			consumo.getCreditCard().setMonto(consumo.getCreditCard().getMonto()-consumo.getAmmount());
-			consumo.getCreditCard().setDeuda(consumo.getAmmount());
+			consumo.getCreditCard().setDeuda(consumo.getCreditCard().getDeuda()+consumo.getAmmount());
 			em.merge(consumo.getCreditCard());
 			boolean estado = true;
 			if(consumo.getCreditCard().getMonto()==0){

@@ -124,6 +124,7 @@ public class PaymentEJB {
 
 					CreditCard tarj = cardEJB.buscarCreditCard(conNoPag.getCreditCard().getNumber());
 					tarj.setMonto(tarj.getMonto() + vSumarTarjeta);
+					tarj.setDisponible(true);
 					em.merge(tarj);
 					tarj.setDeuda(tarj.getMontoOriginal()-tarj.getMonto());
 					em.merge(tarj);
