@@ -1,16 +1,21 @@
 package co.edu.eam.ingesoft.pa.negocio.beans;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Banco;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CuentaAsociados;
-import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Franchise;
 import co.edu.eam.ingesoft.pa.negocio.beans.remote.ICuentaAsociadosRemote;
 import co.edu.eam.ingesoft.pa.negocio.excepciones.ExcepcionNegocio;
 
@@ -54,5 +59,14 @@ public class CuentaAsociadosEJB {
 		return em.find(CuentaAsociados.class, numero);
 	}
 	
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Banco> listaBancos(){
+		
+		Query q = em.createNamedQuery(Banco.LISTA_BANCOS);
+		List<Banco> bancos = q.getResultList();
+		return bancos;
+		
+	}
 	
 }

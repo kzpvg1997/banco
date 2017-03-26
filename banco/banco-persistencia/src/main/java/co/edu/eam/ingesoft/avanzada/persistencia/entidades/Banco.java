@@ -8,16 +8,24 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
  * @author TOSHIBAP55W
  *
  */
+
 @Entity
 @Table(name="T_BANK")
+@NamedQueries({
+	@NamedQuery(name=Banco.LISTA_BANCOS,query="SELECT b FROM Banco b")
+})
 public class Banco implements Serializable{
 
+	public static final String LISTA_BANCOS= "Lista.Bancos";
+	
 	@Id
 	@Column(name="id_bank")
 	private int id;

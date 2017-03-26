@@ -38,10 +38,10 @@
 
 				<p:outputLabel for="tfbanco" id="tfban" value="Banco" />
 				<p:selectOneMenu id="tfbanco"
-					value="#{pagoController.tarjetaSeleccionada}">
+					value="#{asociadosAjaxController.bancoSeleccionado}">
 					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
-					<f:selectItems value="#{pagoController.tarjetas}" var="tarjeta"
-						itemValue="#{tarjeta}" itemLabel="#{tarjeta.number}" />
+					<f:selectItems value="#{asociadosAjaxController.bancos}" var="bancos"
+						itemValue="#{banco}" itemLabel="#{bancos.nombre}" />
 
 					<f:ajax event="change" execute="@this " render="panelavance"
 						listener="#{pagoController.cargarTablaCombo}" />
