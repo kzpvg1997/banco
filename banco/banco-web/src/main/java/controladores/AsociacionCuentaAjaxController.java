@@ -15,7 +15,9 @@ import org.omnifaces.util.Messages;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Banco;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CuentaAsociados;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
+import co.edu.eam.ingesoft.pa.negocio.beans.CreditCardEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadosEJB;
+import co.edu.eam.ingesoft.pa.negocio.beans.CustomerEJB;
 
 @Named("asociadosAjaxController")
 @ViewScoped
@@ -23,6 +25,9 @@ public class AsociacionCuentaAjaxController implements Serializable{
 	
 	@EJB
 	private CuentaAsociadosEJB cuAsEJB; //EJB de CuentaAsociados
+	
+	@EJB
+	private CustomerEJB customerEJB;
 	
 	@Inject
 	private SessionController sesionCotroller;
@@ -50,21 +55,29 @@ public class AsociacionCuentaAjaxController implements Serializable{
 	@PostConstruct
 	public void inicializar(){
 		bancos = cuAsEJB.listaBancos();
-		//cuentasCliente = cuAsEJB.listaCuentasCliente(sesionCotroller.getCliente());
+		cuentasCliente = cuAsEJB.listaCuentasCliente(sesionCotroller.getCliente());
 	}
 
 	
 	public void agregarCuentaAsociada(){
 		
-		Customer customer = sesionCotroller.getCliente();
-		Banco banco = (Banco)cuAsEJB.buscarBanco(bancoSeleccionado);
+		Customer cus = customerEJB.buscarCustomer(sesionCotroller.getCliente().getIdType(), sesionCotroller.getCliente().getIdNum());
+		if(cus != null){
+			System.out.println(cus.getLastName());
+			Banco b = cuAsEJB.buscarBanco(bancoSeleccionado);
+				if(b != null){
+					System.out.println(b.getNombre());
+					CuentaAsociados cu = new CuentaAsociados(numeroCuenta,numeroDocumento,nombreTitular,cbDocumentoTitular,
+							cus,b,true,nombreCuenta,monto);
+					cuAsEJB.agregarCuentaAsociados(cu);
+					cuentasCliente = cuAsEJB.listaCuentasCliente(sesionCotroller.getCliente());
+				}else{
+					System.out.println("No cogio el banco");
+				}
+		}else{
+			System.out.println("no hay clientes");
+		}
 
-		CuentaAsociados cu = new CuentaAsociados(numeroCuenta, numeroDocumento, nombreTitular, cbDocumentoTitular,
-				customer, banco, true, nombreCuenta, monto);
-		System.out.println(cu+"-----"+banco);
-		cuAsEJB.agregarCuentaAsociados(cu);
-		
-		
 	}
 
 	/**

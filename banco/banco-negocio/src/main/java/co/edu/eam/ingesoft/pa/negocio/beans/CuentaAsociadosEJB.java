@@ -47,9 +47,10 @@ public class CuentaAsociadosEJB {
 	public void agregarCuentaAsociados(CuentaAsociados cuenta){
 		CuentaAsociados cu = buscarCuentaAsociado(cuenta.getNumeroCuenta());
 		if(cu!=null){
-			throw new ExcepcionNegocio("Este numero no esta disponible,\n Digite otro numero");			
+			throw new ExcepcionNegocio("Este numero no esta disponible,\n Digite otro numero");		
 		}else{
-			em.persist(cu);
+			
+			em.persist(cuenta);	
 		}
 		
 	}

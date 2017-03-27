@@ -37,7 +37,7 @@
 					<f:selectItems value="#{asociadosAjaxController.bancos}" var="bancos"
 						itemValue="#{bancos.id}" itemLabel="#{bancos.nombre}" />
 
-					<f:ajax event="change" execute="@this " render="panelavance" listener="#{pagoController.cargarTablaCombo}" />
+				
 				</p:selectOneMenu>
 				<p:message for="tfbanco" />
 
@@ -87,7 +87,7 @@
 							Accion
 						</f:facet>
 						<p:commandButton action="#" process="@this" value="Quitar"
-							update="tablaDoc" />
+							update="tablaCuentas" />
 						<p:outputLabel value="#{cue.numeroCuenta}" />
 					</p:column>
 				</p:dataTable>
