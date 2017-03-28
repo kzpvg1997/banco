@@ -48,8 +48,6 @@ public class CreditCard extends Product implements Serializable{
 	@Column(name="deuda")
 	private Double deuda;
 	
-	@Column(name="disponible")
-	private boolean disponible;
 	
 
 	public CreditCard() {
@@ -58,7 +56,7 @@ public class CreditCard extends Product implements Serializable{
 
 	
 	public CreditCard(String cvc, Date expirationDate, Franchise franchise, Double monto, Double montoOriginal,
-			Double deuda, boolean disponible) {
+			Double deuda) {
 		super();
 		this.cvc = cvc;
 		this.expirationDate = expirationDate;
@@ -66,7 +64,6 @@ public class CreditCard extends Product implements Serializable{
 		this.monto = monto;
 		this.montoOriginal = montoOriginal;
 		this.deuda = deuda;
-		this.disponible = disponible;
 	}
 
 
@@ -165,22 +162,6 @@ public class CreditCard extends Product implements Serializable{
 	 */
 	public void setDeuda(Double deuda) {
 		this.deuda = deuda;
-	}
-
-
-	/**
-	 * @return the disponible
-	 */
-	public boolean getDisponible() {
-		return disponible;
-	}
-
-
-	/**
-	 * @param disponible the disponible to set
-	 */
-	public void setDisponible(boolean disponible) {
-		this.disponible = disponible;
 	}
 
 
