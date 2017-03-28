@@ -15,6 +15,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCard;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CuentaAsociados;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Franchise;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Product;
@@ -163,6 +164,34 @@ public class SavingAccountEJB {
 			throw new ExcepcionNegocio("Monto invalido");
 		}
 		
+	}
+	/**
+	 * Transfiere de una cuenta de ahorros de un cliente a una cuenta asociadas de este
+	 * @param monto monto que se desea trasferir
+	 * @param s ala cuenta de ahorros
+	 * @param c la cuenta asociada
+	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void transferirCuentaAsociados(Double monto, SavingAccount s, CuentaAsociados c){
+		if(monto > 0.0){
+			if(s.getAmmount() >= monto){
+				s.setAmmount(s.getAmmount()-monto);
+				c.setMonto(c.getMonto()+monto);
+				em.merge(s);//actualizamos la cuenta de ahorros
+				em.merge(c);//actualizamos cuenta asociados
+				Transaction tr = new Transaction();
+				tr.setAmmount(monto);
+				tr.setSavingAccNumber(s);
+				tr.setTransactionDate(fechaExpedicion());
+				tr.setSourceTransact(c.getNumeroCuenta());
+				tr.setTipoTransaccion(TipoTransaccionEnum.TRANSFERENCIA.toString());
+				em.persist(tr);
+			}else{
+				throw new ExcepcionNegocio("Saldo insuficiente para transferir \n Su saldo es de: "+s.getAmmount());
+			}
+		}else{
+			throw new ExcepcionNegocio("Monto invalido");
+		}
 	}
 	/**
 	 * Transferir

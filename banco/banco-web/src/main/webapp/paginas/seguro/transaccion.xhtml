@@ -16,28 +16,24 @@
 
 				<h:outputLabel for="cbcuorigen" id="lblcuentaorigen" value="Cuenta Origen" />
 				<p:selectOneMenu id="cbcuorigen"
-					value="#{pagoController.tarjetaSeleccionada}">
+					value="#{transaccionAjaxController.cuentasClienteSeleccionada}">
 					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
-					<f:selectItems value="#{transaccionAjaxController.tarjetas}" var="tarjeta"
-						itemValue="#{tarjeta}" itemLabel="#{tarjeta.number}" />
+					<f:selectItems value="#{transaccionAjaxController.cuentasCliente}" var="cuCli"
+						itemValue="#{cuCli.number}" itemLabel="#{cuCli.number}" />
 
-					<f:ajax event="change" execute="@this "
-						render="paneltransaccion"
-						listener="#{pagoController.cargarTablaCombo}" />
+					
 				</p:selectOneMenu>
 				<p:message for="cbcuorigen" />
 				
 				
-				<h:outputLabel for="cbcuodestino" id="lblcuentadesti" value="Cuenta Destino" />
+				<h:outputLabel for="cbcuodestino" id="lblcuentadesti" value="Cuenta Destino (Asociada)" />
 				<p:selectOneMenu id="cbcuodestino"
-					value="#{pagoController.tarjetaSeleccionada}">
+					value="#{transaccionAjaxController.cuentaAsociadoSeleccionada}">
 					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
-					<f:selectItems value="#{transaccionAjaxController.cuentas}" var="cuenta"
-						itemValue="#{cuenta}" itemLabel="#{cuenta.number}" />
+					<f:selectItems value="#{transaccionAjaxController.cuentasAsociadas}" var="cuAso"
+						itemValue="#{cuAso.numeroCuenta}" itemLabel="#{cuAso.nombreAsociacion}" />
 
-					<f:ajax event="change" execute="@this "
-						render="paneltransaccion"
-						listener="#{pagoController.cargarTablaCombo}" />
+					
 				</p:selectOneMenu>
 				<p:message for="cbcuodestino" />
 
@@ -53,9 +49,9 @@
 
 			<p:panelGrid id="panelBotones" columns="2">
 
-				<p:commandButton id="btaceptartrans" value="Aceptar" action="#" />
+				<p:commandButton id="bttransferirTrans" value="Transferir" action="#{transaccionAjaxController.tranferirCuentaAsociados}" />
 
-				<p:commandButton id="btcancelartrans" value="Cancelar" action="#" />
+				<p:commandButton id="btcancelarTrans" value="Cancelar" action="#" />
 			</p:panelGrid>
 
 

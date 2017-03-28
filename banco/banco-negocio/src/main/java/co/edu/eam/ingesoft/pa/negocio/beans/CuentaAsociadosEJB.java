@@ -1,5 +1,6 @@
 package co.edu.eam.ingesoft.pa.negocio.beans;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Banco;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCard;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCardConsume;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CuentaAsociados;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Franchise;
@@ -79,6 +82,20 @@ public class CuentaAsociadosEJB {
 		return cuentas;
 		
 	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<CuentaAsociados> listarCuentasVerificadas(Customer customer){
+		
+		List<CuentaAsociados> lista = listaCuentasCliente(customer);
+		List<CuentaAsociados> verificadas = new ArrayList<CuentaAsociados>();
+			for (CuentaAsociados c : lista) {
+				if(c.isVerificado()){ // preguntar
+					verificadas.add(c);
+				}
+			}
+			return verificadas;
+	}
+	
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Banco buscarBanco(String id){

@@ -70,16 +70,22 @@ public class AsociacionCuentaAjaxController implements Serializable{
 					CuentaAsociados cu = new CuentaAsociados(numeroCuenta,numeroDocumento,nombreTitular,cbDocumentoTitular,
 							cus,b,true,nombreCuenta,monto);
 					cuAsEJB.agregarCuentaAsociados(cu);
-					cuentasCliente = cuAsEJB.listaCuentasCliente(sesionCotroller.getCliente());
+					cuentasCliente = actualizarCuentasCliente();
 				}else{
 					System.out.println("No cogio el banco");
 				}
 		}else{
 			System.out.println("no hay clientes");
+			
 		}
 
 	}
 
+	public List<CuentaAsociados> actualizarCuentasCliente(){
+	
+		Customer cus = customerEJB.buscarCustomer(sesionCotroller.getCliente().getIdType(), sesionCotroller.getCliente().getIdNum());
+		return cuAsEJB.listaCuentasCliente(cus);
+	}
 	/**
 	 * @return the cuentasCliente
 	 */
