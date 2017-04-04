@@ -39,6 +39,12 @@ public class Customer implements Serializable{
 
 	@Column(name = "lastname", nullable = false,length=50)
 	private String lastName;
+	
+	@Column(name="correo")
+	private String correo;
+	
+	@Column(name="telefono")
+	private String telefono;
 
 	@OneToMany(mappedBy="customer",cascade={})
 	private List<Product> productos;
@@ -47,11 +53,13 @@ public class Customer implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-    public Customer(String idType, String idNum, String name, String lastName) {
+    public Customer(String idType, String idNum, String name, String lastName,String correo,String telefono) {
         this.idType = idType;
         this.idNum = idNum;
         this.name = name;
         this.lastName = lastName;
+        this.correo = correo;
+        this.telefono = telefono;
     }
 
     public String getIdType() {
@@ -93,6 +101,34 @@ public class Customer implements Serializable{
 
 	public void setProductos(List<Product> productos) {
 		this.productos = productos;
+	}
+
+	/**
+	 * @return the correo
+	 */
+	public String getCorreo() {
+		return correo;
+	}
+
+	/**
+	 * @param correo the correo to set
+	 */
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+	/**
+	 * @return the telefono
+	 */
+	public String getTelefono() {
+		return telefono;
+	}
+
+	/**
+	 * @param telefono the telefono to set
+	 */
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 	
 	
