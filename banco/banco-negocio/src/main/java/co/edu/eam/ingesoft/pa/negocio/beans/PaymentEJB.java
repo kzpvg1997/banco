@@ -124,11 +124,10 @@ public class PaymentEJB {
 
 					CreditCard tarj = cardEJB.buscarCreditCard(conNoPag.getCreditCard().getNumber());
 					tarj.setMonto(tarj.getMonto() + vSumarTarjeta);
-					tarj.setDisponible(true);
 					em.merge(tarj);
 					tarj.setDeuda(tarj.getMontoOriginal()-tarj.getMonto());
 					em.merge(tarj);
-
+					
 					CreditCardPaymentConsume pay = new CreditCardPaymentConsume();
 					pay.setAmmount(valorTotal);
 					pay.setCapitalAmmount(vdescontar);
@@ -141,9 +140,12 @@ public class PaymentEJB {
 
 					if (conNoPag.getRemainingAmmount() <= 0.0 || conNoPag.getRemaningShares() == 0) {
 						conNoPag.setPayed(true);
-						conNoPag.setRemainingAmmount(0);
+						conNoPag.setRemainingAmmount(0.0);
 						conNoPag.setValorCuota(0);
 						em.merge(conNoPag);
+						tarj.setMonto(tarj.getMontoOriginal());
+						tarj.setDeuda(0.0);
+						em.merge(tarj);
 					}
 				}
 

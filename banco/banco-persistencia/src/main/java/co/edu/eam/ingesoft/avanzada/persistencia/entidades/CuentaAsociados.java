@@ -27,16 +27,19 @@ import javax.persistence.Table;
 @Table(name="T_ASSOCIATED_ACOUNTS")
 @NamedQueries({
 	@NamedQuery(name=CuentaAsociados.ASOCIACIONES_CLIENTE,query="SELECT c FROM CuentaAsociados c WHERE c.customer=?1"),
+	@NamedQuery(name=CuentaAsociados.BUSCAR_ID_ASOCIADO,query="SELECT c.idAsociado FROM CuentaAsociados c")
 })
 public class CuentaAsociados  implements Serializable{
 
 	public static final String ASOCIACIONES_CLIENTE = "CuentasAsciados.Cliente";
 	
+	public static final String BUSCAR_ID_ASOCIADO = "CuentasAsociados.IdAsociado";
+	
 	@Id
 	@Column(name="numero_cuenta")
 	private String numeroCuenta;
 	
-	@Column(name="numero_documento")
+	@Column(name="numero_documento",unique=true)
 	private String idAsociado;
 	
 	@Column(name="nombre_titular")

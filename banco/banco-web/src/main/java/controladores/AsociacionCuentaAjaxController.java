@@ -19,8 +19,8 @@ import co.edu.eam.ingesoft.pa.negocio.beans.CreditCardEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadosEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CustomerEJB;
 
-@Named("asociadosAjaxController")
 @ViewScoped
+@Named("asociadosAjaxController")
 public class AsociacionCuentaAjaxController implements Serializable{
 	
 	@EJB
