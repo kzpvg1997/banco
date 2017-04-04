@@ -18,6 +18,7 @@ import javax.persistence.Query;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCard;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Product;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.SavingAccount;
 import co.edu.eam.ingesoft.pa.negocio.beans.remote.ICreditCardRemote;
 import co.edu.eam.ingesoft.pa.negocio.excepciones.ExcepcionNegocio;
 
@@ -25,6 +26,15 @@ import co.edu.eam.ingesoft.pa.negocio.excepciones.ExcepcionNegocio;
 @Stateless
 @Remote(ICreditCardRemote.class)
 public class CreditCardEJB {
+	
+	@EJB
+	private CreditCardEJB creditCardEJB;
+	
+	@EJB
+	private SavingAccountEJB savingEJB;
+	
+	@EJB
+	private ProductEJB productoEJB;
 
 	@PersistenceContext
 	private EntityManager em;
@@ -180,6 +190,36 @@ public class CreditCardEJB {
 	
 	public void actualizar(CreditCard c){
 		em.merge(c);
+	}
+	
+	public void avanceTarjetaCuenta(String tarjetaSeleccionada, String cuentaSeleccionada, Double cantidad, Double total) {
+		
+		Product protar = productoEJB.buscarProducto(tarjetaSeleccionada);
+		CreditCard ta = (CreditCard) protar;
+		if(ta != null){
+		
+			total = ta.getMonto()*0.30;
+			if(cantidad <= total){
+				ta.setMonto(ta.getMonto()-cantidad);			
+				ta.setDeuda(ta.getDeuda()+cantidad);
+				creditCardEJB.actualizar(ta);
+				
+				Product procuen = productoEJB.buscarProducto(cuentaSeleccionada);
+				SavingAccount cue = (SavingAccount) procuen;
+				if(cue != null){
+					cue.setAmmount(cue.getAmmount()+cantidad);
+					savingEJB.actualizarCuenta(cue);
+					
+				}
+			}else{
+				throw new ExcepcionNegocio("Imposible hacer el avance, El cupo maximo es de: $"+total);
+				
+			}
+				
+		
+		}
+
+		
 	}
 
 }

@@ -57,8 +57,11 @@
 
 
 			<p:panelGrid id="panelBotones" columns="2">
-				<p:commandButton id="btacep" value="Agregar Cuenta" action="#{asociadosAjaxController.agregarCuentaAsociada}" />
-				<p:commandButton id="btcan" value="Cancelar" action="#" />
+				<p:commandButton id="btacep" value="Agregar Cuenta" action="#{asociadosAjaxController.agregarCuentaAsociada}"
+				 update="panelDatosAsociado" />
+				<p:commandButton id="btcan" value="Cancelar" 
+				process="@this" action="/paginas/seguro/resumenproducto.xhtml?faces-redirect=true" 
+				/>
 			</p:panelGrid>
 
 
@@ -86,9 +89,10 @@
 						<f:facet name="header">
 							Accion
 						</f:facet>
-						<p:commandButton action="#" process="@this" value="Quitar"
+						<p:commandButton action="#{asociadosAjaxController.borrar(cue)}" process="@this" value="Quitar"
+							update="panelDatosAsociado" />
+							<p:commandButton action="#" process="@this" value="Verificar"
 							update="tablaCuentas" />
-						<p:outputLabel value="#{cue.numeroCuenta}" />
 					</p:column>
 				</p:dataTable>
 				<br></br>

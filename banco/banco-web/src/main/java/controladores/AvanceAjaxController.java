@@ -20,6 +20,7 @@ import co.edu.eam.ingesoft.avanzada.persistencia.entidades.SavingAccount;
 import co.edu.eam.ingesoft.pa.negocio.beans.CreditCardEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.ProductEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.SavingAccountEJB;
+import co.edu.eam.ingesoft.pa.negocio.excepciones.ExcepcionNegocio;
 
 @Named("avanceAjax")
 @ViewScoped
@@ -58,35 +59,19 @@ public class AvanceAjaxController implements Serializable {
 	}
 
 	public void avance() {
-		
-		Product protar = productoEJB.buscarProducto(tarjetaSeleccionada);
-		CreditCard ta = (CreditCard) protar;
-		if(ta != null){
-		
-			total = ta.getMonto()*0.30;
-			if(cantidad <= total){
-				ta.setMonto(ta.getMonto()-cantidad);			
-				ta.setDeuda(ta.getDeuda()+cantidad);
-				creditCardEJB.actualizar(ta);
-				
-				Product procuen = productoEJB.buscarProducto(cuentaSeleccionada);
-				SavingAccount cue = (SavingAccount) procuen;
-				if(cue != null){
-					cue.setAmmount(cue.getAmmount()+cantidad);
-					savingEJB.actualizarCuenta(cue);
-					Messages.addFlashGlobalWarn("Avance Exitoso !");
-					System.out.println("Avance Exitoso !");
-				}
-			}else{
-				Messages.addFlashGlobalWarn("Imposible hacer el avance, El cupo maximo es de: "+total);
-				System.out.println("Imposible hacer el avance, El cupo maximo es de: "+total);
-			}
-				
-		
+		try{
+			creditCardEJB.avanceTarjetaCuenta(tarjetaSeleccionada, cuentaSeleccionada, cantidad, total);
+			Messages.addFlashGlobalInfo("Avance Exitoso !");
+			cantidad = 0.0;
+		}catch(Exception e){
+			cantidad = 0.0;
+			Messages.addFlashGlobalWarn(e.getMessage());
 		}
-
-		cantidad = 0.0;
+		
+		
 	}
+
+
 	
 
 	/**

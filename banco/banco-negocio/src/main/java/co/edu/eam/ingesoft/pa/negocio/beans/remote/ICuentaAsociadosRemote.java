@@ -18,4 +18,10 @@ public interface ICuentaAsociadosRemote {
 	public List<Banco> listaBancos();
 	
 	public List<CuentaAsociados> listaCuentasCliente(Customer customer);
+	
+	public void agregarCuentaAsociados(CuentaAsociados cuenta);
+	
+	public CuentaAsociados buscarCuentaAsociado(String numero);
+	
+	public void borrarCuentaAsociado(CuentaAsociados cu);
 }

@@ -51,7 +51,8 @@
 
 				<p:commandButton id="bttransferirTrans" value="Transferir" action="#{transaccionAjaxController.tranferirCuentaAsociados}" />
 
-				<p:commandButton id="btcancelarTrans" value="Cancelar" action="#" />
+				<p:commandButton id="btcancelarTrans" value="Cancelar"
+				process="@this" action="/paginas/seguro/resumenproducto.xhtml?faces-redirect=true"  />
 			</p:panelGrid>
 
 

@@ -23,26 +23,40 @@
 					<a href="index.html" class="logo"><img
 						src="#{request.contextPath}/images/logo.png" alt="" /></a>
 					<ul id="navigation">
-						<li class="selected"><a
-							href="#{request.contextPath}/paginas/seguro/pago.xhtml">Pago</a></li>
-						<li><a
-							href="#{request.contextPath}/paginas/seguro/clientes.xhtml">Cliente</a></li>
+
+						<li class="menu"><a href="#">Opciones</a>
+							<ul class="primary">
+								<li><a
+									href="#{request.contextPath}/paginas/seguro/clientes.xhtml">Cliente</a>
+								</li>
+								<li class="selected"><a
+									href="#{request.contextPath}/paginas/seguro/pago.xhtml">Pago</a>
+								</li>
+								<li><a
+									href="#{request.contextPath}/paginas/seguro/avance.xhtml">Avance</a>
+								</li>
+								<li><a
+									href="#{request.contextPath}/paginas/seguro/transaccion.xhtml">Transaccion</a>
+								</li>
+								<li><a
+									href="#{request.contextPath}/paginas/seguro/asociacioncuenta.xhtml">Asocicion</a></li>
+								<li><a
+									href="#{request.contextPath}/paginas/seguro/resumenproducti.xhtml">Resumen
+										Producto</a></li>
+							</ul></li>
 						<li class="menu"><a href="blog.html">#{sessionControl.cliente.name}</a>
 						</li>
+
+						<li class="menu"><a href="#">Idioma</a>
+							<ul class="primary">
+								<li><h:commandLink
+										action="#{idiomaController.cambiarIngles}" value="Ingles" />
+									<h:commandLink action="#{idiomaController.cambiarEspañol}"
+										value="Español" /></li>
+							</ul></li>
 						<li><h:commandLink action="#{sessionControl.cerrarSesion()}"
 								value="Cerrar Sesion" rendered="#{sessionControl.sesion}"></h:commandLink>
 						</li>
-						<li class="menu">
-						<a href="#">Idioma</a>
-						<ul class="primary">
-							<li>
-								<h:commandLink action="#{idiomaController.cambiarIngles}"
-											value="Ingles" />
-											<h:commandLink action="#{idiomaController.cambiarEspañol}"
-										value="Español"/>
-							</li>
-						</ul>
-					</li>
 
 					</ul>
 				</div>
@@ -82,6 +96,7 @@
 						<div class="container">
 
 							<div class="box">
+								<p:messages autoUpdate="true" globalOnly="true" />
 								<ui:insert name="cuerpo" />
 							</div>
 

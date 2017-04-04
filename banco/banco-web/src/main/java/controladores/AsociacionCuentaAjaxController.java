@@ -71,6 +71,7 @@ public class AsociacionCuentaAjaxController implements Serializable{
 							cus,b,true,nombreCuenta,monto);
 					cuAsEJB.agregarCuentaAsociados(cu);
 					cuentasCliente = actualizarCuentasCliente();
+					Messages.addFlashGlobalInfo("Cuenta Asociada Registrada Con Exito!");
 				}else{
 					System.out.println("No cogio el banco");
 				}
@@ -80,12 +81,34 @@ public class AsociacionCuentaAjaxController implements Serializable{
 		}
 
 	}
+	
 
 	public List<CuentaAsociados> actualizarCuentasCliente(){
 	
 		Customer cus = customerEJB.buscarCustomer(sesionCotroller.getCliente().getIdType(), sesionCotroller.getCliente().getIdNum());
 		return cuAsEJB.listaCuentasCliente(cus);
 	}
+	
+	public void borrar(CuentaAsociados cu) {
+
+		cuAsEJB.borrarCuentaAsociado(cu);
+		Messages.addFlashGlobalInfo("Docente borrado exitosamente");
+		cuentasCliente = cuAsEJB.listaCuentasCliente(sesionCotroller.getCliente());
+	}
+	
+	
+	
+	
+	
+	
+	 
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * @return the cuentasCliente
 	 */

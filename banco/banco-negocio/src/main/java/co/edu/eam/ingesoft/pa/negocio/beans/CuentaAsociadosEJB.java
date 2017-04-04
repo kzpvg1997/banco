@@ -101,6 +101,13 @@ public class CuentaAsociadosEJB {
 	public Banco buscarBanco(String id){
 		return em.find(Banco.class, id);
 	}
+	
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void borrarCuentaAsociado(CuentaAsociados cu){
+		cu=buscarCuentaAsociado(cu.getNumeroCuenta());
+		em.remove(cu);
+	}
 
 	
 }
