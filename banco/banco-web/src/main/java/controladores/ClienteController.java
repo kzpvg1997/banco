@@ -29,6 +29,10 @@ public class ClienteController implements Serializable {
 	
 	private String apellido;
 	
+	private String correo;
+	
+	private String telefono;
+	
 	private List<Customer> cliente; 
 	
 
@@ -42,7 +46,7 @@ public class ClienteController implements Serializable {
 
 	public void registrar(){
 		
-		Customer cli = new Customer(tipoDocumento,numeroDocumento,nombre,apellido);
+		Customer cli = new Customer(tipoDocumento,numeroDocumento,nombre,apellido,correo,telefono);
 		customerEJB.crearCustomer(cli);
 		tipoDocumento = "";
 		numeroDocumento = "";
@@ -141,6 +145,38 @@ public class ClienteController implements Serializable {
 	 */
 	public void setCliente(List<Customer> cliente) {
 		this.cliente = cliente;
+	}
+
+
+	/**
+	 * @return the correo
+	 */
+	public String getCorreo() {
+		return correo;
+	}
+
+
+	/**
+	 * @param correo the correo to set
+	 */
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+
+	/**
+	 * @return the telefono
+	 */
+	public String getTelefono() {
+		return telefono;
+	}
+
+
+	/**
+	 * @param telefono the telefono to set
+	 */
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 
 
