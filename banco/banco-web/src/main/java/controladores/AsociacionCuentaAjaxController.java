@@ -18,6 +18,7 @@ import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
 import co.edu.eam.ingesoft.pa.negocio.beans.CreditCardEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadosEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CustomerEJB;
+import co.edu.eam.ingesoft.pa.negocio.excepciones.ExcepcionNegocio;
 
 @ViewScoped
 @Named("asociadosAjaxController")
@@ -60,24 +61,23 @@ public class AsociacionCuentaAjaxController implements Serializable{
 
 	
 	public void agregarCuentaAsociada(){
-		
+		try{
 		Customer cus = customerEJB.buscarCustomer(sesionCotroller.getCliente().getIdType(), sesionCotroller.getCliente().getIdNum());
+		
 		if(cus != null){
-			System.out.println(cus.getLastName());
 			Banco b = cuAsEJB.buscarBanco(bancoSeleccionado);
 				if(b != null){
-					System.out.println(b.getNombre());
 					CuentaAsociados cu = new CuentaAsociados(numeroCuenta,numeroDocumento,nombreTitular,cbDocumentoTitular,
 							cus,b,true,nombreCuenta,monto);
 					cuAsEJB.agregarCuentaAsociados(cu);
 					cuentasCliente = actualizarCuentasCliente();
 					Messages.addFlashGlobalInfo("Cuenta Asociada Registrada Con Exito!");
-				}else{
-					System.out.println("No cogio el banco");
+					
 				}
-		}else{
-			System.out.println("no hay clientes");
-			
+		}
+		
+		}catch (ExcepcionNegocio e) {
+			Messages.addFlashGlobalError(e.getMessage());
 		}
 
 	}
@@ -95,16 +95,6 @@ public class AsociacionCuentaAjaxController implements Serializable{
 		Messages.addFlashGlobalInfo("Docente borrado exitosamente");
 		cuentasCliente = cuAsEJB.listaCuentasCliente(sesionCotroller.getCliente());
 	}
-	
-	
-	
-	
-	
-	
-	 
-	
-	
-	
 	
 	
 	

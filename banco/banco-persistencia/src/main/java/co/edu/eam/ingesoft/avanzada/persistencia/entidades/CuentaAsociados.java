@@ -27,7 +27,7 @@ import javax.persistence.Table;
 @Table(name="T_ASSOCIATED_ACOUNTS")
 @NamedQueries({
 	@NamedQuery(name=CuentaAsociados.ASOCIACIONES_CLIENTE,query="SELECT c FROM CuentaAsociados c WHERE c.customer=?1"),
-	@NamedQuery(name=CuentaAsociados.BUSCAR_ID_ASOCIADO,query="SELECT c.idAsociado FROM CuentaAsociados c")
+	@NamedQuery(name=CuentaAsociados.BUSCAR_ID_ASOCIADO,query="SELECT c.idAsociado FROM CuentaAsociados c WHERE c=?1")
 })
 public class CuentaAsociados  implements Serializable{
 
