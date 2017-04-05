@@ -27,7 +27,7 @@ public class AsociacionCuentaAjaxController implements Serializable{
 	private CuentaAsociadosEJB cuAsEJB; //EJB de CuentaAsociados
 	
 	@EJB
-	private CustomerEJB customerEJB;
+	private CustomerEJB customerEJB; //EJB de cliente
 	
 	@Inject
 	private SessionController sesionCotroller;
