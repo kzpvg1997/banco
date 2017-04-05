@@ -39,8 +39,12 @@
 
 
 				<p:outputLabel for="tfmontotrasn" id="tfcantidad" value="Monto" />
-				<p:inputText id="tfmontotrasn" value="#{pagoController.numeroDocumento}" />
+				<p:inputText id="tfmontotrasn" value="#{transaccionAjaxController.monto}" />
 				<p:message for="tfmontotrasn" />
+				
+				<p:outputLabel for="tfclave" id="tfcla" value="Clave" />
+				<p:inputText id="tfclave" value="#{transaccionAjaxController.clave}" />
+				<p:commandButton id="btnclave" value="Verificar" action="#{transaccionAjaxController.verificarClave}" />
 
 
 				

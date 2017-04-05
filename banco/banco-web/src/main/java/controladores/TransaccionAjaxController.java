@@ -41,6 +41,8 @@ public class TransaccionAjaxController implements Serializable {
 	private String cuentaAsociadoSeleccionada;
 
 	private Double monto;
+	
+	private int clave;
 
 	@PostConstruct
 	public void inicializar() {
@@ -71,6 +73,10 @@ public class TransaccionAjaxController implements Serializable {
 				
 			}
 
+	}
+	
+	public void verificarClave(){
+		System.out.println("Verificando...");
 	}
 
 	/**
@@ -193,4 +199,19 @@ public class TransaccionAjaxController implements Serializable {
 		this.monto = monto;
 	}
 
+	/**
+	 * @return the clave
+	 */
+	public int getClave() {
+		return clave;
+	}
+
+	/**
+	 * @param clave the clave to set
+	 */
+	public void setClave(int clave) {
+		this.clave = clave;
+	}
+
+	
 }
