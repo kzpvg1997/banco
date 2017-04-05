@@ -42,9 +42,9 @@ public class SegundaClaveEJB {
 	public SegundaClave buscarSegundaClave(int num){
 		return em.find(SegundaClave.class, num);
 	}
+	 
 	
-	
-	public static Long numeroAleatorio16(){
+	public static Long numeroAleatorio6(){
 		Long numero = ThreadLocalRandom.current().nextLong(100000L, 999999L );
 		System.out.println(numero);
 		return numero;
