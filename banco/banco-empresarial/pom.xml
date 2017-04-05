@@ -37,7 +37,22 @@
 				<configuration>
 					<version>7</version>
 					<defaultLibBundleDir>lib</defaultLibBundleDir>
+					<finalName>banco5</finalName>
 					<fileNameMapping>no-version</fileNameMapping>
+					<modules>
+					<ejbModule>
+							<groupId>co.edu.eam.ingesoft.avanzada</groupId>
+							<artifactId>banco-negocio</artifactId>
+							<bundleFileName>banco-negocio5</bundleFileName>
+						</ejbModule>
+					
+					<webModule>
+							<groupId>co.edu.eam.ingesoft.avanzada</groupId>
+							<artifactId>banco-web</artifactId>
+							<contextRoot>/banco5</contextRoot>
+						</webModule>
+					
+					</modules>
 				</configuration>
 			</plugin>
 			<plugin>

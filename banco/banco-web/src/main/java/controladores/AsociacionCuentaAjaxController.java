@@ -68,7 +68,7 @@ public class AsociacionCuentaAjaxController implements Serializable{
 			Banco b = cuAsEJB.buscarBanco(bancoSeleccionado);
 				if(b != null){
 					CuentaAsociados cu = new CuentaAsociados(numeroCuenta,numeroDocumento,nombreTitular,cbDocumentoTitular,
-							cus,b,true,nombreCuenta,monto);
+							cus,b,false,nombreCuenta,monto);
 					cuAsEJB.agregarCuentaAsociados(cu);
 					cuentasCliente = actualizarCuentasCliente();
 					Messages.addFlashGlobalInfo("Cuenta Asociada Registrada Con Exito!");
