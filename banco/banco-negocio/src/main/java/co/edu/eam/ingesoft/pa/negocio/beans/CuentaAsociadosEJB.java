@@ -48,9 +48,9 @@ public class CuentaAsociadosEJB {
 		CuentaAsociados cu = buscarCuentaAsociado(cuenta.getNumeroCuenta());
 		if(cu!=null){
 
-			throw new ExcepcionNegocio("Este numero no esta disponible,\n Digite otro numero");	
+			throw new ExcepcionNegocio("Este numero no de cuenta esta disponible,\n Digite otro numero");	
 		}else{
-			if(BuscarIdAsociado(cuenta)==true){
+			if(BuscarIdAsociado(cuenta)!=null){
 				em.persist(cuenta);
 			}else{
 				throw new ExcepcionNegocio("El asociado con numero de documento: "+cuenta.getIdAsociado()+
@@ -109,17 +109,13 @@ public class CuentaAsociadosEJB {
 		em.remove(cu);
 	}
 
-	public boolean BuscarIdAsociado(CuentaAsociados cuen) {
-		boolean valor = true;
+	public String BuscarIdAsociado(CuentaAsociados cuen) {
+		String valor = null;
 		Query q = em.createNamedQuery(CuentaAsociados.BUSCAR_ID_ASOCIADO);
 		q.setParameter(1, cuen);
-		List<CuentaAsociados> ids = q.getResultList();
-		for (CuentaAsociados ca : ids) {
-			if (ca.getIdAsociado().equals(cuen.getIdAsociado())) {
-
-				valor = false;
-			}
-		}
+		valor = String.valueOf(q.getFirstResult());
+		System.out.println(valor);
 		return valor;
+		
 	}
 }
