@@ -112,6 +112,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jTFapellidoCliente = new javax.swing.JTextField();
         jBguardarCliente = new javax.swing.JButton();
         jBbuscarCliente = new javax.swing.JButton();
+        jLabel49 = new javax.swing.JLabel();
+        jTFCorreoCliente = new javax.swing.JTextField();
+        jLabel50 = new javax.swing.JLabel();
+        jTFTelefonoCliente = new javax.swing.JTextField();
         jLabel55 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -370,30 +374,42 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jLabel49.setFont(new java.awt.Font("HelveticaNeueLT Com 57 Cn", 1, 18)); // NOI18N
+        jLabel49.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel49.setText("CORREO");
+
+        jLabel50.setFont(new java.awt.Font("HelveticaNeueLT Com 57 Cn", 1, 18)); // NOI18N
+        jLabel50.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel50.setText("TELEFONO");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(182, Short.MAX_VALUE)
+                .addComponent(jBguardarCliente)
+                .addGap(43, 43, 43)
+                .addComponent(jBbuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(169, 169, 169))
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel49)
+                    .addComponent(jLabel50))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jCbcomboCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTFnumeroDocumentoCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
                     .addComponent(jTFapellidoCliente)
-                    .addComponent(jTFnombreCliente))
+                    .addComponent(jTFnombreCliente)
+                    .addComponent(jTFCorreoCliente)
+                    .addComponent(jTFTelefonoCliente))
                 .addContainerGap(92, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jBguardarCliente)
-                .addGap(43, 43, 43)
-                .addComponent(jBbuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(169, 169, 169))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -414,7 +430,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTFapellidoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel49)
+                    .addComponent(jTFCorreoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel50)
+                    .addComponent(jTFTelefonoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBbuscarCliente)
                     .addComponent(jBguardarCliente))
@@ -443,7 +467,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel55)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(192, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
 
         jTPPrincipal.addTab("CLIENTE", jPanel1);
@@ -2191,6 +2215,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				} else {
 					jTFnombreCliente.setText(cus.getName());
 					jTFapellidoCliente.setText(cus.getLastName());
+					jTFCorreoCliente.setText(cus.getCorreo());
+					jTFTelefonoCliente.setText(cus.getTelefono());
 				}
 
 			}
@@ -2314,7 +2340,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		try {
 			if (jCbcomboCliente.getSelectedIndex() == 0 || jTFnombreCliente.getText().isEmpty()
-					|| jTFapellidoCliente.getText().isEmpty() || jTFnumeroDocumentoCliente.getText().isEmpty()) {
+					|| jTFapellidoCliente.getText().isEmpty() || jTFnumeroDocumentoCliente.getText().isEmpty()
+                                        || jTFTelefonoCliente.getText().isEmpty() || jTFCorreoCliente.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Por favor llene todos los datos", "INGRESE",
 						JOptionPane.WARNING_MESSAGE);
 			} else {
@@ -2323,6 +2350,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				c.setLastName(jTFapellidoCliente.getText());
 				c.setIdNum(jTFnumeroDocumentoCliente.getText());
 				c.setIdType((String) jCbcomboCliente.getSelectedItem());
+                c.setTelefono(jTFTelefonoCliente.getText());
+                c.setCorreo(jTFCorreoCliente.getText());
 
 				conCliente.crearCustomer(c);
 				JOptionPane.showMessageDialog(null,
@@ -2363,6 +2392,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jTFapellidoCliente.setText(null);
 		jTFnombreCliente.setText(null);
 		jTFnumeroDocumentoCliente.setText(null);
+		jTFCorreoCliente.setText(null);
+		jTFTelefonoCliente.setText(null);
 
 	}
 
@@ -2509,7 +2540,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
@@ -2556,6 +2589,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JSpinner jSPNumeroCuotasConsumoBus;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTFCorreoCliente;
+    private javax.swing.JTextField jTFTelefonoCliente;
     private javax.swing.JTextField jTFValorCuotaTotal;
     private javax.swing.JTextField jTFapellidoCliente;
     private javax.swing.JTextField jTFbuscarTarjetaCredito;
