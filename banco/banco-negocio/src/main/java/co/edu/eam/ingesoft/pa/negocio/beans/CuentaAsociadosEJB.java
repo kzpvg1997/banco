@@ -147,4 +147,22 @@ public class CuentaAsociadosEJB {
         System.out.println(resp.getMensaje());
 		
 	}
+	
+//	NotificacionesService cliente=new NotificacionesService();
+//	Notificaciones servicio=cliente.getNotificacionesPort();
+//	
+//	String endpointURL = "http://104.197.238.134:8080/notificaciones/notificacionesService?";
+//	BindingProvider bp = (BindingProvider)servicio;
+//	bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
+//	
+//	Mail correo=new Mail();
+//	correo.setBody("Hola Mundo");
+//	correo.setFrom("Hi");
+//	correo.setTo("Tanganica1@hotmail.com");
+//	correo.setSubject("Probando en clase");
+//	
+//	RespuestaNotificacion resp=servicio.enviarMail(correo);
+//	System.out.println(resp.getMensaje());
+	
+	
 }
