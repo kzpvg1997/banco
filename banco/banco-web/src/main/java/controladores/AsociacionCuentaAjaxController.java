@@ -94,7 +94,7 @@ public class AsociacionCuentaAjaxController implements Serializable{
 	public void borrar(CuentaAsociados cu) {
 
 		cuAsEJB.borrarCuentaAsociado(cu);
-		Messages.addFlashGlobalInfo("Docente borrado exitosamente");
+		Messages.addFlashGlobalInfo("La cuenta ha sido eliminada exitosamente");
 		cuentasCliente = cuAsEJB.listaCuentasCliente(sesionCotroller.getCliente());
 	}
 	

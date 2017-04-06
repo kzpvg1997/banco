@@ -64,7 +64,7 @@
 					<hostname>localhost</hostname>
 					<port>9991</port>
 					<username>user</username>
-					<password>password.</password>
+					<password>password</password>
 				</configuration> 
 			</plugin>
 		</plugins>
