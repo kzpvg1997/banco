@@ -23,6 +23,9 @@ import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Franchise;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Product;
 import co.edu.eam.ingesoft.pa.negocio.beans.remote.ICuentaAsociadosRemote;
 import co.edu.eam.ingesoft.pa.negocio.excepciones.ExcepcionNegocio;
+import co.edu.eam.pa.interbancariows.InterbancarioWS;
+import co.edu.eam.pa.interbancariows.InterbancarioWS_Service;
+import co.edu.eam.pa.interbancariows.RespuestaServicio;
 
 @LocalBean
 @Stateless
@@ -118,4 +121,26 @@ public class CuentaAsociadosEJB {
 		return valor;
 		
 	}
+	
+//	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+//	public boolean verificarCuenta(CuentaAsociados cu) {
+//		
+//		InterbancarioWS_Service cliente=new InterbancarioWS_Service();
+//		InterbancarioWS servicio = cliente.getInterbancarioWSPort();
+//	
+//		
+//		String endpointURL = "http://104.197.238.134:8080/interbancario/InterbancarioWS";
+//		BindingProvider bp = (BindingProvider)servicio;
+//		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
+//		
+//		Mail correo=new Mail();
+//		correo.setBody("Hola Mundo");
+//		correo.setFrom("Hi");
+//		correo.setTo("Tanganica1@hotmail.com");
+//		correo.setSubject("Probando en clase");
+//		
+//		RespuestaServicio resp = servicio.
+//		System.out.println(resp.getMensaje());
+//		
+//	}
 }

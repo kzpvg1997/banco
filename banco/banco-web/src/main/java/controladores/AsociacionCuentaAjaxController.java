@@ -50,6 +50,8 @@ public class AsociacionCuentaAjaxController implements Serializable{
 	
 	private double monto;
 	
+	private String p;
+	
 	private List<CuentaAsociados> cuentasCliente;
 	
 	
