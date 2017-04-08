@@ -98,6 +98,12 @@ public class AsociacionCuentaAjaxController implements Serializable{
 		cuentasCliente = cuAsEJB.listaCuentasCliente(sesionCotroller.getCliente());
 	}
 	
+	public void verificarCuenta (CuentaAsociados cu){
+		
+		cuAsEJB.verificarCuenta(cu);
+		Messages.addFlashGlobalInfo("La cuenta ha sido verificada exitosamente");
+		cuentasCliente = cuAsEJB.listaCuentasCliente(sesionCotroller.getCliente());
+	}
 	
 	
 	

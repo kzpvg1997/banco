@@ -57,7 +57,7 @@ public class CuentaAsociadosEJB {
 
 			throw new ExcepcionNegocio("Este numero no de cuenta esta disponible,\n Digite otro numero");	
 		}else{
-			if(BuscarIdAsociado(cuenta)!=null){
+			if(BuscarIdAsociado(cu)!=null){
 				em.persist(cuenta);
 			}else{
 				throw new ExcepcionNegocio("El asociado con numero de documento: "+cuenta.getIdAsociado()+
@@ -126,25 +126,36 @@ public class CuentaAsociadosEJB {
 		
 	}
 	
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public boolean verificarCuenta(CuentaAsociados cu) {
+	
+	public void verificarCuenta(CuentaAsociados cu) {
 		
-		NotificacionesService cliente = new NotificacionesService();
-        Notificaciones servicio = cliente.getNotificacionesPort();
-        
-        String endpointURL = "http://104.197.238.134:8080/notificaciones/notificacionesService";
-        BindingProvider bp = (BindingProvider)servicio;
-        bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
-        
-        Mail correo = new Mail();
-        correo.setBody("Hello World");
-        correo.setFrom("BancoEAM@bank.com");
-        correo.setTo("kzpvg1997@hotmail.com");
-        correo.setSubject("Prueba de la clase");
-        //servicio.enviarMail(correo);
-        
-        RespuestaNotificacion resp = servicio.enviarMail(correo);
-        System.out.println(resp.getMensaje());
+		CuentaAsociados c = buscarCuentaAsociado(cu.getNumeroCuenta());
+		if(c!=null){
+			if(c.isVerificado()==false){
+				
+				c.setVerificado(true);
+				em.merge(c);
+			}else{
+				throw new ExcepcionNegocio("Esta cuenta ya se encuentra verificada");
+			}
+		}
+		
+//		NotificacionesService cliente = new NotificacionesService();
+//        Notificaciones servicio = cliente.getNotificacionesPort();
+//        
+//        String endpointURL = "http://104.197.238.134:8080/notificaciones/notificacionesService";
+//        BindingProvider bp = (BindingProvider)servicio;
+//        bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
+//        
+//        Mail correo = new Mail();
+//        correo.setBody("Hello World");
+//        correo.setFrom("BancoEAM@bank.com");
+//        correo.setTo("kzpvg1997@hotmail.com");
+//        correo.setSubject("Prueba de la clase");
+//        //servicio.enviarMail(correo);
+//        
+//        RespuestaNotificacion resp = servicio.enviarMail(correo);
+//        System.out.println(resp.getMensaje());
 		
 	}
 }

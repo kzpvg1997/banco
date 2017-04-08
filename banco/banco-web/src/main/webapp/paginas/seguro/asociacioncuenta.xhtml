@@ -92,7 +92,7 @@
 						</f:facet>
 						<p:commandButton action="#{asociadosAjaxController.borrar(cue)}" process="@this" value="Quitar"
 							update="panelDatosAsociado" />
-							<p:commandButton action="#" process="@this" value="Verificar"
+							<p:commandButton action="#{asociadosAjaxController.verificarCuenta(cue)}" process="@this" value="Verificar"
 							update="tablaCuentas" />
 					</p:column>
 				</p:dataTable>
