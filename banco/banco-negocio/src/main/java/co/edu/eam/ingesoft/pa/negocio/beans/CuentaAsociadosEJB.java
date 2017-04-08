@@ -155,7 +155,7 @@ public class CuentaAsociadosEJB {
 //        //servicio.enviarMail(correo);
 //        
 //        RespuestaNotificacion resp = servicio.enviarMail(correo);
-//        System.out.println(resp.getMensaje());
+//        System.out.println(resp.getMensaje()); 
 		
 	}
 }
