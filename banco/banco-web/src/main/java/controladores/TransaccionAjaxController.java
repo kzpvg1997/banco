@@ -95,6 +95,7 @@ public class TransaccionAjaxController implements Serializable {
 		c.setFechaVencimiento(null);
 		claveEJB.crearSegundaClave(c);
 		System.out.println("Creada...");
+
 		
 	}
 
