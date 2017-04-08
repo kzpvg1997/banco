@@ -144,8 +144,8 @@ public class CuentaAsociadosEJB {
         Notificaciones servicio = cliente.getNotificacionesPort();
         
         String endpointURL = "http://104.197.238.134:8080/notificaciones/notificacionesService";
-       // BindingProvider bp = (BindingProvider)servicio;
-       // bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
+       //BindingProvider bp = (BindingProvider)servicio;
+        //bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
         
         Mail correo = new Mail();
         correo.setBody("Hello World");
