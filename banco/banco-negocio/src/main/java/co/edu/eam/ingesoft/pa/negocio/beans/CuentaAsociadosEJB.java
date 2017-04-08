@@ -15,26 +15,18 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Banco;
-import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCard;
-import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCardConsume;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CuentaAsociados;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
-import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Franchise;
-import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Product;
 import co.edu.eam.ingesoft.pa.negocio.beans.remote.ICuentaAsociadosRemote;
 import co.edu.eam.ingesoft.pa.negocio.excepciones.ExcepcionNegocio;
-import co.edu.eam.pa.clientews.Mail;
 import co.edu.eam.pa.clientews.Notificaciones;
 import co.edu.eam.pa.clientews.NotificacionesService;
-import co.edu.eam.pa.clientews.RespuestaNotificacion;
-import co.edu.eam.pa.interbancariows.InterbancarioWS;
-import co.edu.eam.pa.interbancariows.InterbancarioWS_Service;
-import co.edu.eam.pa.interbancariows.RespuestaServicio;
 
 @LocalBean
 @Stateless
 @Remote(ICuentaAsociadosRemote.class)
 public class CuentaAsociadosEJB {
+	
 
 	@PersistenceContext
 	private EntityManager em;
@@ -126,43 +118,29 @@ public class CuentaAsociadosEJB {
 		
 	}
 	
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public boolean verificarCuenta(CuentaAsociados cu) {
+//	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+//	public boolean verificarCuenta(CuentaAsociados cu) {
+//		
+//		NotificacionesService cliente = new NotificacionesService();
+//        Notificaciones servicio = cliente.getNotificacionesPort();
+//        
+//        String endpointURL = "http://104.197.238.134:8080/notificaciones/notificacionesService";
+//        BindingProvider bp = (BindingProvider)servicio;
+//        bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
+//        
+//        Mail correo = new Mail();
+//        correo.setBody("Hello World");
+//        correo.setFrom("BancoEAM@bank.com");
+//        correo.setTo("kzpvg1997@hotmail.com");
+//        correo.setSubject("Prueba de la clase");
+//        //servicio.enviarMail(correo);
+//        
+//        RespuestaNotificacion resp = servicio.enviarMail(correo);
+//        System.out.println(resp.getMensaje());
 		
-		NotificacionesService cliente = new NotificacionesService();
-        Notificaciones servicio = cliente.getNotificacionesPort();
-        
-        String endpointURL = "http://104.197.238.134:8080/notificaciones/notificacionesService";
-        BindingProvider bp = (BindingProvider)servicio;
-        bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
-        
-        Mail correo = new Mail();
-        correo.setBody("Hello World");
-        correo.setFrom("BancoEAM@bank.com");
-        correo.setTo("kzpvg1997@hotmail.com");
-        correo.setSubject("Prueba de la clase");
-        //servicio.enviarMail(correo);
-        
-        RespuestaNotificacion resp = servicio.enviarMail(correo);
-        System.out.println(resp.getMensaje());
-		
-	}
+//	}
+
 	
-//	NotificacionesService cliente=new NotificacionesService();
-//	Notificaciones servicio=cliente.getNotificacionesPort();
-//	
-//	String endpointURL = "http://104.197.238.134:8080/notificaciones/notificacionesService?";
-//	BindingProvider bp = (BindingProvider)servicio;
-//	bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
-//	
-//	Mail correo=new Mail();
-//	correo.setBody("Hola Mundo");
-//	correo.setFrom("Hi");
-//	correo.setTo("Tanganica1@hotmail.com");
-//	correo.setSubject("Probando en clase");
-//	
-//	RespuestaNotificacion resp=servicio.enviarMail(correo);
-//	System.out.println(resp.getMensaje());
-	
-	
+
+
 }

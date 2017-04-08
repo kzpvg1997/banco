@@ -44,10 +44,11 @@ public class SegundaClaveEJB {
 	}
 	 
 	
-	public static Long numeroAleatorio6(){
+	public static int numeroAleatorio6(){
 		Long numero = ThreadLocalRandom.current().nextLong(100000L, 999999L );
 		System.out.println(numero);
-		return numero;
+		int numero1 = numero.intValue();
+		return numero1;
 		
 		}
 	
