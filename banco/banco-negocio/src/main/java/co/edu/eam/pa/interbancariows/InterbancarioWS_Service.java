@@ -42,26 +42,12 @@ public class InterbancarioWS_Service
         super(__getWsdlLocation(), INTERBANCARIOWS_QNAME);
     }
 
-    public InterbancarioWS_Service(WebServiceFeature... features) {
-        super(__getWsdlLocation(), INTERBANCARIOWS_QNAME, features);
-    }
-
-    public InterbancarioWS_Service(URL wsdlLocation) {
-        super(wsdlLocation, INTERBANCARIOWS_QNAME);
-    }
-
-    public InterbancarioWS_Service(URL wsdlLocation, WebServiceFeature... features) {
-        super(wsdlLocation, INTERBANCARIOWS_QNAME, features);
-    }
-
+  
     public InterbancarioWS_Service(URL wsdlLocation, QName serviceName) {
         super(wsdlLocation, serviceName);
     }
 
-    public InterbancarioWS_Service(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
-        super(wsdlLocation, serviceName, features);
-    }
-
+   
     /**
      * 
      * @return

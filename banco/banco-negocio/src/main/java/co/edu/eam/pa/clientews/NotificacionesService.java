@@ -42,26 +42,13 @@ public class NotificacionesService
         super(__getWsdlLocation(), NOTIFICACIONESSERVICE_QNAME);
     }
 
-    public NotificacionesService(WebServiceFeature... features) {
-        super(__getWsdlLocation(), NOTIFICACIONESSERVICE_QNAME, features);
-    }
-
-    public NotificacionesService(URL wsdlLocation) {
-        super(wsdlLocation, NOTIFICACIONESSERVICE_QNAME);
-    }
-
-    public NotificacionesService(URL wsdlLocation, WebServiceFeature... features) {
-        super(wsdlLocation, NOTIFICACIONESSERVICE_QNAME, features);
-    }
+   
 
     public NotificacionesService(URL wsdlLocation, QName serviceName) {
         super(wsdlLocation, serviceName);
     }
 
-    public NotificacionesService(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
-        super(wsdlLocation, serviceName, features);
-    }
-
+   
     /**
      * 
      * @return

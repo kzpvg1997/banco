@@ -15,9 +15,12 @@ import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCard;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CuentaAsociados;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.SavingAccount;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.SegundaClave;
 import co.edu.eam.ingesoft.pa.negocio.beans.CreditCardEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadosEJB;
+import co.edu.eam.ingesoft.pa.negocio.beans.CustomerEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.SavingAccountEJB;
+import co.edu.eam.ingesoft.pa.negocio.beans.SegundaClaveEJB;
 
 @Named("transaccionAjaxController")
 @ViewScoped
@@ -31,6 +34,12 @@ public class TransaccionAjaxController implements Serializable {
 
 	@EJB
 	private CuentaAsociadosEJB asocEJB;
+	
+	@EJB
+	private SegundaClaveEJB claveEJB;
+	
+	@EJB
+	private CustomerEJB customerEJB;
 
 	private List<SavingAccount> cuentasCliente;
 
@@ -77,6 +86,16 @@ public class TransaccionAjaxController implements Serializable {
 	
 	public void verificarClave(){
 		System.out.println("Verificando...");
+		int clave =  claveEJB.numeroAleatorio6();
+		Customer cus = customerEJB.buscarCustomer(sesionCotroller.getCliente().getIdType(), sesionCotroller.getCliente().getIdNum());
+		SegundaClave c = new SegundaClave();
+		c.setClave(clave);
+		c.setCustomer(cus);
+		c.setFechaGeneracion(null);
+		c.setFechaVencimiento(null);
+		claveEJB.crearSegundaClave(c);
+		System.out.println("Creada...");
+		
 	}
 
 	/**
