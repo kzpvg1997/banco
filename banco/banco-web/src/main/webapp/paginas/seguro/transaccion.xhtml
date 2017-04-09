@@ -44,7 +44,8 @@
 				
 				<p:outputLabel for="tfclave" id="tfcla" value="Clave" />
 				<p:inputText id="tfclave" value="#{transaccionAjaxController.clave}" />
-				<p:commandButton id="btnclave" value="Verificar" action="#{transaccionAjaxController.verificarClave}" />
+				<p:commandButton id="btnclave" value="Verificar" action="#{transaccionAjaxController.verificarClave}" 
+				process="@this paneltransaccion"/>
 
 
 				

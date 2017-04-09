@@ -75,7 +75,7 @@ public class CuentaAsociadosEJB {
 		return bancos;
 
 	}
-
+	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<CuentaAsociados> listaCuentasCliente(Customer customer) {
 
@@ -147,10 +147,12 @@ public class CuentaAsociadosEJB {
         correo.setFrom("BancoEAM@bank.com");
         correo.setTo("kzpvg1997@hotmail.com");
         correo.setSubject("Prueba de la clase");
-        //servicio.enviarMail(correo);
+        servicio.enviarMail(correo);
         
         RespuestaNotificacion resp = servicio.enviarMail(correo);
         System.out.println(resp.getMensaje()); 
 		
 	}
+	
+	
 }

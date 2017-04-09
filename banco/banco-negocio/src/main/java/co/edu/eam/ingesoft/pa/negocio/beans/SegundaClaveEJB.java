@@ -13,6 +13,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCard;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCardConsume;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CuentaAsociados;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.SegundaClave;
 import co.edu.eam.ingesoft.pa.negocio.beans.remote.ISavingAccountRemote;
@@ -41,34 +43,39 @@ public class SegundaClaveEJB {
 	
 
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-	public SegundaClave buscarSegundaClave(int num){
+	public SegundaClave buscarSegundaClave(String num){
 		return em.find(SegundaClave.class, num);
 	}
-	 
 	
-	public static int numeroAleatorio6(){
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void borrarSegundaClave(SegundaClave cu){
+		SegundaClave c =buscarSegundaClave(cu.getClave());
+		em.remove(c);
+	}
+	
+	public static String numeroAleatorio6(){
 		Long numero = ThreadLocalRandom.current().nextLong(100000L, 999999L );
 		System.out.println(numero);
-		int numero1 = numero.intValue();
+		String numero1 = numero.toString();
 		return numero1;
 		
 		}
 	
-
-
+	
 	public Date fechaExpedicionClave() {
 		Calendar calendar = Calendar.getInstance();
 		Date fecha = calendar.getTime();
+	    fecha.setMinutes(fecha.getMinutes()+2);
 		return fecha;
 	}
 	
-	
-	public Date fechaExpiracionClave() {
+	public Date fechaExpiracion() {
 		Calendar calendar = Calendar.getInstance();
 		Date fecha = calendar.getTime();
-		fecha.setMinutes(fecha.getMinutes()+5);
+		fecha.setYear(fecha.getYear()+4);
 		return fecha;
 	}
+
 
 	
 	
