@@ -68,16 +68,7 @@ public class SegundaClaveEJB {
 	    fecha.setMinutes(fecha.getMinutes()+2);
 		return fecha;
 	}
-	
-	public Date fechaExpiracion() {
-		Calendar calendar = Calendar.getInstance();
-		Date fecha = calendar.getTime();
-		fecha.setYear(fecha.getYear()+4);
-		return fecha;
-	}
-
-
-	
+		
 	
 
 }

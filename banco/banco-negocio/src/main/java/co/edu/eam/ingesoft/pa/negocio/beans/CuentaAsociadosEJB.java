@@ -53,7 +53,6 @@ public class CuentaAsociadosEJB {
 		
 		CuentaAsociados cu = buscarCuentaAsociado(cuenta.getNumeroCuenta());
 		if(cu!=null){
-
 			throw new ExcepcionNegocio("Este numero no de cuenta esta disponible,\n Digite otro numero");	
 		}else{
 			if(BuscarIdAsociado(cu)!=null){				

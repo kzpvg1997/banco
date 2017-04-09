@@ -70,9 +70,6 @@ public class TransaccionAjaxController implements Serializable {
 
 	}
 	
-	
-
-
 	public void tranferirCuentaAsociados() {
 		
 		SegundaClave sc = claveEJB.buscarSegundaClave(sesionCotroller.getCliente().getIdNum());
