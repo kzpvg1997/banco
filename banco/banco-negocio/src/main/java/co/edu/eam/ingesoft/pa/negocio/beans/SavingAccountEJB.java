@@ -184,7 +184,7 @@ public class SavingAccountEJB {
 				tr.setSavingAccNumber(s);
 				tr.setTransactionDate(fechaExpedicion());
 				tr.setSourceTransact(c.getNumeroCuenta());
-				tr.setTipoTransaccion(TipoTransaccionEnum.TRANSFERENCIA.toString());
+				tr.setTipoTransaccion(TipoTransaccionEnum.TRANAFERENCIA_INTERBANCARIA.toString());
 				em.persist(tr);
 			}else{
 				throw new ExcepcionNegocio("Saldo insuficiente para transferir \n Su saldo es de: "+s.getAmmount());

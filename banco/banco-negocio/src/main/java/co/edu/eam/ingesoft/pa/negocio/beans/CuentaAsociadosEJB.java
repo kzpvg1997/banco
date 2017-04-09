@@ -24,6 +24,9 @@ import co.edu.eam.pa.clientews.Mail;
 import co.edu.eam.pa.clientews.Notificaciones;
 import co.edu.eam.pa.clientews.NotificacionesService;
 import co.edu.eam.pa.clientews.RespuestaNotificacion;
+import co.edu.eam.pa.interbancariows.InterbancarioWS;
+import co.edu.eam.pa.interbancariows.InterbancarioWS_Service;
+import co.edu.eam.pa.interbancariows.RegistrarCuentaAsociada;
 
 @LocalBean
 @Stateless
@@ -47,12 +50,13 @@ public class CuentaAsociadosEJB {
 	}
 
 	public void agregarCuentaAsociados(CuentaAsociados cuenta){
+		
 		CuentaAsociados cu = buscarCuentaAsociado(cuenta.getNumeroCuenta());
 		if(cu!=null){
 
 			throw new ExcepcionNegocio("Este numero no de cuenta esta disponible,\n Digite otro numero");	
 		}else{
-			if(BuscarIdAsociado(cu)!=null){
+			if(BuscarIdAsociado(cu)!=null){				
 				em.persist(cuenta);
 			}else{
 				throw new ExcepcionNegocio("El asociado con numero de documento: "+cuenta.getIdAsociado()+
@@ -62,6 +66,8 @@ public class CuentaAsociadosEJB {
 		}
 		
 	}
+	
+	
 
 	public CuentaAsociados buscarCuentaAsociado(String numero) {
 		return em.find(CuentaAsociados.class, numero);
@@ -130,27 +136,12 @@ public class CuentaAsociadosEJB {
 				
 				c.setVerificado(true);
 				em.merge(c);
+				
 			}else{
 				throw new ExcepcionNegocio("Esta cuenta ya se encuentra verificada");
 			}
-		}
-		
-		NotificacionesService cliente = new NotificacionesService();
-        Notificaciones servicio = cliente.getNotificacionesPort();
-        
-        String endpointURL = "http://104.197.238.134:8080/notificaciones/notificacionesService";
-       BindingProvider bp = (BindingProvider)servicio;
-       bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
-        
-        Mail correo = new Mail();
-        correo.setBody("Hello World");
-        correo.setFrom("BancoEAM@bank.com");
-        correo.setTo("kzpvg1997@hotmail.com");
-        correo.setSubject("Prueba de la clase");
-        //servicio.enviarMail(correo);
-        
-        RespuestaNotificacion resp = servicio.enviarMail(correo);
-        System.out.println(resp.getMensaje()); 
+		}	
 		
 	}
+	
 }
