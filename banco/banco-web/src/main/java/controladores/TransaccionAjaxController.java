@@ -1,6 +1,8 @@
 package controladores;
 
 import java.io.Serializable;
+import java.security.Timestamp;
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +23,7 @@ import co.edu.eam.ingesoft.avanzada.persistencia.entidades.SegundaClave;
 import co.edu.eam.ingesoft.pa.negocio.beans.CreditCardEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadosEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CustomerEJB;
+import co.edu.eam.ingesoft.pa.negocio.beans.MensajeEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.SavingAccountEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.SegundaClaveEJB;
 
@@ -42,6 +45,9 @@ public class TransaccionAjaxController implements Serializable {
 
 	@EJB
 	private CustomerEJB customerEJB;
+	
+	@EJB
+	private MensajeEJB msjEJB;
 
 	private List<SavingAccount> cuentasCliente;
 
@@ -73,31 +79,44 @@ public class TransaccionAjaxController implements Serializable {
 	public void tranferirCuentaAsociados() {
 		
 		SegundaClave sc = claveEJB.buscarSegundaClave(sesionCotroller.getCliente().getIdNum());
-		
-		if(sc.getNumeroClave().equalsIgnoreCase(clave)){
-			SavingAccount sa = savigEJB.buscarCuentaAhorro(cuentasClienteSeleccionada);
-			if (sa != null) {
-				CuentaAsociados cu = asocEJB.buscarCuentaAsociado(cuentaAsociadoSeleccionada);
-				if (cu != null) {
-		
-					savigEJB.transferirCuentaAsociados(monto, sa, cu);
-					Messages.addFlashGlobalInfo("Transferencia Exitosa !");
-					System.out.println("Transferencia Exitosa !");
-				}
-		
-			}
+		int mn = claveEJB.fechaExpedicionClave().getMinutes();
+		if(sc.getMin() > mn){
+			System.out.println("Activo");
+			if(sc.getNumeroClave().equalsIgnoreCase(clave)){
+				SavingAccount sa = savigEJB.buscarCuentaAhorro(cuentasClienteSeleccionada);
+				if (sa != null) {
+					CuentaAsociados cu = asocEJB.buscarCuentaAsociado(cuentaAsociadoSeleccionada);
+					if (cu != null) {
 			
+						savigEJB.transferirCuentaAsociados(monto, sa, cu);
+						Messages.addFlashGlobalInfo("Transferencia Exitosa !");
+						System.out.println("Transferencia Exitosa !");
+					}
+			
+				}
+				
+			}else{
+				Messages.addFlashGlobalError("Clave Erronea!");
+				System.out.println("Clave Erronea!");
+			}
 		}else{
-			Messages.addFlashGlobalError("Clave Erronea!");
-			System.out.println("Clave Erronea!");
+			Messages.addFlashGlobalError("La clave ha expirado");
+			System.out.println("La clave ha expirado");
 		}
+			
+
 		
 	}
 
 	public void verificarClave() {
+		
 		System.out.println("Verificando...");
 		String clave1 = claveEJB.numeroAleatorio6();
 		Date fecha = claveEJB.fechaExpedicionClave();
+		int min = claveEJB.fechaExpedicion();
+		
+		String txt = "La clve de verificacion es: "+clave1;
+		
 
 		Customer cus = customerEJB.buscarCustomer(sesionCotroller.getCliente().getIdType(),
 				sesionCotroller.getCliente().getIdNum());
@@ -107,14 +126,19 @@ public class TransaccionAjaxController implements Serializable {
 		c.setNumeroClave(clave1);
 		c.setCustomer(cus);
 		c.setFechaGeneracion(fecha);
+		c.setMin(min);
+		
 
 		SegundaClave sc = claveEJB.buscarSegundaClave(c.getClave());
 		if (sc != null) {
 			claveEJB.borrarSegundaClave(sc);
 			claveEJB.crearSegundaClave(c);
+			msjEJB.Sms(txt, sesionCotroller.getCliente().getTelefono());
 		} else {
 			claveEJB.crearSegundaClave(c);
+			msjEJB.Sms(txt, sesionCotroller.getCliente().getTelefono());
 		}
+		Messages.addFlashGlobalInfo("Tienes 2 minutos para ingresar la clave");
 
 	}
 

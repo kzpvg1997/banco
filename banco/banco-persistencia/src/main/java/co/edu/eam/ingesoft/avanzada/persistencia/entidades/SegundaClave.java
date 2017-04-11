@@ -36,8 +36,11 @@ public class SegundaClave implements Serializable{
 	private Customer customer;
 	
 	@Column(name="fecha_genecion")
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaGeneracion;
+	
+	@Column(name="minutos")
+	private int min;
 		
 
 	public SegundaClave() {
@@ -46,12 +49,13 @@ public class SegundaClave implements Serializable{
 	}
 
 
-	public SegundaClave(String id, String numeroClave, Customer customer, Date fechaGeneracion) {
+	public SegundaClave(String id, String numeroClave, Customer customer, Date fechaGeneracion,int min) {
 		super();
 		this.id = id;
 		this.numeroClave = numeroClave;
 		this.customer = customer;
 		this.fechaGeneracion = fechaGeneracion;
+		this.min = min;
 	}
 
 
@@ -116,6 +120,22 @@ public class SegundaClave implements Serializable{
 	 */
 	public void setFechaGeneracion(Date fechaGeneracion) {
 		this.fechaGeneracion = fechaGeneracion;
+	}
+
+
+	/**
+	 * @return the min
+	 */
+	public int getMin() {
+		return min;
+	}
+
+
+	/**
+	 * @param min the min to set
+	 */
+	public void setMin(int min) {
+		this.min = min;
 	}
 
 	

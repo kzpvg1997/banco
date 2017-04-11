@@ -1,5 +1,6 @@
 package co.edu.eam.ingesoft.pa.negocio.beans;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
@@ -64,8 +65,14 @@ public class SegundaClaveEJB {
 	
 	public Date fechaExpedicionClave() {
 		Calendar calendar = Calendar.getInstance();
-		Date fecha = calendar.getTime();
-	    fecha.setMinutes(fecha.getMinutes()+2);
+		Date fecha =  calendar.getTime();
+	    fecha.setMinutes(fecha.getMinutes());
+		return fecha;
+	}
+	
+	public int fechaExpedicion() {
+		Calendar calendar = Calendar.getInstance();
+		int fecha = calendar.getTime().getMinutes()+2;
 		return fecha;
 	}
 		

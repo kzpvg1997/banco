@@ -19,7 +19,6 @@ import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
 import co.edu.eam.ingesoft.pa.negocio.beans.CreditCardEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadosEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CustomerEJB;
-import co.edu.eam.ingesoft.pa.negocio.beans.ServiciosServidor;
 import co.edu.eam.ingesoft.pa.negocio.excepciones.ExcepcionNegocio;
 import co.edu.eam.pa.clientews.Mail;
 import co.edu.eam.pa.clientews.Notificaciones;
@@ -37,8 +36,8 @@ public class AsociacionCuentaAjaxController implements Serializable{
 	@EJB
 	private CuentaAsociadosEJB cuAsEJB; //EJB de CuentaAsociados
 	
-	@EJB
-	private ServiciosServidor servicios;
+//	@EJB
+//	private ServiciosServidor servicios;
 	
 	@EJB
 	private CustomerEJB customerEJB; //EJB de cliente
@@ -90,7 +89,7 @@ public class AsociacionCuentaAjaxController implements Serializable{
 							cus,b,false,nombreCuenta,monto);
 					
 					cuAsEJB.agregarCuentaAsociados(cu);
-					servicios.asociarCuenta(bancoSeleccionado, cbDocumentoTitular, numeroDocumento, nombreTitular, numeroCuenta);
+//					servicios.asociarCuenta(bancoSeleccionado, cbDocumentoTitular, numeroDocumento, nombreTitular, numeroCuenta);
 					
 					cuentasCliente = actualizarCuentasCliente();
 					Messages.addFlashGlobalInfo("Cuenta Asociada Registrada Con Exito!");

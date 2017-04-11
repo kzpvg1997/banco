@@ -11,6 +11,7 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -35,6 +36,9 @@ public class CreditCardEJB {
 	
 	@EJB
 	private ProductEJB productoEJB;
+	
+	@EJB
+	private MensajeEJB msjEJB;
 
 	@PersistenceContext
 	private EntityManager em;
@@ -207,7 +211,7 @@ public class CreditCardEJB {
 				SavingAccount cue = (SavingAccount) procuen;
 				if(cue != null){
 					cue.setAmmount(cue.getAmmount()+cantidad);
-					savingEJB.actualizarCuenta(cue);
+					savingEJB.actualizarCuenta(cue);		
 					
 				}
 			}else{

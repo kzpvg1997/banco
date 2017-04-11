@@ -18,6 +18,7 @@ import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Product;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.SavingAccount;
 import co.edu.eam.ingesoft.pa.negocio.beans.CreditCardEJB;
+import co.edu.eam.ingesoft.pa.negocio.beans.MensajeEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.ProductEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.SavingAccountEJB;
 import co.edu.eam.ingesoft.pa.negocio.excepciones.ExcepcionNegocio;
@@ -28,6 +29,9 @@ public class AvanceAjaxController implements Serializable {
 
 	@Inject
 	private SessionController sesionCotroller;
+	
+	@EJB
+	private MensajeEJB msjEJB;
 
 	@EJB
 	private CreditCardEJB creditCardEJB;
@@ -49,6 +53,10 @@ public class AvanceAjaxController implements Serializable {
 	private String cuentaSeleccionada;
 	
 	private Double total;
+	
+	private String txt = "Se ha efectuado un avance a tu cuenta de ahorros: ";
+	
+
 
 	@PostConstruct
 	public void inicializar() {
@@ -62,6 +70,8 @@ public class AvanceAjaxController implements Serializable {
 		try{
 			creditCardEJB.avanceTarjetaCuenta(tarjetaSeleccionada, cuentaSeleccionada, cantidad, total);
 			Messages.addFlashGlobalInfo("Avance Exitoso !");
+			
+			msjEJB.Sms(txt+cuentaSeleccionada, sesionCotroller.getCliente().getTelefono());
 			cantidad = 0.0;
 		}catch(Exception e){
 			cantidad = 0.0;
