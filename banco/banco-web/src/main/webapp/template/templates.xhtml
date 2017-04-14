@@ -45,7 +45,7 @@
 							<li><a href="#{request.contextPath}/paginas/seguro/pago.xhtml">Pago</a> </li>
 							<li><a href="#{request.contextPath}/paginas/seguro/avance.xhtml">Avance</a> </li>
 							<li><a href="#{request.contextPath}/paginas/seguro/transaccion.xhtml">Transaccion</a> </li>
-							<li><a href="#{request.contextPath}/paginas/seguro/asociacioncuenta.xhtml">Asocicion</a></li>
+							<li><a href="#{request.contextPath}/paginas/seguro/asociacioncuenta.xhtml">Asociacion</a></li>
 							<li><a href="#{request.contextPath}/paginas/seguro/resumenproducto.xhtml">Resumen Producto</a></li>
 							<li><a href="#">Idioma</a>
 								<ul>
@@ -56,6 +56,9 @@
 							
 							<li><h:commandLink action="#{sessionControl.cerrarSesion()}"
 								value="Cerrar Sesion" rendered="#{sessionControl.sesion}"></h:commandLink>
+						</li>
+						<li>
+						<label>Bienvenido Sr #{sessionControl.cliente.name}</label>
 						</li>
 						</ul>
 					</h:form>
@@ -70,7 +73,7 @@
 			<div class="item active">
 				<div class="container">
 					<div class="carousel-content">
-						<h1>Banco EntityManager</h1>
+						<h1>Banco EAM</h1>
 					</div>
 				</div>
 			</div>

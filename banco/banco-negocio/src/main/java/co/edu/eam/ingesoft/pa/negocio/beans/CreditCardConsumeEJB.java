@@ -82,6 +82,11 @@ public class CreditCardConsumeEJB {
 			em.merge(consumo.getCreditCard());
 		}
 	}
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public CreditCardConsume buscarConsumo (int id){
+		return em.find(CreditCardConsume.class, id);
+	}
+	
 	/**
 	 * Metodo para listar los conumos de una tarjeta
 	 * @param tarjeta la tarjeta que se le deseasacar la lista
