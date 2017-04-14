@@ -60,8 +60,8 @@ public class CuentaAsociados  implements Serializable{
 	@JoinColumn(name="bank_id")
 	private Banco banco;
 	
-	@Column(name="verificated")
-	private boolean verificado;
+	@Column(name="estado")
+	private String estado;
 	
 	@Column(name="name_association")
 	private String nombreAsociacion;
@@ -90,7 +90,7 @@ public class CuentaAsociados  implements Serializable{
 	 * @param monto
 	 */
 	public CuentaAsociados(String numeroCuenta, String idAsociado, String nombreAsociado, String tipoID,
-			Customer customer, Banco banco, boolean verificado, String nombreAsociacion, double monto) {
+			Customer customer, Banco banco, String estado, String nombreAsociacion, double monto) {
 		
 		this.numeroCuenta = numeroCuenta;
 		this.idAsociado = idAsociado;
@@ -98,7 +98,7 @@ public class CuentaAsociados  implements Serializable{
 		this.tipoID = tipoID;
 		this.customer = customer;
 		this.banco = banco;
-		this.verificado = verificado;
+		this.estado = estado;
 		this.nombreAsociacion = nombreAsociacion;
 		this.monto = monto;
 	}
@@ -199,20 +199,19 @@ public class CuentaAsociados  implements Serializable{
 		this.banco = banco;
 	}
 
-
 	/**
-	 * @return the verificado
+	 * @return the estado
 	 */
-	public boolean isVerificado() {
-		return verificado;
+	public String getEstado() {
+		return estado;
 	}
 
 
 	/**
-	 * @param verificado the verificado to set
+	 * @param estado the estado to set
 	 */
-	public void setVerificado(boolean verificado) {
-		this.verificado = verificado;
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 

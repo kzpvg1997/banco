@@ -97,7 +97,7 @@ public class CuentaAsociadosEJB {
 		List<CuentaAsociados> lista = listaCuentasCliente(customer);
 		List<CuentaAsociados> verificadas = new ArrayList<CuentaAsociados>();
 		for (CuentaAsociados c : lista) {
-			if (c.isVerificado()) { // preguntar
+			if (c.getEstado().equalsIgnoreCase("Asociada")) { // preguntar
 				verificadas.add(c);
 			}
 		}
@@ -131,9 +131,9 @@ public class CuentaAsociadosEJB {
 		
 		CuentaAsociados c = buscarCuentaAsociado(cu.getNumeroCuenta());
 		if(c!=null){
-			if(c.isVerificado()==false){
+			if(c.getEstado().equalsIgnoreCase("PENDIENTE")){
 				
-				c.setVerificado(true);
+				c.setEstado("Asociada");
 				em.merge(c);
 				
 			}else{

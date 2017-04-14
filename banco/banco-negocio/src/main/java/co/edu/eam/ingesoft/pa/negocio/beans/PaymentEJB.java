@@ -20,6 +20,7 @@ import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCardConsume;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCardPaymentConsume;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CustomerPK;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.SavingAccount;
 import co.edu.eam.ingesoft.pa.negocio.beans.remote.IPaymentRemote;
 import co.edu.eam.ingesoft.pa.negocio.excepciones.ExcepcionNegocio;
 
@@ -44,6 +45,9 @@ public class PaymentEJB {
 
 	@EJB
 	private CreditCardEJB cardEJB;
+	
+	@EJB
+	private SavingAccountEJB savingEJB;
 
 	/**
 	 * Lista los pagos de un determinado consumo
@@ -100,6 +104,91 @@ public class PaymentEJB {
 		double operacion = monto + interes / consumo.getNumberShares();
 		return operacion;
 	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void pagarConsumoCuentaAhorros(SavingAccount cuenta,CreditCardConsume consumo,CreditCard tarjeta){
+		
+		double valorConsumo= consumo.getRemainingAmmount();
+		double montoCuenta = cuenta.getAmmount();
+		
+		if(valorConsumo>montoCuenta){
+			throw new ExcepcionNegocio("Saldo insuficiente para realizar el pago de este consumo \n"
+					+ "Su saldo es de: "+cuenta.getAmmount());
+		}else{
+			
+			consumo.setRemainingAmmount(0);
+			consumo.setRemaningShares(0);
+			consumo.setValorCuota(0);
+			em.merge(consumo);
+			
+			cuenta.setAmmount(montoCuenta-valorConsumo);
+			em.merge(cuenta);
+			
+			CreditCardPaymentConsume pay = new CreditCardPaymentConsume();
+			pay.setAmmount(valorConsumo);
+			pay.setCapitalAmmount(valorConsumo);
+			pay.setInterestAmmount(valorConsumo* 0.036 + valorConsumo);
+			pay.setPaymentDate(consumoEJB.fechaActual());
+			pay.setIdConsume(consumo);
+			pay.setShare(consumo.getRemaningShares());
+
+			em.persist(pay);
+			
+			tarjeta.setDeuda(tarjeta.getDeuda()-valorConsumo);
+			em.merge(tarjeta);
+		}
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void pagarTotalConsumosCuentaAhorros(SavingAccount cuenta,CreditCard tarjeta){
+		
+		double valorTotalCuotas = consumoEJB.consumosTotalTarjetaCredito(tarjeta);
+		if (valorTotalCuotas == 0) {
+			throw new ExcepcionNegocio("Usted ya tiene todos los consumos de esta tarjeta pagos.");
+		} else {
+			List<CreditCardConsume> conNoPago = consumoEJB.consumosTarjetaNoPagos(tarjeta);
+			for (CreditCardConsume conNoPag : conNoPago) {
+
+				if (!conNoPag.isPayed()) {
+					if(valorTotalCuotas>cuenta.getAmmount()){
+						throw new ExcepcionNegocio("Saldo insuficiente para realizar el pago total de sus consumos \n"
+								+ "Su saldo es de: "+cuenta.getAmmount());
+					}else{
+					
+					conNoPag.setRemainingAmmount(conNoPag.getRemainingAmmount() - valorTotalCuotas);
+					conNoPag.setRemaningShares(0);
+					conNoPag.setValorCuota(0);
+					em.merge(conNoPag);
+					
+					cuenta.setAmmount(cuenta.getAmmount()-valorTotalCuotas);
+					em.merge(cuenta);
+					
+					CreditCardPaymentConsume pay = new CreditCardPaymentConsume();
+					pay.setAmmount(valorTotalCuotas);
+					pay.setCapitalAmmount(valorTotalCuotas);
+					pay.setInterestAmmount(valorTotalCuotas * 0.036 + valorTotalCuotas);
+					pay.setPaymentDate(consumoEJB.fechaActual());
+					pay.setIdConsume(conNoPag);
+					pay.setShare(conNoPag.getRemaningShares());
+
+					em.persist(pay);
+					
+					
+					if (conNoPag.getRemainingAmmount() <= 0.0 || conNoPag.getRemaningShares() == 0) {
+						conNoPag.setPayed(true);
+						conNoPag.setRemainingAmmount(0.0);
+						conNoPag.setValorCuota(0);
+						em.merge(conNoPag);			
+						tarjeta.setDeuda(0.0);
+						em.merge(tarjeta);
+					}
+					}
+					}
+				}
+			}
+		}
+	
+	
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void pagarTarjeta(CreditCard tarjeta) {

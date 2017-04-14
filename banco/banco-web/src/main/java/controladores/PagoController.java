@@ -15,6 +15,8 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 import org.omnifaces.cdi.ViewScoped;
+import org.omnifaces.util.Messages;
+import org.omnifaces.util.Messages.Message;
 
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCard;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCardConsume;
@@ -27,6 +29,7 @@ import co.edu.eam.ingesoft.pa.negocio.beans.CustomerEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.PaymentEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.ProductEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.SavingAccountEJB;
+import co.edu.eam.ingesoft.pa.negocio.excepciones.ExcepcionNegocio;
 
 /**
  * @author GAR-T
@@ -44,6 +47,9 @@ public class PagoController implements Serializable{
 	
 	@EJB
 	private CreditCardConsumeEJB consumoEJB;
+	
+	@EJB
+	private PaymentEJB payEJB;
 	
 	@EJB
 	private ProductEJB productoEJB;
@@ -104,10 +110,50 @@ public class PagoController implements Serializable{
 		consumos = consumoEJB.consumosTarjetaNoPagos(tar);
 		
 	}
+	
+	public void pagarConsumo(int idConsumo){
+		try{
+			SavingAccount cuenta = savinEJB.buscarCuentaAhorro(cuentaSeleccionada);
+			if(cuenta==null){
+				Messages.addFlashGlobalWarn("Por favor elija una cuenta de ahorros");
+			}else{
+			CreditCard tarjeta = creditCardEJB.buscarCreditCard(tarjetaSeleccionada);
+			if(tarjeta==null){
+				Messages.addFlashGlobalWarn("Por favor elija una tarjeta");
+			}else{
+				CreditCardConsume consumo = consumoEJB.buscarConsumo(idConsumo);
+				payEJB.pagarConsumoCuentaAhorros(cuenta, consumo, tarjeta);
+				cargarTablaCombo();
+				Messages.addFlashGlobalInfo("Se ha realizado el pago este consumo Exitosamente!");
+			}
+			}
+		}catch (ExcepcionNegocio e){
+			Messages.addFlashGlobalError(e.getMessage());
+		}
+	}
 
 	
 	public void pagar(){
-		System.out.println("holaaaaa");
+		try{
+		SavingAccount cuenta = savinEJB.buscarCuentaAhorro(cuentaSeleccionada);
+		if(cuenta==null){
+			Messages.addFlashGlobalWarn("Por favor elija una cuenta de ahorros");
+		}else{
+		CreditCard tarjeta = creditCardEJB.buscarCreditCard(tarjetaSeleccionada);
+		if(tarjeta==null){
+			Messages.addFlashGlobalWarn("Por favor elija una tarjeta");
+		}else{
+		
+		payEJB.pagarTotalConsumosCuentaAhorros(cuenta, tarjeta);
+		
+		cargarTablaCombo();
+		Messages.addFlashGlobalInfo("Se ha realizado el pago total de sus consumos Exitosamente!");
+		}
+		}
+		}catch (ExcepcionNegocio e){
+			Messages.addFlashGlobalError(e.getMessage());
+		}
+		
 	}
 
 	/**

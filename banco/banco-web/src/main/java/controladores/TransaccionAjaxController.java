@@ -26,6 +26,7 @@ import co.edu.eam.ingesoft.pa.negocio.beans.CustomerEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.MensajeEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.SavingAccountEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.SegundaClaveEJB;
+import co.edu.eam.ingesoft.pa.negocio.excepciones.ExcepcionNegocio;
 
 @Named("transaccionAjaxController")
 @ViewScoped
@@ -45,7 +46,7 @@ public class TransaccionAjaxController implements Serializable {
 
 	@EJB
 	private CustomerEJB customerEJB;
-	
+
 	@EJB
 	private MensajeEJB msjEJB;
 
@@ -75,48 +76,54 @@ public class TransaccionAjaxController implements Serializable {
 		}
 
 	}
-	
+
 	public void tranferirCuentaAsociados() {
-		
+		try {
+		if(clave.isEmpty()){
+			Messages.addFlashGlobalError("Por favor ingrese la clave");
+		}else{
 		SegundaClave sc = claveEJB.buscarSegundaClave(sesionCotroller.getCliente().getIdNum());
 		int mn = claveEJB.fechaExpedicionClave().getMinutes();
-		if(sc.getMin() > mn){
+		if (sc.getMin() > mn) {
 			System.out.println("Activo");
-			if(sc.getNumeroClave().equalsIgnoreCase(clave)){
+			if (sc.getNumeroClave().equalsIgnoreCase(clave)) {
 				SavingAccount sa = savigEJB.buscarCuentaAhorro(cuentasClienteSeleccionada);
 				if (sa != null) {
 					CuentaAsociados cu = asocEJB.buscarCuentaAsociado(cuentaAsociadoSeleccionada);
 					if (cu != null) {
-			
-						savigEJB.transferirCuentaAsociados(monto, sa, cu);
-						Messages.addFlashGlobalInfo("Transferencia Exitosa !");
-						System.out.println("Transferencia Exitosa !");
-					}
-			
+						
+							savigEJB.transferirCuentaAsociados(monto, sa, cu);
+							Messages.addFlashGlobalInfo("Transferencia Exitosa !");
+							System.out.println("Transferencia Exitosa !");
+
+						}
+
 				}
-				
-			}else{
+			
+
+			} else {
 				Messages.addFlashGlobalError("Clave Erronea!");
 				System.out.println("Clave Erronea!");
 			}
-		}else{
+		} else {
 			Messages.addFlashGlobalError("La clave ha expirado");
 			System.out.println("La clave ha expirado");
 		}
-			
+		}
+		} catch (ExcepcionNegocio e) {
+			Messages.addFlashGlobalError(e.getMessage());
+		}
 
-		
 	}
 
 	public void verificarClave() {
-		
+
 		System.out.println("Verificando...");
 		String clave1 = claveEJB.numeroAleatorio6();
 		Date fecha = claveEJB.fechaExpedicionClave();
 		int min = claveEJB.fechaExpedicion();
-		
-		String txt = "La clve de verificacion es: "+clave1;
-		
+
+		String txt = "La clve de verificacion es: " + clave1;
 
 		Customer cus = customerEJB.buscarCustomer(sesionCotroller.getCliente().getIdType(),
 				sesionCotroller.getCliente().getIdNum());
@@ -127,7 +134,6 @@ public class TransaccionAjaxController implements Serializable {
 		c.setCustomer(cus);
 		c.setFechaGeneracion(fecha);
 		c.setMin(min);
-		
 
 		SegundaClave sc = claveEJB.buscarSegundaClave(c.getClave());
 		if (sc != null) {
@@ -276,11 +282,5 @@ public class TransaccionAjaxController implements Serializable {
 	public void setClave(String clave) {
 		this.clave = clave;
 	}
-	
-	
-
-	
-	
-	
 
 }

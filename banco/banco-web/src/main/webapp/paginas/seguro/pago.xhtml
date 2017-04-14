@@ -33,7 +33,7 @@
 				var="con" border="1">
 				<p:column>
 					<f:facet name="header">
-							Identificacion
+							numero de consumo
 						</f:facet>
 					<p:outputLabel value="#{con.id}" />
 				</p:column>
@@ -47,17 +47,17 @@
 					<f:facet name="header">
 							Valor
 						</f:facet>
-					<p:outputLabel value="#{con.ammount}" />
+					<p:outputLabel value="#{con.remainingAmmount}" />
 				</p:column>
 				<p:column>
 					<f:facet name="header">
 							N° Cuotas
 						</f:facet>
-					<p:outputLabel value="#{con.numberShares}" />
+					<p:outputLabel value="#{con.remaningShares}" />
 				</p:column>
 
 				<p:column headerText="Pago">
-					<p:commandButton action="#" process="@this" value="Pagar"
+					<p:commandButton action="#{pagoController.pagarConsumo(con.id)}" value="Pagar"
 						update="tablaDoc" />
 				</p:column>
 			</p:dataTable>
@@ -77,8 +77,8 @@
 						itemValue="#{cuentas}" itemLabel="#{cuentas.number}" />
 				</h:selectOneMenu>
 
-				<p:commandButton id="btnpagar" value="#{msj['pago.pagar']}"
-					action="#{pagoController.pagar}" />
+				<p:commandButton id="btnpagar" value="pagar total"
+					action="#{pagoController.pagar}" update="tablaDoc"/>
 			</p:panelGrid>
 
 

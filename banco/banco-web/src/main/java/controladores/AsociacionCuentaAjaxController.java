@@ -19,6 +19,7 @@ import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
 import co.edu.eam.ingesoft.pa.negocio.beans.CreditCardEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadosEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CustomerEJB;
+import co.edu.eam.ingesoft.pa.negocio.beans.ServiciosServidor;
 import co.edu.eam.ingesoft.pa.negocio.excepciones.ExcepcionNegocio;
 import co.edu.eam.pa.clientews.Mail;
 import co.edu.eam.pa.clientews.Notificaciones;
@@ -36,8 +37,8 @@ public class AsociacionCuentaAjaxController implements Serializable{
 	@EJB
 	private CuentaAsociadosEJB cuAsEJB; //EJB de CuentaAsociados
 	
-//	@EJB
-//	private ServiciosServidor servicios;
+	@EJB
+	private ServiciosServidor servicios;
 	
 	@EJB
 	private CustomerEJB customerEJB; //EJB de cliente
@@ -86,10 +87,10 @@ public class AsociacionCuentaAjaxController implements Serializable{
 				if(b != null){	     
 				     
 					CuentaAsociados cu = new CuentaAsociados(numeroCuenta,numeroDocumento,nombreTitular,cbDocumentoTitular,
-							cus,b,false,nombreCuenta,monto);
+							cus,b,"PENDIENTE",nombreCuenta,monto);
 					
 					cuAsEJB.agregarCuentaAsociados(cu);
-//					servicios.asociarCuenta(bancoSeleccionado, cbDocumentoTitular, numeroDocumento, nombreTitular, numeroCuenta);
+					servicios.asociarCuenta(bancoSeleccionado, cbDocumentoTitular, numeroDocumento, nombreTitular, numeroCuenta);
 					
 					cuentasCliente = actualizarCuentasCliente();
 					Messages.addFlashGlobalInfo("Cuenta Asociada Registrada Con Exito!");
@@ -121,25 +122,8 @@ public class AsociacionCuentaAjaxController implements Serializable{
 	
 	public void verificarCuenta (CuentaAsociados cu){
 		try{
-		cuAsEJB.verificarCuenta(cu);
-		Messages.addFlashGlobalInfo("La cuenta ha sido verificada exitosamente");
 		
-		NotificacionesService cliente = new NotificacionesService();
-        Notificaciones servicio = cliente.getNotificacionesPort();
-        
-       String endpointURL = "http://104.197.238.134:8080/notificaciones/notificacionesService";
-       BindingProvider bp = (BindingProvider)servicio;
-       bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
-        
-        Mail correo = new Mail();
-        correo.setBody("Su cuenta ha sido verificada exitosamente");
-        correo.setFrom("BancoEAM@bank.com");
-        correo.setTo(sesionCotroller.getCliente().getCorreo());
-        correo.setSubject("VERIFIACION DE CUENTA");
-        //servicio.enviarMail(correo);
-        
-        RespuestaNotificacion resp = servicio.enviarMail(correo);
-        System.out.println(resp.getMensaje()); 
+		servicios.verificarCuenta(cu);
 		
         cuentasCliente = cuAsEJB.listaCuentasCliente(sesionCotroller.getCliente());
         
