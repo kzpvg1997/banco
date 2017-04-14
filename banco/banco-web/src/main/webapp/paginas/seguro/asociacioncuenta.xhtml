@@ -15,11 +15,11 @@
 
 			<p:panelGrid id="panelavance" columns="3">
 
-				<p:outputLabel for="tftitular" id="tfnombretitular" value="Nombre Titular" />
+				<p:outputLabel for="tftitular" id="tfnombretitular" value="#{msj['asociado.nombreTitular']}:" />
 				<p:inputText id="tftitular" value="#{asociadosAjaxController.nombreTitular}" />
 				<p:message for="tftitular" />
 
-				<p:outputLabel for="cbDocTitular" id="lbliDocumentoTitular" value="Tipo ID Titular" />
+				<p:outputLabel for="cbDocTitular" id="lbliDocumentoTitular" value="#{msj['asociado.cbDocumentoTitular']}:" />
 				<h:selectOneMenu id="cbDocTitular"
 					value="#{asociadosAjaxController.cbDocumentoTitular}">
 					<f:selectItem itemValue="CC" itemLabel="C.C" />					
@@ -29,11 +29,11 @@
 				</h:selectOneMenu>
 				<p:message for="cbDocTitular" />
 
-				<p:outputLabel for="tfnumDocumentoTitu" id="tfnumetitular" value="Numero Documento" />
+				<p:outputLabel for="tfnumDocumentoTitu" id="tfnumetitular" value="#{msj['asociado.numeroDocumento']}:" />
 				<p:inputText id="tfnumDocumentoTitu" value="#{asociadosAjaxController.numeroDocumento}" />
 				<p:message for="tfnumDocumentoTitu" />
 
-				<p:outputLabel for="tfbanco" id="tfban" value="Banco" />
+				<p:outputLabel for="tfbanco" id="tfban" value="#{msj['asociado.bancoSeleccionado']}:" />
 				<p:selectOneMenu id="tfbanco" value="#{asociadosAjaxController.bancoSeleccionado}">
 					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
 					<f:selectItems value="#{asociadosAjaxController.bancos}" var="bancos"
@@ -43,15 +43,15 @@
 				</p:selectOneMenu>
 				<p:message for="tfbanco" />
 
-				<p:outputLabel for="tfnumeroCu" id="tfnuroCu" value="Numero Cuenta" />
+				<p:outputLabel for="tfnumeroCu" id="tfnuroCu" value="#{msj['asociado.numeroCuenta']}:" />
 				<p:inputText id="tfnumeroCu" value="#{asociadosAjaxController.numeroCuenta}" />
 				<p:message for="tfnumeroCu" />
 
-				<p:outputLabel for="tfnombreCu" id="tfnomCu" value="Nombre de Cuenta" />
+				<p:outputLabel for="tfnombreCu" id="tfnomCu" value="#{msj['asociado.nombreCuenta']}:" />
 				<p:inputText id="tfnombreCu" value="#{asociadosAjaxController.nombreCuenta}" />
 				<p:message for="tfnombreCu" />
 				
-				<p:outputLabel for="tfmonto" id="tfmon" value="Monto" />
+				<p:outputLabel for="tfmonto" id="tfmon" value="#{msj['asociado.monto']}:" />
 				<p:inputText id="tfmonto" value="#{asociadosAjaxController.monto}" />
 				<p:message for="tfmonto" />
 
@@ -59,9 +59,9 @@
 
 
 			<p:panelGrid id="panelBotones" columns="2">
-				<p:commandButton id="btacep" value="Agregar Cuenta" action="#{asociadosAjaxController.agregarCuentaAsociada}"
+				<p:commandButton id="btacep" value="#{msj['asociado.agregar']}:" action="#{asociadosAjaxController.agregarCuentaAsociada}"
 				 update="panelDatosAsociado" />
-				<p:commandButton id="btcan" value="Cancelar" 
+				<p:commandButton id="btcan" value="#{msj['asociado.cancelar']}:" 
 				process="@this" action="/paginas/seguro/resumenproducto.xhtml?faces-redirect=true" 
 				/>
 			</p:panelGrid>

@@ -15,7 +15,7 @@
 
 			<p:panelGrid id="paneltransaccion" columns="3">
 
-				<h:outputLabel for="cbcuorigen" id="lblcuentaorigen" value="Cuenta Origen" />
+				<h:outputLabel for="cbcuorigen" id="lblcuentaorigen" value="#{msj['transaccion.cuentaOrigen']}:" />
 				<p:selectOneMenu id="cbcuorigen"
 					value="#{transaccionAjaxController.cuentasClienteSeleccionada}">
 					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
@@ -27,7 +27,7 @@
 				<p:message for="cbcuorigen" />
 				
 				
-				<h:outputLabel for="cbcuodestino" id="lblcuentadesti" value="Cuenta Destino (Asociada)" />
+				<h:outputLabel for="cbcuodestino" id="lblcuentadesti" value="#{msj['transaccion.cuentaDestino']}:" />
 				<p:selectOneMenu id="cbcuodestino"
 					value="#{transaccionAjaxController.cuentaAsociadoSeleccionada}">
 					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
@@ -39,13 +39,13 @@
 				<p:message for="cbcuodestino" />
 
 
-				<p:outputLabel for="tfmontotrasn" id="tfcantidad" value="Monto" />
+				<p:outputLabel for="tfmontotrasn" id="tfcantidad" value="#{msj['transaccion.montoTra']}:" />
 				<p:inputText id="tfmontotrasn" value="#{transaccionAjaxController.monto}" />
 				<p:message for="tfmontotrasn" />
 				
-				<p:outputLabel for="tfclave" id="tfcla" value="Clave" />
+				<p:outputLabel for="tfclave" id="tfcla" value="#{msj['transaccion.clave']}:" />
 				<p:inputText id="tfclave" value="#{transaccionAjaxController.clave}" />
-				<p:commandButton id="btnclave" value="Verificar" action="#{transaccionAjaxController.verificarClave}" 
+				<p:commandButton id="btnclave" value="#{msj['transaccion.verificarCla']}:" action="#{transaccionAjaxController.verificarClave}" 
 				process="@this paneltransaccion"/>
 
 
@@ -55,9 +55,9 @@
 
 			<p:panelGrid id="panelBotones" columns="2">
 
-				<p:commandButton id="bttransferirTrans" value="Transferir" action="#{transaccionAjaxController.tranferirCuentaAsociados}" />
+				<p:commandButton id="bttransferirTrans" value="#{msj['transaccion.transferir']}:" action="#{transaccionAjaxController.tranferirCuentaAsociados}" />
 
-				<p:commandButton id="btcancelarTrans" value="Cancelar"
+				<p:commandButton id="btcancelarTrans" value="#{msj['transaccion.cancelarTra']}:"
 				process="@this" action="/paginas/seguro/resumenproducto.xhtml?faces-redirect=true"  />
 			</p:panelGrid>
 
