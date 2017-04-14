@@ -47,16 +47,16 @@
 							<li><a href="#{request.contextPath}/paginas/seguro/transaccion.xhtml">Transaccion</a> </li>
 							<li><a href="#{request.contextPath}/paginas/seguro/asociacioncuenta.xhtml">Asociacion</a></li>
 							<li><a href="#{request.contextPath}/paginas/seguro/resumenproducto.xhtml">Resumen Producto</a></li>
-							<li><a href="#">Idioma</a>
-								<ul>
-									<h:commandLink action="#{idiomaController.cambiarIngles}" value="Ingles" />
-									<h:commandLink action="#{idiomaController.cambiarEspañol}" value="Español" />
-								</ul>
-							</li>
 							
 							<li><h:commandLink action="#{sessionControl.cerrarSesion()}"
 								value="Cerrar Sesion" rendered="#{sessionControl.sesion}"></h:commandLink>
 						</li>
+						<li><a href="#">Idioma</a>
+								<ul>
+									<li><h:commandLink action="#{idiomaController.cambiarIngles}" value="Ingles" /></li>
+									<li><h:commandLink action="#{idiomaController.cambiarEspañol}" value="Español" /></li>
+								</ul>
+							</li>
 						<li>
 						<label>Bienvenido Sr #{sessionControl.cliente.name}</label>
 						</li>

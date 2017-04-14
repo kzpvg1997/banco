@@ -55,7 +55,8 @@
 
 			<p:panelGrid id="panelBotones" columns="2">
 
-				<p:commandButton id="bttransferirTrans" value="#{msj['transaccion.transferir']}:" action="#{transaccionAjaxController.tranferirCuentaAsociados}" />
+				<p:commandButton id="bttransferirTrans" value="#{msj['transaccion.transferir']}:" 
+				update="paneltransaccion" action="#{transaccionAjaxController.tranferirCuentaAsociados}" />
 
 				<p:commandButton id="btcancelarTrans" value="#{msj['transaccion.cancelarTra']}:"
 				process="@this" action="/paginas/seguro/resumenproducto.xhtml?faces-redirect=true"  />

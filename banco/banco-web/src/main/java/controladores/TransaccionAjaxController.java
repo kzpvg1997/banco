@@ -95,6 +95,8 @@ public class TransaccionAjaxController implements Serializable {
 							savigEJB.transferirCuentaAsociados(monto, sa, cu);
 							Messages.addFlashGlobalInfo("Transferencia Exitosa !");
 							System.out.println("Transferencia Exitosa !");
+							claveEJB.borrarSegundaClave(sc);
+							limpiar();
 
 						}
 
@@ -146,6 +148,12 @@ public class TransaccionAjaxController implements Serializable {
 		}
 		Messages.addFlashGlobalInfo("Tienes 2 minutos para ingresar la clave");
 
+	}
+	
+	public void limpiar(){
+		monto = 0.0;
+		clave = null;
+		
 	}
 
 	/**
