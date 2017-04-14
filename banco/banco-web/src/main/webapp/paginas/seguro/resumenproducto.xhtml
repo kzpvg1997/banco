@@ -4,7 +4,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+	xmlns:p="http://primefaces.org/ui" 
+	template="/template/templates.xhtml">
 
 	<ui:define name="cuerpo">
 
@@ -14,7 +15,7 @@
 			<br></br>
 			<h3>Cuentas</h3>
 
-			<p:panelGrid id="panelresumencuentas" columns="1">
+	
 
 				<p:dataTable id="tablaCue" value="#{resumenProductoAjaxController.cuentas}"
 					var="cuen" border="1">
@@ -31,13 +32,13 @@
 						<p:outputLabel value="#{cuen.ammount}" />
 					</p:column>
 				</p:dataTable>
-			</p:panelGrid>
+		
 
 			<br></br>
 			<h3>Tarjetas De Credito</h3>
 			<br></br>
 
-			<p:panelGrid id="paneltarjetas" columns="1">
+			
 
 				<p:dataTable id="tablaTarje" value="#{resumenProductoAjaxController.tarjetas}"
 					var="tar" border="1">
@@ -67,7 +68,7 @@
 					</p:column>
 				</p:dataTable>
 				<br></br>
-			</p:panelGrid>
+		
 
 
 

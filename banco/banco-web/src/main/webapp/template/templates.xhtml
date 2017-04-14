@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+	<title>Banco</title>
+	<link href="#{request.contextPath}/css/bootstrap.min.css"
+		rel="stylesheet" />
+	<link href="#{request.contextPath}/css/font-awesome.min.css"
+		rel="stylesheet" />
+	<link href="#{request.contextPath}/css/prettyPhoto.css"
+		rel="stylesheet" />
+	<link href="#{request.contextPath}/css/main.css" rel="stylesheet" />
+	<!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+	<link rel="shortcut icon"
+		href="#{request.contextPath}/images/ico/favicon.ico" />
+	<link rel="apple-touch-icon-precomposed" sizes="144x144"
+		href="#{request.contextPath}/images/ico/apple-touch-icon-144-precomposed.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="114x114"
+		href="#{request.contextPath}/images/ico/apple-touch-icon-114-precomposed.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="72x72"
+		href="#{request.contextPath}/images/ico/apple-touch-icon-72-precomposed.png" />
+	<link rel="apple-touch-icon-precomposed"
+		href="#{request.contextPath}/images/ico/apple-touch-icon-57-precomposed.png" />
+</h:head>
+<!--/head-->
+
+<h:body>
+	<header id="header" role="banner">
+		<div class="container">
+			<div id="navbar" class="navbar navbar-default">
+
+				<div class="collapse navbar-collapse">
+					<h:form>
+						<ul class="nav navbar-nav">
+							<li class="active"><a href="#main-slider"><i
+									class="icon-home"></i></a></li>
+							<li><a  href="#{request.contextPath}/paginas/seguro/clientes.xhtml">Cliente</a> </li>
+							<li><a href="#{request.contextPath}/paginas/seguro/pago.xhtml">Pago</a> </li>
+							<li><a href="#{request.contextPath}/paginas/seguro/avance.xhtml">Avance</a> </li>
+							<li><a href="#{request.contextPath}/paginas/seguro/transaccion.xhtml">Transaccion</a> </li>
+							<li><a href="#{request.contextPath}/paginas/seguro/asociacioncuenta.xhtml">Asocicion</a></li>
+							<li><a href="#{request.contextPath}/paginas/seguro/resumenproducto.xhtml">Resumen Producto</a></li>
+							
+							
+							<li><h:commandLink action="#{sessionControl.cerrarSesion()}"
+								value="Cerrar Sesion" rendered="#{sessionControl.sesion}"></h:commandLink>
+						</li>
+						</ul>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!--/#header-->
+
+	<section id="main-slider" class="carousel">
+		<div class="carousel-inner">
+			<div class="item active">
+				<div class="container">
+					<div class="carousel-content">
+						<h1>Banco EntityManager</h1>
+					</div>
+				</div>
+			</div>
+
+			<!--/.item-->
+		</div>
+		<!--/.carousel-inner-->
+		<a class="prev" href="#main-slider" data-slide="prev"><i
+			class="icon-angle-left"></i></a> <a class="next" href="#main-slider"
+			data-slide="next"><i class="icon-angle-right"></i></a>
+	</section>
+	<!--/#main-slider-->
+
+	<section id="services">
+		<div class="container">
+			<div class="box first">
+				<div class="row">
+
+					<p:messages id="facesMessage" autoUpdate="true" globalOnly="true"
+						closable="true" />
+
+				</div>
+				<!--/.row-->
+			</div>
+			<!--/.box-->
+		</div>
+		<!--/.container-->
+	</section>
+	<!--/#services-->
+
+	<section id="portfolio">
+		<div class="container">
+			<div class="box">
+
+				<ui:insert name="cuerpo" />
+
+
+			</div>
+		</div>
+	</section>
+
+
+
+	<section id="contact">
+		<div class="container">
+			<div class="box last">
+				<div class="row"></div>
+			</div>
+			<!--/.box-->
+		</div>
+		<!--/.container-->
+	</section>
+
+
+</h:body>
+</html>
