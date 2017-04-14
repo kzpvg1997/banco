@@ -119,6 +119,7 @@ public class PaymentEJB {
 			consumo.setRemainingAmmount(0);
 			consumo.setRemaningShares(0);
 			consumo.setValorCuota(0);
+			consumo.setPayed(true);
 			em.merge(consumo);
 			
 			cuenta.setAmmount(montoCuenta-valorConsumo);
@@ -155,14 +156,14 @@ public class PaymentEJB {
 								+ "Su saldo es de: "+cuenta.getAmmount());
 					}else{
 					
+					cuenta.setAmmount(cuenta.getAmmount()-conNoPag.getRemainingAmmount());
+					em.merge(cuenta);	
+						
 					conNoPag.setRemainingAmmount(conNoPag.getRemainingAmmount() - valorTotalCuotas);
 					conNoPag.setRemaningShares(0);
 					conNoPag.setValorCuota(0);
 					em.merge(conNoPag);
-					
-					cuenta.setAmmount(cuenta.getAmmount()-valorTotalCuotas);
-					em.merge(cuenta);
-					
+								
 					CreditCardPaymentConsume pay = new CreditCardPaymentConsume();
 					pay.setAmmount(valorTotalCuotas);
 					pay.setCapitalAmmount(valorTotalCuotas);

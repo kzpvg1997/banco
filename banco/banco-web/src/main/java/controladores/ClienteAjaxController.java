@@ -27,7 +27,7 @@ public class ClienteAjaxController implements Serializable {
 	private String tipoDocumento;
 	
 	@Pattern(regexp="[0-9]*",message="Ingrese solo numeros")
-	@Length(min=4,max=10,message="Lonitud entre 4 y 10")
+	@Length(min=2,max=10,message="Lonitud entre 2 y 10")
 	private String numeroDocumento;
 	
 	@Pattern(regexp="[A-Za-z ]*",message="Ingrese solo numeros")
