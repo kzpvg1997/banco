@@ -15,7 +15,7 @@
 
 			<p:panelGrid id="panelavance" columns="3">
 
-				<h:outputLabel for="cbtar" id="lbltarje" value="Tarjeta" />
+				<h:outputLabel for="cbtar" id="lbltarje" value="#{msj['avance.targetaA']}:" />
 				<p:selectOneMenu id="cbtar"
 					value="#{avanceAjax.tarjetaSeleccionada}">
 					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
@@ -25,7 +25,7 @@
 				<p:message for="cbtar" />
 
 
-				<h:outputLabel for="cbtcuenta" id="cbtcuen" value="Cuenta" />
+				<h:outputLabel for="cbtcuenta" id="cbtcuen" value="#{msj['avance.cuentaA']}:" />
 				<p:selectOneMenu id="cbtcuenta"
 					value="#{avanceAjax.cuentaSeleccionada}">
 					<f:selectItem itemValue="Null" itemLabel="Seleccione..." />
@@ -35,7 +35,7 @@
 				<p:message for="cbtcuenta" />
 
 				<p:outputLabel for="tfcantidadAvance" id="tfcantidad"
-					value="Cantidad" />
+					value="#{msj['avance.cantidadA']}:" />
 				<p:inputText id="tfcantidadAvance" value="#{avanceAjax.cantidad}" />
 				<p:message for="tfcantidadAvance" />
 
@@ -44,12 +44,12 @@
 
 			<p:panelGrid id="panelBotones" columns="2">
 
-				<p:commandButton id="baceptar" value="Aceptar"
+				<p:commandButton id="baceptar" value="#{msj['avance.aceptarA']}:"
 					action="#{avanceAjax.avance}"
 					process="@this tfcantidadAvance cbtar cbtcuenta"
 					update="panelavance " />
 
-				<p:commandButton id="btcancelar" value="Cancelar"
+				<p:commandButton id="btcancelar" value="#{msj['avance.cancelarA']}:"
 					process="@this" action="/paginas/seguro/resumenproducto.xhtml?faces-redirect=true" />
 			</p:panelGrid>
 
