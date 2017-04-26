@@ -78,10 +78,12 @@ public class TransaccionAjaxController implements Serializable {
 	}
 
 	public void tranferirCuentaAsociados() {
-		try {
 		if(clave.isEmpty()){
 			Messages.addFlashGlobalError("Por favor ingrese la clave");
 		}else{
+			
+		try {
+		
 		SegundaClave sc = claveEJB.buscarSegundaClave(sesionCotroller.getCliente().getIdNum());
 		int mn = claveEJB.fechaExpedicionClave().getMinutes();
 		if (sc.getMin() > mn) {
@@ -111,9 +113,10 @@ public class TransaccionAjaxController implements Serializable {
 			Messages.addFlashGlobalError("La clave ha expirado");
 			System.out.println("La clave ha expirado");
 		}
-		}
+		
 		} catch (ExcepcionNegocio e) {
 			Messages.addFlashGlobalError(e.getMessage());
+		}
 		}
 
 	}

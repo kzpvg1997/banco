@@ -130,7 +130,7 @@ public class AsociacionCuentaAjaxController implements Serializable{
 	
 		Customer cliente = customerEJB.buscarCustomer(sesionCotroller.getCliente().getIdType(), sesionCotroller.getCliente().getIdNum());
 
-		//cuAsEJB.verificarCuenta(cu, cliente);
+		servicios.verificarCuenta(cu);
         cuentasCliente = cuAsEJB.listaCuentasCliente(sesionCotroller.getCliente());
         
 		}catch (ExcepcionNegocio e){

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -33,6 +34,7 @@ public class SavingAccountEJB {
 	@PersistenceContext
 	private EntityManager em;
 	
+	@EJB
 	private CustomerEJB customerEJB;
 	
 
@@ -232,14 +234,20 @@ public class SavingAccountEJB {
 	}
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public boolean verificarCuentaAhorros(String numeroCuenta, String cedula,String tipoId) {
-		
-		boolean estado = false;
+	public String verificarCuentaAhorros(String numeroCuenta, String cedula,String tipoId) {
+		String tipo="";
+		String estado = "ERROR";
+		if(tipoId.equals("1")){
+			tipo="C.C";
+		}else if(tipoId.equals("2")){
+			tipo="T.I";
+		}
 		SavingAccount c = buscarCuentaAhorro(numeroCuenta);
-		Customer cus = customerEJB.buscarCustomer(cedula, tipoId);
+		Customer cus = customerEJB.buscarCustomer(cedula, tipo);
 		if(cus!=null){
 			if(c!=null){
-				estado= true;
+
+				estado= "EXITO";
 			}
 			}
 		return estado;
