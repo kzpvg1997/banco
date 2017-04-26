@@ -8,6 +8,10 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
@@ -27,15 +31,20 @@ import javax.persistence.Table;
 @Table(name="T_ASSOCIATED_ACOUNTS")
 @NamedQueries({
 	@NamedQuery(name=CuentaAsociados.ASOCIACIONES_CLIENTE,query="SELECT c FROM CuentaAsociados c WHERE c.customer=?1"),
-	@NamedQuery(name=CuentaAsociados.BUSCAR_ID_ASOCIADO,query="SELECT c.idAsociado FROM CuentaAsociados c WHERE c=?1")
+	@NamedQuery(name=CuentaAsociados.BUSCAR_CUENTA_ASOCIADOS,query="SELECT c FROM CuentaAsociados c WHERE c.numeroCuenta=?1")
 })
 public class CuentaAsociados  implements Serializable{
 
 	public static final String ASOCIACIONES_CLIENTE = "CuentasAsciados.Cliente";
 	
-	public static final String BUSCAR_ID_ASOCIADO = "CuentasAsociados.IdAsociado";
+	public static final String BUSCAR_CUENTA_ASOCIADOS = "CuentasAsociados.numeroCuenta";
+
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="codigo_cuenta")
+	private int codigoCuenta;
+	
 	@Column(name="numero_cuenta")
 	private String numeroCuenta;
 	
@@ -58,7 +67,7 @@ public class CuentaAsociados  implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name="bank_id")
-	private Banco banco;
+	private Bank bank;
 	
 	@Column(name="estado")
 	private String estado;
@@ -84,20 +93,20 @@ public class CuentaAsociados  implements Serializable{
 	 * @param nombreAsociado
 	 * @param tipoID
 	 * @param customer
-	 * @param banco
+	 * @param bank
 	 * @param verificado
 	 * @param nombreAsociacion
 	 * @param monto
 	 */
 	public CuentaAsociados(String numeroCuenta, String idAsociado, String nombreAsociado, String tipoID,
-			Customer customer, Banco banco, String estado, String nombreAsociacion, double monto) {
+			Customer customer, Bank bank, String estado, String nombreAsociacion, double monto) {
 		
 		this.numeroCuenta = numeroCuenta;
 		this.idAsociado = idAsociado;
 		this.nombreAsociado = nombreAsociado;
 		this.tipoID = tipoID;
 		this.customer = customer;
-		this.banco = banco;
+		this.bank = bank;
 		this.estado = estado;
 		this.nombreAsociacion = nombreAsociacion;
 		this.monto = monto;
@@ -185,18 +194,18 @@ public class CuentaAsociados  implements Serializable{
 
 
 	/**
-	 * @return the banco
+	 * @return the bank
 	 */
-	public Banco getBanco() {
-		return banco;
+	public Bank getBanco() {
+		return bank;
 	}
 
 
 	/**
-	 * @param banco the banco to set
+	 * @param bank the bank to set
 	 */
-	public void setBanco(Banco banco) {
-		this.banco = banco;
+	public void setBanco(Bank bank) {
+		this.bank = bank;
 	}
 
 	/**

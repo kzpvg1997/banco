@@ -55,7 +55,7 @@ public class ListarBancosResponse {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Banco }
+     * {@link Bank }
      * 
      * 
      */

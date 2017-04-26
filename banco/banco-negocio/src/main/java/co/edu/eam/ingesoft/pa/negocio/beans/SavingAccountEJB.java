@@ -33,6 +33,8 @@ public class SavingAccountEJB {
 	@PersistenceContext
 	private EntityManager em;
 	
+	private CustomerEJB customerEJB;
+	
 
 	
 	/**
@@ -227,5 +229,19 @@ public class SavingAccountEJB {
 	
 	public void actualizarCuenta(SavingAccount c){
 		em.merge(c);
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public boolean verificarCuentaAhorros(String numeroCuenta, String cedula,String tipoId) {
+		
+		boolean estado = false;
+		SavingAccount c = buscarCuentaAhorro(numeroCuenta);
+		Customer cus = customerEJB.buscarCustomer(cedula, tipoId);
+		if(cus!=null){
+			if(c!=null){
+				estado= true;
+			}
+			}
+		return estado;
 	}
 }

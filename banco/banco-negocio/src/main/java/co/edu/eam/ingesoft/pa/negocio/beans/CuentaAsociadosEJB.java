@@ -15,9 +15,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.xml.ws.BindingProvider;
 
-import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Banco;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Bank;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CuentaAsociados;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.SavingAccount;
 import co.edu.eam.ingesoft.pa.negocio.beans.remote.ICuentaAsociadosRemote;
 import co.edu.eam.ingesoft.pa.negocio.excepciones.ExcepcionNegocio;
 import co.edu.eam.pa.clientews.Mail;
@@ -39,6 +40,12 @@ public class CuentaAsociadosEJB {
 
 	@EJB
 	private CreditCardEJB cardEJB;
+	
+	@EJB
+	private CustomerEJB customerEJB;
+	
+	@EJB
+	private ServiciosServidor servicioEJB;
 
 	/**
 	 * Metodo para obtener la fecha actual
@@ -55,32 +62,13 @@ public class CuentaAsociadosEJB {
 		if(cu!=null){
 			throw new ExcepcionNegocio("Este numero no de cuenta esta disponible,\n Digite otro numero");	
 		}else{
-			if(BuscarIdAsociado(cu)!=null){				
+						
 				em.persist(cuenta);
-			}else{
-				throw new ExcepcionNegocio("El asociado con numero de documento: "+cuenta.getIdAsociado()+
-						" ya se encuentra registrado");	
-			}
 				
 		}
 		
 	}
-	
-	
 
-	public CuentaAsociados buscarCuentaAsociado(String numero) {
-		return em.find(CuentaAsociados.class, numero);
-	}
-
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public List<Banco> listaBancos() {
-
-		Query q = em.createNamedQuery(Banco.LISTA_BANCOS);
-		List<Banco> bancos = q.getResultList();
-		return bancos;
-
-	}
-	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<CuentaAsociados> listaCuentasCliente(Customer customer) {
 
@@ -103,11 +91,6 @@ public class CuentaAsociadosEJB {
 		}
 		return verificadas;
 	}
-
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Banco buscarBanco(String id) {
-		return em.find(Banco.class, id);
-	}
 	
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -116,32 +99,17 @@ public class CuentaAsociadosEJB {
 		em.remove(cu);
 	}
 
-	public String BuscarIdAsociado(CuentaAsociados cuen) {
-		String valor = null;
-		Query q = em.createNamedQuery(CuentaAsociados.BUSCAR_ID_ASOCIADO);
-		q.setParameter(1, cuen);
-		valor = String.valueOf(q.getFirstResult());
-		System.out.println(valor);
-		return valor;
+	public CuentaAsociados buscarCuentaAsociado(String numeroCuenta) {
 		
-	}
-	
-	
-	public void verificarCuenta(CuentaAsociados cu) {
-		
-		CuentaAsociados c = buscarCuentaAsociado(cu.getNumeroCuenta());
-		if(c!=null){
-			if(c.getEstado().equalsIgnoreCase("PENDIENTE")){
-				
-				c.setEstado("Asociada");
-				em.merge(c);
-				
-			}else{
-				throw new ExcepcionNegocio("Esta cuenta ya se encuentra verificada");
-			}
-
+		Query q = em.createNamedQuery(CuentaAsociados.BUSCAR_CUENTA_ASOCIADOS);
+		q.setParameter(1, numeroCuenta);
+		List<CuentaAsociados> cuentas = q.getResultList();
+		if(cuentas.isEmpty()){
+			return null;
+		}else{
+		return cuentas.get(0);
 		}
-		
 	}
+	
 	
 }

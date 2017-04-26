@@ -13,9 +13,10 @@ import javax.xml.ws.BindingProvider;
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Messages;
 
-import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Banco;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Bank;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CuentaAsociados;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
+import co.edu.eam.ingesoft.pa.negocio.beans.BancoEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CreditCardEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadosEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CustomerEJB;
@@ -29,6 +30,7 @@ import co.edu.eam.pa.interbancariows.InterbancarioWS;
 import co.edu.eam.pa.interbancariows.InterbancarioWS_Service;
 import co.edu.eam.pa.interbancariows.RegistrarCuentaAsociada;
 import co.edu.eam.pa.interbancariows.TipoDocumentoEnum;
+import servicios.ServiciosREST;
 
 @ViewScoped
 @Named("asociadosAjaxController")
@@ -39,6 +41,9 @@ public class AsociacionCuentaAjaxController implements Serializable{
 	
 	@EJB
 	private ServiciosServidor servicios;
+	
+	@EJB
+	private BancoEJB bancoEJB; 
 	
 	@EJB
 	private CustomerEJB customerEJB; //EJB de cliente
@@ -52,7 +57,7 @@ public class AsociacionCuentaAjaxController implements Serializable{
 	
 	private String numeroDocumento;
 	
-	private List<Banco> bancos;
+	private List<Bank> banks;
 	
 	private String numeroCuenta;
 	
@@ -70,7 +75,7 @@ public class AsociacionCuentaAjaxController implements Serializable{
 	
 	@PostConstruct
 	public void inicializar(){
-		bancos = cuAsEJB.listaBancos();
+		banks = bancoEJB.listarBancosRemotos();
 		cuentasCliente = cuAsEJB.listaCuentasCliente(sesionCotroller.getCliente());
 	}
 
@@ -83,7 +88,7 @@ public class AsociacionCuentaAjaxController implements Serializable{
 		Customer cus = customerEJB.buscarCustomer(sesionCotroller.getCliente().getIdType(), sesionCotroller.getCliente().getIdNum());
 		
 		if(cus != null){
-			Banco b = cuAsEJB.buscarBanco(bancoSeleccionado);
+			Bank b = bancoEJB.buscarBanco(bancoSeleccionado);
 				if(b != null){	     
 				     
 					CuentaAsociados cu = new CuentaAsociados(numeroCuenta,numeroDocumento,nombreTitular,cbDocumentoTitular,
@@ -122,9 +127,10 @@ public class AsociacionCuentaAjaxController implements Serializable{
 	
 	public void verificarCuenta (CuentaAsociados cu){
 		try{
-		
-		servicios.verificarCuenta(cu);
-		
+	
+		Customer cliente = customerEJB.buscarCustomer(sesionCotroller.getCliente().getIdType(), sesionCotroller.getCliente().getIdNum());
+
+		//cuAsEJB.verificarCuenta(cu, cliente);
         cuentasCliente = cuAsEJB.listaCuentasCliente(sesionCotroller.getCliente());
         
 		}catch (ExcepcionNegocio e){
@@ -214,18 +220,18 @@ public class AsociacionCuentaAjaxController implements Serializable{
 
 
 	/**
-	 * @return the bancos
+	 * @return the banks
 	 */
-	public List<Banco> getBancos() {
-		return bancos;
+	public List<Bank> getBancos() {
+		return banks;
 	}
 
 
 	/**
-	 * @param bancos the bancos to set
+	 * @param banks the banks to set
 	 */
-	public void setBancos(List<Banco> bancos) {
-		this.bancos = bancos;
+	public void setBancos(List<Bank> banks) {
+		this.banks = banks;
 	}
 
 

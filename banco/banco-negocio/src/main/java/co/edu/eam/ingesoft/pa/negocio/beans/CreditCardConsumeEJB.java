@@ -35,92 +35,91 @@ import java.util.ArrayList;
 @Remote(ICreditCardConsumeRemote.class)
 public class CreditCardConsumeEJB {
 
-	
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@EJB
 	private CreditCardEJB cardEJB;
-	
+
 	/**
 	 * Metodo para obtener la fecha actual
+	 * 
 	 * @return la fecha actual
 	 */
-	public Date fechaActual(){
+	public Date fechaActual() {
 		return cardEJB.fechaExpedicion();
 	}
+
 	/**
 	 * 
 	 * @param consumo
 	 * @throws Exception
 	 */
-	public void crearConsumo(CreditCardConsume consumo)throws Exception{
-		
+	public void crearConsumo(CreditCardConsume consumo) throws Exception {
+
 		consumo.setDateConsume(fechaActual());
-		if(consumo.getAmmount()>consumo.getCreditCard().getMonto()){
+		if (consumo.getAmmount() > consumo.getCreditCard().getMonto()) {
 			throw new ExcepcionNegocio("Esta compra excede el monto de la terjeta de credito");
-		}else{
+		} else {
 			double valorRestante = consumo.getAmmount();
-			
-//			DecimalFormat formateador = new DecimalFormat("###0.##"); 
-			double interes = consumo.getAmmount()*0.036;
-//			interes = formateador.parse(formateador.format(interes)).doubleValue();
-			
-//			DecimalFormat formateador2 = new DecimalFormat("###0");
-			double valorCuota = valorRestante/consumo.getNumberShares();
-//			valorCuota = formateador2.parse(formateador2.format(valorCuota)).doubleValue();
-//			Math.round(valorCuota);
-			
+			double interes = consumo.getAmmount() * 0.036;
+			double valorCuota = valorRestante / consumo.getNumberShares();
+
 			consumo.setInterest(interes);
 			consumo.setRemainingAmmount(valorRestante);
 			consumo.setRemaningShares(consumo.getNumberShares());
 			consumo.setValorCuota(valorCuota);
-			
+
 			em.persist(consumo);
-			consumo.getCreditCard().setMonto(consumo.getCreditCard().getMonto()-consumo.getAmmount());
-			consumo.getCreditCard().setDeuda(consumo.getCreditCard().getDeuda()+consumo.getAmmount());
+			consumo.getCreditCard().setMonto(consumo.getCreditCard().getMonto() - consumo.getAmmount());
+			consumo.getCreditCard().setDeuda(consumo.getCreditCard().getDeuda() + consumo.getAmmount());
 			em.merge(consumo.getCreditCard());
 		}
 	}
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public CreditCardConsume buscarConsumo (int id){
+	public CreditCardConsume buscarConsumo(int id) {
 		return em.find(CreditCardConsume.class, id);
 	}
-	
+
 	/**
 	 * Metodo para listar los conumos de una tarjeta
-	 * @param tarjeta la tarjeta que se le deseasacar la lista
+	 * 
+	 * @param tarjeta
+	 *            la tarjeta que se le deseasacar la lista
 	 * @return la lista de consumos
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public List<CreditCardConsume> consumosTarjeta(CreditCard tarjeta){
+	public List<CreditCardConsume> consumosTarjeta(CreditCard tarjeta) {
 		Query q = em.createNamedQuery(CreditCardConsume.CONSUMOS_TARJETAS);
 		q.setParameter(1, tarjeta);
 		List<CreditCardConsume> lista = q.getResultList();
 		return lista;
 	}
-        
-        	/**
+
+	/**
 	 * Lista todos los consumos de una determinada tarjeta en estado no pagado
+	 * 
 	 * @param c
 	 * @return
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public List<CreditCardConsume> consumosTarjetaNoPagos(CreditCard c){
+	public List<CreditCardConsume> consumosTarjetaNoPagos(CreditCard c) {
 		List<CreditCardConsume> lista = consumosTarjeta(c);
 		List<CreditCardConsume> pagos = new ArrayList<CreditCardConsume>();
 		for (CreditCardConsume e : lista) {
-			if(!e.isPayed()){ // preguntar
+			if (!e.isPayed()) { // preguntar
 				pagos.add(e);
 			}
 		}
 		return pagos;
 	}
-	
+
 	/**
-	 * Calcular la suma de todos los consumos que debe el cliente con respecto a una tarjeta de credito
+	 * Calcular la suma de todos los consumos que debe el cliente con respecto a
+	 * una tarjeta de credito
 	 */
-	public double consumosTotalTarjetaCredito(CreditCard c){
+	public double consumosTotalTarjetaCredito(CreditCard c) {
 		double total = 0.0;
 		List<CreditCardConsume> lista = consumosTarjetaNoPagos(c);
 		for (CreditCardConsume e : lista) {
@@ -128,31 +127,24 @@ public class CreditCardConsumeEJB {
 		}
 		return total;
 	}
+
 	/**
 	 * Actualiza un consumo
 	 */
-	public void actualizarConsumo(CreditCardConsume consumo){
+	public void actualizarConsumo(CreditCardConsume consumo) {
 		em.merge(consumo); // Actualizar
 	}
-	
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public double sumaConsumosTarjetaCuotas(CreditCard tarjeta){
+	public double sumaConsumosTarjetaCuotas(CreditCard tarjeta) {
 		double valor = 0.0;
-		List<CreditCardConsume> lista= consumosTarjetaNoPagos(tarjeta);
+		List<CreditCardConsume> lista = consumosTarjetaNoPagos(tarjeta);
 		for (CreditCardConsume cc : lista) {
-			
-				valor += cc.getValorCuota();
-			}
-		/**
-		 * Metodo para reducir la cantidad de decimales de un double
-		 */
-		//DecimalFormat formateador = new DecimalFormat("###0.##"); 
-		double interes = valor*0.036;
-			//interes = formateador.parse(formateador.format(interes)).doubleValue();
-		
-		
-		return valor+interes;
+
+			valor += cc.getValorCuota();
+		}
+		double interes = valor * 0.036;
+		return valor + interes;
 	}
-	
-	
+
 }

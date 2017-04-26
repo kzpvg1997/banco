@@ -319,7 +319,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jTextField2.setText("jTextField2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Banco");
+        setTitle("Bank");
         setBackground(new java.awt.Color(79, 187, 215));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

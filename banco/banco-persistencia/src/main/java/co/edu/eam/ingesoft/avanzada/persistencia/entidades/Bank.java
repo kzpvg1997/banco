@@ -20,9 +20,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name="T_BANK")
 @NamedQueries({
-	@NamedQuery(name=Banco.LISTA_BANCOS,query="SELECT b FROM Banco b")
+	@NamedQuery(name=Bank.LISTA_BANCOS,query="SELECT b FROM Bank b")
 })
-public class Banco implements Serializable{
+public class Bank implements Serializable{
 
 	public static final String LISTA_BANCOS= "Lista.Bancos";
 	
@@ -35,7 +35,7 @@ public class Banco implements Serializable{
 	private String nombre;
 	
 	
-	public Banco() {
+	public Bank() {
 		
 	}
 	
@@ -43,7 +43,7 @@ public class Banco implements Serializable{
 	 * @param id
 	 * @param nombre
 	 */
-	public Banco(String id, String nombre) {
+	public Bank(String id, String nombre) {
 		super();
 		this.id = id;
 		this.nombre = nombre;

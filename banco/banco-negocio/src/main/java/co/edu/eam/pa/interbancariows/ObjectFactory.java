@@ -95,7 +95,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Banco }
+     * Create an instance of {@link Bank }
      * 
      */
     public Banco createBanco() {
