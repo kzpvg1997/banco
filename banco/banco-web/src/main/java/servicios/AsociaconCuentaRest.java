@@ -4,6 +4,7 @@
 package servicios;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -17,7 +18,9 @@ import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.SavingAccount;
 import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadosEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CustomerEJB;
+import co.edu.eam.ingesoft.pa.negocio.beans.MensajeEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.SavingAccountEJB;
+import controladores.SessionController;
 
 /**
  * @author TOSHIBAP55W
@@ -40,6 +43,12 @@ public class AsociaconCuentaRest {
 	@EJB
 	private CuentaAsociadosEJB asocEJB;
 	
+	@EJB
+	private MensajeEJB msjEJB;
+	
+	@Inject
+	private SessionController sesionController;
+	
 	
 	@Path("/verificar")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -57,13 +66,17 @@ public class AsociaconCuentaRest {
     public String transferir(@QueryParam("numeroCuenta") String numeroCuenta,
     		@QueryParam("cuentaAsociada") String cuentaAsociada,@QueryParam("cantidad") double cantidad) {
        
+		
+		
 		SavingAccount cuenta = savaccEJB.buscarCuentaAhorro(numeroCuenta);
         CuentaAsociados asociada = asocEJB.buscarCuentaAsociado(cuentaAsociada);
         if (cuenta != null) {
         	if(asociada!=null){
 
         	savaccEJB.transferirCuentaAsociados(cantidad, cuenta, asociada);
+        	msjEJB.Sms("Se ha tranferido un monto de: "+cantidad, sesionController.getCliente().getTelefono());
             return "Exito";
+            
         	}
         }
         return "Error";
@@ -79,6 +92,7 @@ public class AsociaconCuentaRest {
         SavingAccount cuenta = savaccEJB.buscarCuentaAhorro(numeroCuenta);
         if (cuenta != null) {
         	savaccEJB.consignar(cantidad,cuenta);
+        	msjEJB.Sms("Se ha tranferido un monto de: "+cantidad, sesionController.getCliente().getTelefono());
             return "EXITO";
         }
         return "ERROR";

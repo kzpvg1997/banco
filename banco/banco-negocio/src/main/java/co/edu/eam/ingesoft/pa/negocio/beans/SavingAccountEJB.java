@@ -11,6 +11,7 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -26,6 +27,7 @@ import co.edu.eam.ingesoft.avanzada.persistencia.enumeraciones.TipoTransaccionEn
 import co.edu.eam.ingesoft.pa.negocio.beans.remote.ISavingAccountRemote;
 import co.edu.eam.ingesoft.pa.negocio.excepciones.ExcepcionNegocio;
 
+
 @LocalBean
 @Stateless
 @Remote(ISavingAccountRemote.class)
@@ -37,6 +39,8 @@ public class SavingAccountEJB {
 	@EJB
 	private CustomerEJB customerEJB;
 	
+
+		
 
 	
 	/**
@@ -190,6 +194,7 @@ public class SavingAccountEJB {
 				tr.setSourceTransact(c.getNumeroCuenta());
 				tr.setTipoTransaccion(TipoTransaccionEnum.TRANAFERENCIA_INTERBANCARIA.toString());
 				em.persist(tr);
+				
 			}else{
 				throw new ExcepcionNegocio("Saldo insuficiente para transferir \n Su saldo es de: "+s.getAmmount());
 			}
@@ -217,6 +222,7 @@ public class SavingAccountEJB {
 					tr.setSourceTransact(s1.getNumber());
 					tr.setTipoTransaccion(TipoTransaccionEnum.TRANSFERENCIA.toString());
 					em.persist(tr);
+					
 					
 				}else{
 					throw new ExcepcionNegocio("Saldo insuficiente para transferir");
