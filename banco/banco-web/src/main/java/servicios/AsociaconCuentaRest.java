@@ -43,11 +43,6 @@ public class AsociaconCuentaRest {
 	@EJB
 	private CuentaAsociadosEJB asocEJB;
 	
-	@EJB
-	private MensajeEJB msjEJB;
-	
-	@Inject
-	private SessionController sesionController;
 	
 	
 	@Path("/verificar")
@@ -66,15 +61,12 @@ public class AsociaconCuentaRest {
     public String transferir(@QueryParam("numeroCuenta") String numeroCuenta,
     		@QueryParam("cuentaAsociada") String cuentaAsociada,@QueryParam("cantidad") double cantidad) {
        
-		
-		
 		SavingAccount cuenta = savaccEJB.buscarCuentaAhorro(numeroCuenta);
         CuentaAsociados asociada = asocEJB.buscarCuentaAsociado(cuentaAsociada);
         if (cuenta != null) {
         	if(asociada!=null){
 
         	savaccEJB.transferirCuentaAsociados(cantidad, cuenta, asociada);
-        	msjEJB.Sms("Se ha tranferido un monto de: "+cantidad, sesionController.getCliente().getTelefono());
             return "Exito";
             
         	}
@@ -92,7 +84,6 @@ public class AsociaconCuentaRest {
         SavingAccount cuenta = savaccEJB.buscarCuentaAhorro(numeroCuenta);
         if (cuenta != null) {
         	savaccEJB.consignar(cantidad,cuenta);
-        	msjEJB.Sms("Se ha tranferido un monto de: "+cantidad, sesionController.getCliente().getTelefono());
             return "EXITO";
         }
         return "ERROR";

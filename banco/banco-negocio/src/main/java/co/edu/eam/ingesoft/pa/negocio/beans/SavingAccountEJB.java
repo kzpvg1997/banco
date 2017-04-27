@@ -39,7 +39,8 @@ public class SavingAccountEJB {
 	@EJB
 	private CustomerEJB customerEJB;
 	
-
+	@EJB
+	private MensajeEJB msjEJB;
 		
 
 	
@@ -141,9 +142,10 @@ public class SavingAccountEJB {
 			tr.setTransactionDate(fechaExpedicion());
 			tr.setSourceTransact(s.getNumber());
 			tr.setTipoTransaccion(TipoTransaccionEnum.CONSIGANCION.toString());
-			
 			em.persist(tr);
 		
+			msjEJB.Sms("Se ha tranferido un monto de: "+monto,s.getCustomer().getTelefono());
+			
 		}else{
 			throw new ExcepcionNegocio("Monto invalido");
 		}
@@ -194,6 +196,8 @@ public class SavingAccountEJB {
 				tr.setSourceTransact(c.getNumeroCuenta());
 				tr.setTipoTransaccion(TipoTransaccionEnum.TRANAFERENCIA_INTERBANCARIA.toString());
 				em.persist(tr);
+				
+				msjEJB.Sms("Se ha tranferido un monto de: "+monto, s.getCustomer().getTelefono());
 				
 			}else{
 				throw new ExcepcionNegocio("Saldo insuficiente para transferir \n Su saldo es de: "+s.getAmmount());
