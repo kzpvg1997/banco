@@ -9,6 +9,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CuentaAsociados;
@@ -34,7 +35,11 @@ public class AsociaconCuentaRest {
 	private CustomerEJB clienteEJB;;
 	
 	@EJB 
-	private SavingAccountEJB cueEJB;
+	private SavingAccountEJB savaccEJB;
+	
+	@EJB
+	private CuentaAsociadosEJB asocEJB;
+	
 	
 	@Path("/verificar")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -43,6 +48,40 @@ public class AsociaconCuentaRest {
 	public String verificar(@FormParam("numeroCuenta")String numeroCuenta,@FormParam("id")String cedula,
 			@FormParam("tipoId")String tipoId){
 		
-		return cueEJB.verificarCuentaAhorros(numeroCuenta, cedula,tipoId);
+		return savaccEJB.verificarCuentaAhorros(numeroCuenta, cedula,tipoId);
 	}
+	
+	@POST
+    @Path("/transferir")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public String transferir(@QueryParam("numeroCuenta") String numeroCuenta,
+    		@QueryParam("cuentaAsociada") String cuentaAsociada,@QueryParam("cantidad") double cantidad) {
+       
+		SavingAccount cuenta = savaccEJB.buscarCuentaAhorro(numeroCuenta);
+        CuentaAsociados asociada = asocEJB.buscarCuentaAsociado(cuentaAsociada);
+        if (cuenta != null) {
+        	if(asociada!=null){
+
+        	savaccEJB.transferirCuentaAsociados(cantidad, cuenta, asociada);
+            return "Exito";
+        	}
+        }
+        return "Error";
+        
+	}
+
+    @POST
+    @Path("/recibirdinero")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String recibirDinero(@FormParam("numerocuenta") String numeroCuenta,
+            @FormParam("cantidad") double cantidad) {
+        SavingAccount cuenta = savaccEJB.buscarCuentaAhorro(numeroCuenta);
+        if (cuenta != null) {
+        	savaccEJB.consignar(cantidad,cuenta);
+            return "EXITO";
+        }
+        return "ERROR";
+
+    }
 }

@@ -243,7 +243,7 @@ public class SavingAccountEJB {
 			tipo="T.I";
 		}
 		SavingAccount c = buscarCuentaAhorro(numeroCuenta);
-		Customer cus = customerEJB.buscarCustomer(cedula, tipo);
+		Customer cus = customerEJB.buscarCustomer(tipo, cedula);
 		if(cus!=null){
 			if(c!=null){
 
