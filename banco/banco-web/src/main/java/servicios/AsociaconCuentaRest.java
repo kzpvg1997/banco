@@ -55,25 +55,26 @@ public class AsociaconCuentaRest {
 		return savaccEJB.verificarCuentaAhorros(numeroCuenta, cedula,tipoId);
 	}
 	
-	@POST
-    @Path("/transferir")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String transferir(@QueryParam("numeroCuenta") String numeroCuenta,
-    		@QueryParam("cuentaAsociada") String cuentaAsociada,@QueryParam("cantidad") double cantidad) {
-       
-		SavingAccount cuenta = savaccEJB.buscarCuentaAhorro(numeroCuenta);
-        CuentaAsociados asociada = asocEJB.buscarCuentaAsociado(cuentaAsociada);
-        if (cuenta != null) {
-        	if(asociada!=null){
-
-        	savaccEJB.transferirCuentaAsociados(cantidad, cuenta, asociada);
-            return "Exito";
-            
-        	}
-        }
-        return "Error";
-        
-	}
+//	@POST
+//    @Path("/transferir")
+//    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+//	@Produces(MediaType.APPLICATION_JSON)
+//    public String transferir(@QueryParam("numeroCuenta") String numeroCuenta,
+//    		@QueryParam("cuentaAsociada") String cuentaAsociada,@QueryParam("cantidad") double cantidad) {
+//       
+//		SavingAccount cuenta = savaccEJB.buscarCuentaAhorro(numeroCuenta);
+//        CuentaAsociados asociada = asocEJB.buscarCuentaAsociado(cuentaAsociada);
+//        if (cuenta != null) {
+//        	if(asociada!=null){
+//
+//        	savaccEJB.transferirCuentaAsociados(cantidad, cuenta, asociada);
+//            return "Exito";
+//            
+//        	}
+//        }
+//        return "Error";
+//        
+//	}
 
     @POST
     @Path("/recibirdinero")

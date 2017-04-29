@@ -26,6 +26,7 @@ import co.edu.eam.ingesoft.pa.negocio.beans.CustomerEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.MensajeEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.SavingAccountEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.SegundaClaveEJB;
+import co.edu.eam.ingesoft.pa.negocio.beans.ServiciosServidor;
 import co.edu.eam.ingesoft.pa.negocio.excepciones.ExcepcionNegocio;
 
 @Named("transaccionAjaxController")
@@ -34,6 +35,9 @@ public class TransaccionAjaxController implements Serializable {
 
 	@Inject
 	private SessionController sesionCotroller;
+	
+	@EJB
+	private ServiciosServidor serviciosEJB;
 
 	@EJB
 	private SavingAccountEJB savigEJB;
@@ -94,7 +98,8 @@ public class TransaccionAjaxController implements Serializable {
 					CuentaAsociados cu = asocEJB.buscarCuentaAsociado(cuentaAsociadoSeleccionada);
 					if (cu != null) {
 						
-							savigEJB.transferirCuentaAsociados(monto, sa, cu);
+							serviciosEJB.transferirMonto(cuentasClienteSeleccionada, cu.getBanco().getId(), 
+									cuentaAsociadoSeleccionada, monto);
 							Messages.addFlashGlobalInfo("Transferencia Exitosa !");
 							System.out.println("Transferencia Exitosa !");
 							claveEJB.borrarSegundaClave(sc);

@@ -22,6 +22,7 @@ import javax.xml.ws.BindingProvider;
 
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Bank;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CuentaAsociados;
+import co.edu.eam.ingesoft.avanzada.persistencia.entidades.SavingAccount;
 import co.edu.eam.pa.interbancariows.Banco;
 import co.edu.eam.pa.interbancariows.InterbancarioWS;
 import co.edu.eam.pa.interbancariows.InterbancarioWS_Service;
@@ -33,7 +34,7 @@ import co.edu.eam.pa.interbancariows.TipoDocumentoEnum;
 import co.edu.eam.pa.interbancariows.TransferirMonto;
 
 /**
- * @author TOSHIBAP55W Calse encargada de los servicios del servidor
+ * @author TOSHIBAP55W Clase encargada de los servicios del servidor
  *
  */
 @LocalBean
@@ -42,6 +43,9 @@ public class ServiciosServidor implements Serializable {
 
 	@PersistenceContext
 	private EntityManager em;
+	
+	@EJB
+	private SavingAccountEJB savEJB;
 
 	@EJB
 	private CuentaAsociadosEJB asoEJB;
@@ -49,7 +53,7 @@ public class ServiciosServidor implements Serializable {
 	private TipoDocumentoEnum tipo;
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void transferirMonto(String idBanco, String numeroCuenta, double monto) {
+	public void transferirMonto(String numeroCuentaAhorros,String idBanco, String numeroCuentaAso, double monto) {
 
 		InterbancarioWS_Service cliente = new InterbancarioWS_Service();
 		InterbancarioWS servicio = cliente.getInterbancarioWSPort();
@@ -61,12 +65,15 @@ public class ServiciosServidor implements Serializable {
 
 		TransferirMonto tran = new TransferirMonto();
 		tran.setIdbanco(idBanco);
-		tran.setNumerocuenta(numeroCuenta);
+		tran.setNumerocuenta(numeroCuentaAso);
 		tran.setMonto(monto);
 
-		RespuestaServicio resp = servicio.transferirMonto(idBanco, numeroCuenta, monto);
+		RespuestaServicio resp = servicio.transferirMonto(idBanco, numeroCuentaAso, monto);
 		if (resp.getCodigo().equals("0000")) {// Si la trasnferencia es exitosa
 			System.out.println("Transferencia Exitosa");
+			SavingAccount cuentaAhorros = savEJB.buscarCuentaAhorro(numeroCuentaAhorros);
+			CuentaAsociados cuentaAsociada =asoEJB.buscarCuentaAsociado(numeroCuentaAso);
+			savEJB.transferirCuentaAsociados(monto, cuentaAhorros, cuentaAsociada);
 			resp.getMensaje();
 		} else {
 			if (resp.getCodigo().equals("0002")) {// si la cuenta aun no esta
@@ -76,7 +83,6 @@ public class ServiciosServidor implements Serializable {
 			} else {
 				if (resp.getCodigo().equals("0002")) {// si la Cuenta no existe
 														// en el banco de
-														// destino
 					System.out.println("la Cuenta no existe en el banco de destino");
 					resp.getMensaje();
 				}
