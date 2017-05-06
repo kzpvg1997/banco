@@ -59,7 +59,7 @@ public class BancoEJB {
 		InterbancarioWS_Service cliente = new InterbancarioWS_Service();
 		InterbancarioWS servicio = cliente.getInterbancarioWSPort();
 
-		String endpoint = "http://104.155.128.249:8080/interbancario/InterbancarioWS/InterbancarioWS";
+		String endpoint = "http://104.198.67.149:8080/interbancario/InterbancarioWS/InterbancarioWS";
 
 		BindingProvider bp = (BindingProvider) servicio;
 		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
@@ -81,7 +81,7 @@ public class BancoEJB {
 			}
 
 		}
-		//Listar banco y vverificar si no esta
+//		Listar banco y vverificar si no esta
 //		for (Bank bank : bancos) {
 //			
 //		}

@@ -61,7 +61,7 @@
 				<configuration>
 					<filename>banco5.ear</filename>
 					<skip>false</skip>
-					<hostname>104.155.128.249</hostname>
+					<hostname>104.198.67.149</hostname>
 					<port>9993</port>
 					<username>user</username>
 					<password>password</password>

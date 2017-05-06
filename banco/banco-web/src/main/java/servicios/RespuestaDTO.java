@@ -5,7 +5,7 @@ public class RespuestaDTO {
 	
 	private String mensaje;
 	private int codigo;
-	private Object objeto;
+	private Object obj;
 	
 	
 	/**
@@ -13,11 +13,11 @@ public class RespuestaDTO {
 	 * @param codigo
 	 * @param objeto
 	 */
-	public RespuestaDTO(String mensaje, int codigo, Object objeto) {
+	public RespuestaDTO(String mensaje, int codigo, Object obj) {
 		super();
 		this.mensaje = mensaje;
 		this.codigo = codigo;
-		this.objeto = objeto;
+		this.obj = obj;
 	}
 	/**
 	 * @return the mensaje
@@ -46,14 +46,14 @@ public class RespuestaDTO {
 	/**
 	 * @return the objeto
 	 */
-	public Object getObjeto() {
-		return objeto;
+	public Object getObj() {
+		return obj;
 	}
 	/**
 	 * @param objeto the objeto to set
 	 */
-	public void setObjeto(Object objeto) {
-		this.objeto = objeto;
+	public void setObj(Object obj) {
+		this.obj = obj;
 	}
 	
 	
