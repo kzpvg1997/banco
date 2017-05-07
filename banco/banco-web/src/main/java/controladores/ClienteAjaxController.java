@@ -188,6 +188,22 @@ public class ClienteAjaxController implements Serializable {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
+
+
+	/**
+	 * @return the customerEJB
+	 */
+	public CustomerEJB getCustomerEJB() {
+		return customerEJB;
+	}
+
+
+	/**
+	 * @param customerEJB the customerEJB to set
+	 */
+	public void setCustomerEJB(CustomerEJB customerEJB) {
+		this.customerEJB = customerEJB;
+	}
 	
 	
 
