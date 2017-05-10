@@ -51,6 +51,5 @@ public class ProductEJB {
 		return em.find(Product.class, num);
 	}
 
-	
-	
+		
 }
