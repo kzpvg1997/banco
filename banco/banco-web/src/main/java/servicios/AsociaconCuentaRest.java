@@ -3,6 +3,7 @@
  */
 package servicios;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -151,7 +152,22 @@ public class AsociaconCuentaRest {
 		if (lista.isEmpty()) {
 			return new RespuestaDTO("No hay registros", 1, null);
 		} else {
-			return new RespuestaDTO("Se encontraron registros", 0, lista);
-		}
+			  List<CuentaAsociadaDTO> listaDto = new ArrayList<CuentaAsociadaDTO>();
+	            for (CuentaAsociados cuentas : lista) {
+	                CuentaAsociadaDTO dto = new CuentaAsociadaDTO();
+
+	                dto.setNombreAsociado(cuentas.getNombreAsociado());
+	                dto.setTipoIdAsociado(cuentas.getTipoID());
+	                dto.setNumeroIdAsociado(cuentas.getIdAsociado());
+	                dto.setBank(cuentas.getBanco().getId());
+	                dto.setTipoIdCliente(cuentas.getCustomer().getIdType());
+	                dto.setIdCliente(cuentas.getCustomer().getIdNum());
+	                dto.setNumeroCuenta(cuentas.getNumeroCuenta());
+	                dto.setNombreCuenta(cuentas.getNombreAsociacion());
+	                dto.setEstado(cuentas.getEstado());
+	                listaDto.add(dto);
+	            }
+	            return new RespuestaDTO("Se encontraron registros", 0, listaDto);
+	        }
 	}
 }

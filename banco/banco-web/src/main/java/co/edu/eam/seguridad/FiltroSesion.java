@@ -1,4 +1,4 @@
-package seguridad;
+package co.edu.eam.seguridad;
 
 import java.io.IOException;
 

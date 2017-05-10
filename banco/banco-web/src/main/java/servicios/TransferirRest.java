@@ -116,6 +116,7 @@ public class TransferirRest {
 
 		return new RespuestaDTO("Se encontraron registros",0, claveGenerada);
 	}
+	
 	@GET
 	@Path("/listarCuentasAhorroCliente")
 	@Produces(MediaType.APPLICATION_JSON)
