@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @NamedQuery(name=Usuario.USUARIO,query="SELECT u FROM Usuario u WHERE u.usuario=?1")
 public class Usuario implements Serializable  {
 	
-	public static final String USUARIO = "Usuario.listUs";
+	public static final String USUARIO = "Usuario.buscarXUser";
 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "ID")

@@ -186,7 +186,6 @@ public class SavingAccountEJB {
 		if(monto > 0.0){
 			if(s.getAmmount() >= monto){
 				s.setAmmount(s.getAmmount()-monto);
-				c.setMonto(c.getMonto()+monto);
 				em.merge(s);//actualizamos la cuenta de ahorros
 				em.merge(c);//actualizamos cuenta asociados
 				Transaction tr = new Transaction();

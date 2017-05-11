@@ -111,7 +111,7 @@ public class TransferirRest {
 		SegundaClave sc = new SegundaClave();
 		sc.setClave(claveGenerada);
 		segundaClaveEJB.crearSegundaClave(sc);;
-		String msj = "Su codigo de verificacion es: " + claveGenerada + "\n \nSu codigo expirara en 90 minutos";
+		String msj = "Su codigo de verificacion es: " + claveGenerada + "\n \nSu codigo expirara en 2 minutos";
 		mensajeEJB.Sms(msj, cus.getTelefono());
 
 		return new RespuestaDTO("Se encontraron registros",0, claveGenerada);

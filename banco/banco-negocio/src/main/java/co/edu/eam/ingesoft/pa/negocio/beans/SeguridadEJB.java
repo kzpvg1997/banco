@@ -5,6 +5,8 @@ package co.edu.eam.ingesoft.pa.negocio.beans;
 
 import java.util.List;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -14,6 +16,8 @@ import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Usuario;
  * @author TOSHIBAP55W
  *
  */
+@LocalBean
+@Stateless
 public class SeguridadEJB {
 
 	@PersistenceContext

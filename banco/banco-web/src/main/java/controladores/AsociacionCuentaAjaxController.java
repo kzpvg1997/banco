@@ -66,8 +66,6 @@ public class AsociacionCuentaAjaxController implements Serializable{
 	@NotNull(message="Seleccione una opcion")
 	private String bancoSeleccionado;
 	
-	private double monto;
-	
 	private String p;
 	
 	private List<CuentaAsociados> cuentasCliente;
@@ -92,7 +90,7 @@ public class AsociacionCuentaAjaxController implements Serializable{
 				if(b != null){	     
 				     
 					CuentaAsociados cu = new CuentaAsociados(numeroCuenta,numeroDocumento,nombreTitular,cbDocumentoTitular,
-							cus,b,"PENDIENTE",nombreCuenta,monto);
+							cus,b,"PENDIENTE",nombreCuenta);
 					
 					cuAsEJB.agregarCuentaAsociados(cu);
 					servicios.asociarCuenta(bancoSeleccionado, cbDocumentoTitular, numeroDocumento, nombreTitular, numeroCuenta);
@@ -169,23 +167,6 @@ public class AsociacionCuentaAjaxController implements Serializable{
 	public void setBancoSeleccionado(String bancoSeleccionado) {
 		this.bancoSeleccionado = bancoSeleccionado;
 	}
-
-
-	/**
-	 * @return the monto
-	 */
-	public double getMonto() {
-		return monto;
-	}
-
-
-	/**
-	 * @param monto the monto to set
-	 */
-	public void setMonto(double monto) {
-		this.monto = monto;
-	}
-
 
 	/**
 	 * @return the nombreTitular

@@ -75,8 +75,6 @@ public class CuentaAsociados  implements Serializable{
 	@Column(name="name_association")
 	private String nombreAsociacion;
 	
-	@Column(name="ammount")
-	private double monto;
 	
 	
 	
@@ -99,7 +97,7 @@ public class CuentaAsociados  implements Serializable{
 	 * @param monto
 	 */
 	public CuentaAsociados(String numeroCuenta, String idAsociado, String nombreAsociado, String tipoID,
-			Customer customer, Bank bank, String estado, String nombreAsociacion, double monto) {
+			Customer customer, Bank bank, String estado, String nombreAsociacion) {
 		
 		this.numeroCuenta = numeroCuenta;
 		this.idAsociado = idAsociado;
@@ -109,7 +107,6 @@ public class CuentaAsociados  implements Serializable{
 		this.bank = bank;
 		this.estado = estado;
 		this.nombreAsociacion = nombreAsociacion;
-		this.monto = monto;
 	}
 
 
@@ -238,24 +235,5 @@ public class CuentaAsociados  implements Serializable{
 	public void setNombreAsociacion(String nombreAsociacion) {
 		this.nombreAsociacion = nombreAsociacion;
 	}
-
-
-	/**
-	 * @return the monto
-	 */
-	public double getMonto() {
-		return monto;
-	}
-
-
-	/**
-	 * @param monto the monto to set
-	 */
-	public void setMonto(double monto) {
-		this.monto = monto;
-	}
-
-
-
 	
 }

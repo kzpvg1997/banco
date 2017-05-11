@@ -128,7 +128,7 @@ public class AsociaconCuentaRest {
 			ca.setIdAsociado(cuentaAsociada.getNumeroIdAsociado());
 			Bank b = bankEJB.buscarBanco(cuentaAsociada.getBank());
 			ca.setBanco(b);
-			Customer cus = clienteEJB.buscarCustomer(cuentaAsociada.getTipoIdCliente(),cuentaAsociada.getIdCliente() );
+			Customer cus = clienteEJB.buscarCustomer(cuentaAsociada.getTipoIdCliente(),cuentaAsociada.getIdCliente());
 			ca.setCustomer(cus);
 			ca.setNumeroCuenta(cuentaAsociada.getNumeroCuenta());
 			ca.setNombreAsociacion(cuentaAsociada.getNombreCuenta());
