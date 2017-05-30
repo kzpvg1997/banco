@@ -35,7 +35,7 @@ public class Product implements Serializable{
 		@JoinColumn(name="holder_idtype", referencedColumnName="identification_type"),
 		@JoinColumn(name="holder_idnumber", referencedColumnName="identification_number")
 	}
-			)
+	)
 	@ManyToOne
 	private Customer customer;
 	

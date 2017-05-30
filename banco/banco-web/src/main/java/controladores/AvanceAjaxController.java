@@ -7,15 +7,11 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.swing.JOptionPane;
 
-import org.hibernate.validator.constraints.Length;
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Messages;
 
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.CreditCard;
-import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Customer;
-import co.edu.eam.ingesoft.avanzada.persistencia.entidades.Product;
 import co.edu.eam.ingesoft.avanzada.persistencia.entidades.SavingAccount;
 import co.edu.eam.ingesoft.pa.negocio.beans.CreditCardEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.MensajeEJB;

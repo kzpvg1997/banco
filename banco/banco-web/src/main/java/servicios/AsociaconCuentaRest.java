@@ -78,6 +78,8 @@ public class AsociaconCuentaRest {
 		return savaccEJB.verificarCuentaAhorros(numeroCuenta, cedula,tipoId);
 	}
 	
+	
+	
 	@POST
     @Path("/transferir")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)

@@ -38,7 +38,7 @@ public class SeguridadRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public RespuestaDTO login(LoginDTO dto) {
 
-		Usuario user = ejb.buscarUsuario(dto.getUser());
+		Usuario user = ejb.buscar(dto.getUser());
 		if (user != null && user.getContraseña().equals(dto.getPassword())) {
 			String token = UUID.randomUUID().toString();
 			usuarios.put(token, user);
@@ -54,7 +54,7 @@ public class SeguridadRest {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public RespuestaDTO login2(@QueryParam("user") String nickname, @QueryParam("password") String password) {
-		Usuario user = ejb.buscarUsuario(nickname);
+		Usuario user = ejb.buscarUs(nickname);
 		if (user != null && user.getContraseña().equals(password)) {
 			String token = UUID.randomUUID().toString();
 			usuarios.put(token, user);
